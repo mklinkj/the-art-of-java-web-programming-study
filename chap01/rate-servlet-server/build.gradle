@@ -21,6 +21,8 @@ dependencies {
   implementation "org.apache.logging.log4j:log4j-core:${log4jVersion}"
   implementation "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
 
+  implementation "org.apache.commons:commons-text:${commonsTextVersion}"
+
   compileOnly "jakarta.servlet:jakarta.servlet-api:${jakartaServletApiVersion}"
   implementation "org.glassfish.web:jakarta.servlet.jsp.jstl:${jakartaServletJspJstlVersion}"
 

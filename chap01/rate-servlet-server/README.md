@@ -40,3 +40,28 @@
   * Gretty + Tomcat 10.1.x 환경의 문제인지는 잘모르겠다. 일단 web.xml 참고용으로 web-example.xml로 이름만 바꿔서 보관했다.
 
     
+
+## 더 해볼 일...
+
+원래는 FreeMaker를 HTML 생성 부분에 적용해보고 싶었는데.. 이러면 JSP 파일 쓰는게 나아서... 그냥 commons-text 라이브러리로 한번 보기 좋게 변경해보았다..
+
+* 참고
+  * https://www.baeldung.com/java-string-formatting-named-placeholders
+
+일단 HTML 보기가 편해졌음... 😄👍 수정도 쉬워졌고...
+
+
+
+
+
+## 정오표
+
+* [ ] p33: 코드 1-5에서 String으로 html 문자열을 response에 써주는 부분에... 여는 form 태그가 바로 닫아져있다.
+
+  ```html
+  <form  name='frmCalc' method='post' action='/rateServer/calc' />
+  ==>
+  <form  name='frmCalc' method='post' action='/rateServer/calc'>
+  ```
+
+  * 브라우저에서 문법 오류 보정을 해서 처리되서 그런지? 예제 동작확인에는 문제 없지만... 수정되는 것이 좋을 것 같습니다.

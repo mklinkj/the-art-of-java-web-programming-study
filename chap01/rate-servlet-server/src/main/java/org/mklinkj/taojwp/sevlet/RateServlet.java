@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
+import org.apache.logging.log4j.core.lookup.StrSubstitutor;
 
 /** Servlet implementation class RateServlet */
 @WebServlet(urlPatterns = "/calc")
@@ -31,6 +33,58 @@ public class RateServlet extends HttpServlet {
     doHandle(request, response);
   }
 
+  private String makeRateInputForm(String contextPath, String servletPath) {
+    return StrSubstitutor.replace(
+        """
+          <!DOCTYPE html>
+          <html lang="ko">
+          <head>
+            <meta charset="UTF-8">
+            <title>환율 계산기</title>
+          </head>
+          <body>
+            <h1>환율 계산기</h1>
+            <form name='frmCalc' method='post' action='${contextPath}${servletPath}'>
+              원화: <input type='text' name='won' size=10 value='0' />
+              <select name='operator'>
+                <option value='dollar'>달러</option>
+                <option value='en'>엔화</option>
+                <option value='wian'>위안</option>
+                <option value='pound'>파운드</option>
+                <option value='euro'>유로</option>
+              </select>
+              <input type='hidden' name='command' value='calculate' />
+              <input type='submit' value='변환' />
+            </form>
+          </body>
+          </html>
+          """,
+        Map.of("contextPath", contextPath, "servletPath", servletPath),
+        "${",
+        "}");
+  }
+
+  private String makeRateResult(String result, String contextPath, String servletPath) {
+    return StrSubstitutor.replace(
+        """
+          <!DOCTYPE html>
+          <html lang="ko">
+          <head>
+            <meta charset="UTF-8">
+            <title>환율 계산기</title>
+          </head>
+          <body>
+            <h1>변환결과</h1>
+            <h1>${result}</h1>
+            <a href='${contextPath}${servletPath}'>환율 계산기 </a>
+          </body>
+          </html>
+          """,
+        Map.of("result", result, "contextPath", contextPath, "servletPath", servletPath),
+        "${",
+        "}");
+  }
+
   private void doHandle(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     request.setCharacterEncoding(SERVER_ENCODING);
@@ -39,32 +93,14 @@ public class RateServlet extends HttpServlet {
     String command = request.getParameter("command");
     String won = request.getParameter("won");
     String operator = request.getParameter("operator");
-    final String contextPath = request.getContextPath();
 
     if ("calculate".equals(command)) {
       String result = calculate(Float.parseFloat(won), operator);
-      pw.print("<html><h1>변환결과</h1><br>");
-      pw.print("<html><h1>" + result + "</h1><br><br><br>");
-      pw.print(String.format("<a href='%s/calc'>환율 계산기 </a>", contextPath));
+      pw.print(makeRateResult(result, request.getContextPath(), request.getServletPath()));
       return;
     }
 
-    pw.print("<html><title>환율계산기</title>");
-    pw.print("<h1>환율 계산기</h1><br>");
-    pw.print(
-        String.format("<form  name='frmCalc' method='post' action='%s/calc' />  ", contextPath));
-    pw.print("원화: <input type='text' name='won' size=10 value='0'  />  ");
-    pw.print("<select name='operator' >");
-    pw.print("<option value='dollar'>달러</option>");
-    pw.print("<option value='en'>엔화</option>");
-    pw.print("<option value='wian'>위안</option>");
-    pw.print("<option value='pound'>파운드</option>");
-    pw.print("<option value='euro'>유로</option>");
-    pw.print("</select>");
-    pw.print("<input type='hidden' name='command' value='calculate'  />  ");
-    pw.println("<input type='submit' value='변환'  />");
-    pw.println("</form>");
-    pw.print("</html>");
+    pw.print(makeRateInputForm(request.getContextPath(), request.getServletPath()));
     pw.close();
   }
 
