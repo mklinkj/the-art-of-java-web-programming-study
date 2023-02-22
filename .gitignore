@@ -1,0 +1,50 @@
+# maven-wrapper.properties 만 있어도 jar를 maven-wrapper.jar 를 자동으로 다운로드 받는다.
+.mvn/wrapper/*
+!.mvn/wrapper/maven-wrapper.properties
+
+# Libre Office document lock file
+.~lock.*
+
+# HSQLDB 파일 사용시 DB 경로
+file_db_temp
+
+# Visual Paradigm 임시파일
+*.vpp.bak_*
+
+HELP.md
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
