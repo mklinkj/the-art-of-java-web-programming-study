@@ -8,6 +8,8 @@ for /F "delims=" %%a in (project-folder-list.txt) do (
   rmdir /S /Q %%a\gradle\
   del %%a\gradlew.bat
   del %%a\gradlew
+
+  del %%a\.gitattributes
 )
 
 @ECHO remove is complete.

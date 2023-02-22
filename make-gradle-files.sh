@@ -6,6 +6,7 @@ PROJECT_FOLDER_LIST=$(sed 's/\\/\//g' "project-folder-list.txt")
 for folder in $PROJECT_FOLDER_LIST;
 do
   cp gradle.properties $folder
+  cp .gitattributes $folder
   cp $folder/local-settings.gradle $folder/settings.gradle
 
   cp -r gradle $folder/

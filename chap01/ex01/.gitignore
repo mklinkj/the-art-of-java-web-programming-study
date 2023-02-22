@@ -1,6 +1,7 @@
-# 배치 파일로 만들어지는 프로젝트 로컬의 settings.gradle, gradle.properties 들은 무시 처리
+# 배치 파일로 만들어지는 프로젝트 로컬의 settings.gradle, gradle.properties, .gitattributes 들은 무시 처리
 settings.gradle
 gradle.properties
+.gitattributes
 
 # 하위 프로젝트에서는 wrapper 파일을 포함하지 않는다.
 gradlew
