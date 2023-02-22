@@ -29,7 +29,7 @@
 
 * WAS: 
   * Tomcat 또는 Jetty
-    * Gradle로 하게되면 Gretty
+    * Gradle로 하게되면 Gretty 사용.
     * Maven 을 하게되면 jetty-maven-plugin 또는 cargo-maven-plugin 사용.
 * DB: 
   * Docker의 OracleXE 11g R2 또는 OracleXE 18c
@@ -53,7 +53,7 @@
 
 ### 1장. [프로그램의 발전 과정](chap01)
 
-### 2장. 웹 프로그래밍과 JSP
+### 2장. [웹 프로그래밍과 JSP](chap02)
 
 ### 3장. 개발 환경 설정하기
 
