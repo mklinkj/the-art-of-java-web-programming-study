@@ -1,0 +1,46 @@
+plugins {
+  id 'java'
+  id "io.freefair.lombok" version "${lombokPluginVersion}"
+  id "org.gretty" version "${grettyVersion}"
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of("${javaVersion}")
+  }
+}
+
+compileJava.options.encoding = "${projectEncoding}"
+compileTestJava.options.encoding = "${projectEncoding}"
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation "org.apache.logging.log4j:log4j-core:${log4jVersion}"
+  implementation "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
+
+  compileOnly "jakarta.servlet:jakarta.servlet-api:${jakartaServletApiVersion}"
+  implementation "org.glassfish.web:jakarta.servlet.jsp.jstl:${jakartaServletJspJstlVersion}"
+
+  testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+  testImplementation "org.assertj:assertj-core:${assertJVersion}"
+}
+
+// gradle appRun 으로 실행
+gretty {
+  httpPort = 8080
+  contextPath = "/"
+  servletContainer = "tomcat10"
+  inplaceMode = "soft"
+  loggingLevel= "DEBUG"
+}
+
+test {
+  useJUnitPlatform()
+  testLogging {
+    outputs.upToDateWhen { false }
+    showStandardStreams = true
+  }
+}

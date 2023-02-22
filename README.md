@@ -29,7 +29,8 @@
 
 * WAS: 
   * Tomcat 또는 Jetty
-    * Gradle로 하게되면 Gretty, Maven 을 하게되면 jetty-maven-plugin 또는 cargo-maven-plugin 사용.
+    * Gradle로 하게되면 Gretty
+    * Maven 을 하게되면 jetty-maven-plugin 또는 cargo-maven-plugin 사용.
 * DB: 
   * Docker의 OracleXE 11g R2 또는 OracleXE 18c
     * DB는 다른 스터디에서 이미 설치한게 있어서 그거 쓰면 되겠다.
