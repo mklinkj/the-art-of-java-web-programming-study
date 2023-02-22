@@ -1,3 +1,5 @@
 rootProject.name = 'the-art-of-java-web-programming-study'
 
 include('chap01:ex01')
+include('chap01:ex02:server')
+include('chap01:ex02:client')

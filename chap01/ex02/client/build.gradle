@@ -25,7 +25,7 @@ dependencies {
 }
 
 application {
-  mainClass = 'org.mklinkj.taojwp.ex01.Calculator'
+  mainClass = 'org.mklinkj.taojwp.ex02.client.RateClient'
 }
 
 tasks.named('test') {

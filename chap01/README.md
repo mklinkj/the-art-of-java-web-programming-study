@@ -14,7 +14,7 @@
 
 
 
-### 1.1 클라이언트 Pc 기반 프로그램
+### 1.1 클라이언트 PC 기반 프로그램
 
 * https://youtu.be/HqK0A8ShAbg
 
@@ -37,6 +37,7 @@
 
 * 저자님 Gihub가서 예제를 보니.. swing으로 되어있다.
   * https://github.com/gilbutITbook/006895/tree/master/pro01
+* Gradle Java Application으로 실행되게 해도 될 것 같다.
 
 
 

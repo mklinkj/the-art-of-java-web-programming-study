@@ -5,11 +5,14 @@ package org.mklinkj.taojwp.ex01;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
+@Slf4j
 class AppTest {
   @Test
   void appHasAGreeting() {
+    LOGGER.info("### 로거 확인... ###");
     Calculator calculator = new Calculator();
     assertThat(calculator).isNotNull();
   }

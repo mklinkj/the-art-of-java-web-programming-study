@@ -1,0 +1,4 @@
+rootProject.name = 'ex02'
+
+include('client')
+include('server')
