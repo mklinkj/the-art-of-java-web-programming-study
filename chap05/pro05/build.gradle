@@ -24,7 +24,6 @@ dependencies {
   implementation "org.apache.commons:commons-text:${commonsTextVersion}"
 
   compileOnly "jakarta.servlet:jakarta.servlet-api:${jakartaServletApiVersion}"
-
   implementation "org.glassfish.web:jakarta.servlet.jsp.jstl:${jakartaServletJspJstlVersion}"
 
   testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
@@ -39,11 +38,12 @@ dependencies {
 
 // gradle appRun 으로 실행
 gretty {
-  httpPort = 8080
-  contextPath = "/"
+  httpPort = 8090
+  contextPath = project.name
   servletContainer = "tomcat10"
   inplaceMode = "soft"
-  loggingLevel = "DEBUG"
+  reloadOnClassChange = true
+  loggingLevel= "DEBUG"
 }
 
 test {

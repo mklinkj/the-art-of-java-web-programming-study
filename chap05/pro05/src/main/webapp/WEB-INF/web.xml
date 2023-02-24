@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+                      https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+  version="6.0"
+  metadata-complete="true">
+
+  <!--
+    Gretty 환경에서는 web.xml 파일을 src/main/webapp/WEB-INF 위치에 만들어 둘 경우
+    서블릿 클래스에 붙여둔 @WebServlet(urlPatterns = "/urlPattern") 가 동작을 안한다.
+    서블릿 매핑을 이 파일에서만 설정해야함.
+  -->
+
+  <display-name>FirstServlet</display-name>
+
+  <servlet>
+    <servlet-name>aaa</servlet-name>
+    <servlet-class>org.mklinkj.taojwp.sec01.ex01.FirstServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>aaa</servlet-name>
+    <url-pattern>/first</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>bbb</servlet-name>
+    <servlet-class>org.mklinkj.taojwp.sec01.ex01.SecondServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>bbb</servlet-name>
+    <url-pattern>/second</url-pattern>
+  </servlet-mapping>
+
+
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.xhtml</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+
+
+</web-app>
