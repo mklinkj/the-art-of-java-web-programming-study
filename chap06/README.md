@@ -63,11 +63,24 @@
 
   
 
-
-
-
-
 #### 6.3.2 여러 개의 값을 전송할 때의 요청 처리
+
+* ...
+
+* 동작 확인
+
+  ```
+  03:38:57.948 [http-nio-8090-exec-3] INFO  org.mklinkj.taojwp.sec01.ex01.InputServlet - init 메서드 호출
+  03:38:57.956 [http-nio-8090-exec-3] INFO  org.mklinkj.taojwp.sec01.ex01.InputServlet - 아이디: choi
+  03:38:57.957 [http-nio-8090-exec-3] INFO  org.mklinkj.taojwp.sec01.ex01.InputServlet - 암호: 1212
+  03:38:57.957 [http-nio-8090-exec-3] INFO  org.mklinkj.taojwp.sec01.ex01.InputServlet - 선택한 과목: java
+  03:38:57.957 [http-nio-8090-exec-3] INFO  org.mklinkj.taojwp.sec01.ex01.InputServlet - 선택한 과목: JSP
+  03:38:57.957 [http-nio-8090-exec-3] INFO  org.mklinkj.taojwp.sec01.ex01.InputServlet - 선택한 과목: 안드로이드
+  ```
+
+  
+
+
 
 
 

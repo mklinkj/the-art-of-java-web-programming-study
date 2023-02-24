@@ -40,7 +40,7 @@ gretty {
   httpPort = 8090
   contextPath = project.name
   servletContainer = "tomcat10"
-  inplaceMode = "soft"
+  inplaceMode = "hard"
   reloadOnClassChange = true
   loggingLevel = "DEBUG"
 }

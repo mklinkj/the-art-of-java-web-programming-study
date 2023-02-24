@@ -8,17 +8,19 @@ import org.junit.jupiter.api.Test;
 import org.mklinkj.taojwp.test.support.MockHttpServletTestSupport;
 import org.springframework.http.HttpStatus;
 
-class LoginServletTest extends MockHttpServletTestSupport<LoginServlet> {
+class InputServletTest extends MockHttpServletTestSupport<InputServlet> {
   @BeforeEach
   void beforeEach() {
-    request.setServletPath("/login");
-    setServlet(new LoginServlet());
+    request.setServletPath("/input");
+    setServlet(new InputServlet());
   }
 
   @Test
   void testDoGet() throws IOException {
     request.setParameter("user_id", "choi");
     request.setParameter("user_pw", "1212");
+
+    request.setParameter("subject", "java", "C언어", "JSP", "안드로이드");
 
     servlet.doGet(request, response);
 
