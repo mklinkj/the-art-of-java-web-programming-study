@@ -16,26 +16,7 @@
     그래서 metadata-complete="true" 설정을 제거했다.
   -->
 
-  <display-name>FirstServlet</display-name>
-
-  <servlet>
-    <servlet-name>aaa</servlet-name>
-    <servlet-class>org.mklinkj.taojwp.sec01.ex01.FirstServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>aaa</servlet-name>
-    <url-pattern>/first</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>bbb</servlet-name>
-    <servlet-class>org.mklinkj.taojwp.sec01.ex01.SecondServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>bbb</servlet-name>
-    <url-pattern>/second</url-pattern>
-  </servlet-mapping>
-
+  <display-name>Chap06_Servlet</display-name>
 
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

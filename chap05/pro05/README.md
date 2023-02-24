@@ -13,22 +13,16 @@
 
 이후 브라우저에서 아래 주소로 접속
 
-* `http://localhost:8080/`
+* `http://localhost:8090/pro05/first`
+* `http://localhost:8090/pro05/second`
+* `http://localhost:8090/pro05/third`
 
 
 
 ## 의견
 
-* 
+* Spring Test라이브러리를 활용해서 Servlet 메서드를 잘 테스트 할 수 있었다.
   
 
-## 특이한점
-
-* 
 
 
-
-
-## 정오표
-
-* [ ] 
