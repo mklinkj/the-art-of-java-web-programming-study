@@ -5,17 +5,31 @@
   <title>여러 가지 input 타입 표시 창</title>
 </head>
 <body>
+서블릿 선택:<br>
+<ul>
+  <li><input type="radio" name="servlet_name" value="input" checked> input 서블릿</li>
+  <li><input type="radio" name="servlet_name" value="input2"> input2 서블릿</li>
+</ul>
 <form name="frmLogin" method="get" action="input">
   아이디: <input type="text" name="user_id"><br>
   비밀번호:
   <input type="password" name="user_pw"><br>
   <input type="checkbox" name="subject" value="java" checked>자바
-  <input type="checkbox" name="subject" value="C언어" >C언어
-  <input type="checkbox" name="subject" value="JSP" >JSP
-  <input type="checkbox" name="subject" value="안드로이드" >안드로이드
+  <input type="checkbox" name="subject" value="C언어">C언어
+  <input type="checkbox" name="subject" value="JSP">JSP
+  <input type="checkbox" name="subject" value="안드로이드">안드로이드
   <br><br>
-  <input type="submit" value="전송">
+  <input type="button" onclick="selectServlet()" value="전송">
   <input type="reset" value="다시입력">
 </form>
+<script>
+  const selectServlet = () => {
+    const servletName = document.querySelector("input[name='servlet_name']:checked").value
+    const form = document.frmLogin;
+    form.action = servletName;
+    form.submit();
+  }
+</script>
 </body>
+
 </html>

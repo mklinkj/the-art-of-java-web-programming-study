@@ -80,13 +80,23 @@
 
   
 
-
-
-
-
 #### 6.3.3 getParameterNames() 메서드를 이용한 요청 처리
 
+* ...
 
+* 동작 확인
+
+  ```
+  04:09:48.990 [http-nio-8090-exec-1] INFO  org.mklinkj.taojwp.sec01.ex01.InputServlet2 - init 메서드 호출
+  04:09:49.000 [http-nio-8090-exec-1] INFO  org.mklinkj.taojwp.sec01.ex01.InputServlet2 - name=user_id, value=choo
+  04:09:49.000 [http-nio-8090-exec-1] INFO  org.mklinkj.taojwp.sec01.ex01.InputServlet2 - name=user_pw, value=1234
+  04:09:49.000 [http-nio-8090-exec-1] INFO  org.mklinkj.taojwp.sec01.ex01.InputServlet2 - name=subject, value=java
+  04:09:49.000 [http-nio-8090-exec-1] INFO  org.mklinkj.taojwp.sec01.ex01.InputServlet2 - name=subject, value=C언어
+  04:09:49.000 [http-nio-8090-exec-1] INFO  org.mklinkj.taojwp.sec01.ex01.InputServlet2 - name=subject, value=JSP
+  04:09:49.000 [http-nio-8090-exec-1] INFO  org.mklinkj.taojwp.sec01.ex01.InputServlet2 - name=subject, value=안드로이드
+  ```
+
+  index.html의 action 주소값을 바꾸지 않고, 라디오 버튼으로 서블릿 주소를 선택할 수 있게 구현했다.
 
 
 
