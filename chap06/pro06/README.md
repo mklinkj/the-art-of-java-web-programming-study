@@ -14,6 +14,7 @@
 
 * `http://localhost:8090/pro06/login.html`
 * `http://localhost:8090/pro06/input.html`
+* `http://localhost:8090/pro06/calc`
 
 
 
@@ -21,5 +22,4 @@
 
 * p183. 코드 6-1에서 `encType="UTF-8"` 지정이 의미가 있는 것인지? 없어보이는데... 일단 빼고 써보자~
   * 폼 데이터 전송 기본 값은 `application/x-www-form-urlencoded` 같은데...
-
 

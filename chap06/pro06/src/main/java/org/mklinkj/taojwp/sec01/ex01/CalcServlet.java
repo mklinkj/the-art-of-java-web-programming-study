@@ -1,4 +1,4 @@
-package org.mklinkj.taojwp.sevlet;
+package org.mklinkj.taojwp.sec01.ex01;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,9 +10,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import org.apache.commons.text.StringSubstitutor;
 
-/** Servlet implementation class RateServlet */
-@WebServlet(urlPatterns = "/calc")
-public class RateServlet extends HttpServlet {
+@WebServlet("/calc")
+public class CalcServlet extends HttpServlet {
   private static final float USD_RATE = 1124.70F;
   private static final float JPY_RATE = 10.113F;
   private static final float CNY_RATE = 163.30F;

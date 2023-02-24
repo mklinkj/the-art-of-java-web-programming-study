@@ -9,7 +9,7 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.core.lookup.StrSubstitutor;
+import org.apache.commons.text.StringSubstitutor;
 
 @Slf4j
 @WebServlet("/login2")
@@ -33,7 +33,7 @@ public class LoginServlet2 extends HttpServlet {
     String password = request.getParameter("user_pw");
 
     out.print(
-        StrSubstitutor.replace(
+        StringSubstitutor.replace(
             """
             <!DOCTYPE html>
             <html lang="ko">
@@ -47,9 +47,7 @@ public class LoginServlet2 extends HttpServlet {
             </body>
             </html>
             """,
-            Map.of("id", userId, "pw", password),
-            "${",
-            "}"));
+            Map.of("id", userId, "pw", password)));
   }
 
   @Override
