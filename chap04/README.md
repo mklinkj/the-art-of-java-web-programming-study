@@ -18,6 +18,7 @@
 ### 4.3 컨테이너에서 웹 애플리케이션 실행하기
 
 * https://youtu.be/WZxRUB1-5ws
+* https://youtu.be/cMknM795h6s
 
 #### 4.3.1 컨테이너에 웹 애플리케이션 등록 ~ 4.3.3
 
@@ -29,19 +30,108 @@
 
 
 
+#### 4.3.4 컨텍스트란?
+
+* https://youtu.be/yzqdpZLqFmw
+* server.xml에 등록하는 웹 어플리케이션을 컨텍스트라고 함.
+* Tomcat에서 인식하는 한개의 어플리케이션
+
+
+
+#### 4.3.5 톰캣 컨테이너에 컨텍스트 등록하기
+
+* https://youtu.be/BMwBzR42f9k
+
+`${TOMCAT_HOME}/conf/server.xml` 에 Host 태그 안쪽에 다음내용 추가
+
+```xml
+        <Context
+          path="webMall"
+          docBase="{webShop 디렉토리 경로}"
+          reloadable="true" />
+        />
+```
+
+* `http://localhost:8090/webMall/main.html` 경로로 잘 접속되는지 확인.
+
+
+
+#### 4.3.6 톰캣 컨테이너에서의 웹 애플리케이션 동작과정
+
+* ... 
 
 
 
 
-## 진행
 
-* ....
+## 4.4 이클립스에서 웹 애플리케이션 실습하기
+
+> Eclipse는 사용하지 않을 예정이니.. 책 내용만 쭉 보자.. 😅
+
+* https://youtu.be/bG8oR0SHRFs
+
+  
+
+### 4.4. 1이클립스에서 웹 프로젝트 생성
+
+* 루트이하에 WebContent라고 HTML, JSP 파일 넣어둘 디렉토리를 그냥 만들어주는듯...
+
+* 소스 구조를  다음과 같이 만들어주는 듯..
+
+  ```
+  webShop
+    ├─ build
+    ├─ src
+    └─ WebContent
+        │    main.html 
+        ├─ META-INF
+        └─ WEB-INF
+             │   web.xml
+             └─lib
+  ```
+
+  
+
+#### 4.4.2 이클립스에서 HTML 파일 생성
+
+* ...
+
+#### 4.4.3 이클립스와 톰캣 연동
+
+* ...
+
+#### 4.4.4 이클립스와 연동한 톰캣에 프로젝트 등록
+
+* ...
+
+#### 4.4.5 웹 브라우저에서 요청하기
+
+* ...
+
+
+
+## 4.5 웹 애플리케이션 서비스 하기
+
+* https://youtu.be/wbtFS_VETSg
+
+### 4.5.1 톰캣에 배치하기
+
+* 이클립스를 사용하지 않으니 war생성시 JDK에서 제공해주는 jar명령을 직접 실행하자..
+
+  ```
+  > cd webShop의_경로
+  > jar -cvf webShop.war *
+  ```
+
+* 생성한 webShop.war를 ${TOMCAT_HOME}/webapps`로 복사하고 Tomcat 재시작
+
+* `http://localhost:8090/webMall/main.html` 로 다시 접속해서 접속되는지 확인.
 
 
 
 ## 의견
 
-* 
+* 그래도 한번 밑바닥 부터 조립해본 것 같아서 좋았다. 👍👍👍
 
   
 
@@ -53,15 +143,21 @@
 
 ## Eclipse를 사용하지 않음으로 인헤 별도로 해야할일들..
 
-### war 압축
+### war 압축 명령 실행.
 
+```
+>jar -cvf webShop.war *
+Manifest를 추가함
+추가하는 중: classes/(입력 = 0) (출력 = 0)(0%를 저장함)
+추가하는 중: lib/(입력 = 0) (출력 = 0)(0%를 저장함)
+추가하는 중: main.html(입력 = 811) (출력 = 385)(52%를 감소함)
+추가하는 중: WEB-INF/(입력 = 0) (출력 = 0)(0%를 저장함)
+추가하는 중: WEB-INF/web.xml(입력 = 320) (출력 = 177)(44%를 감소함)
 
+>
+```
 
-1. 
-
-
-
-
+* webShop.war란 이름으로 해당 디렉토리 내용을 zip압축하는 것과 큰 차이가 없음.
 
 
 
