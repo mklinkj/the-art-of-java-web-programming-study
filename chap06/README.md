@@ -100,6 +100,28 @@
 
 
 
+### 6.4 서블릿의 응답 처리 방법
+
+* ...
+
+#### 6.4.1 MIME-TYPE
+
+* Tomcat 컨테이너에서 미리 설정해 놓은 데이터 종류
+
+* `${CATALINA_HOME}/conf/web.xml` 의 Default MIME Type Mappings 이하 항목에 미리 정의된 매핑 정보들이 있음.
+
+  ```xml
+  <!-- html확장자의 예.. -->
+  ...
+      <mime-mapping>
+          <extension>html</extension>
+          <mime-type>text/html</mime-type>
+      </mime-mapping>
+  ...
+  ```
+
+  
+
 
 
 
@@ -120,6 +142,24 @@
 
 
 ## 기타
+
+### ✨✨✨ [HttpServletResponse.getOutputStream()/.getWriter()에서 .close()를 호출해야 합니까?](https://stackoverflow.com/questions/1159168/should-one-call-close-on-httpservletresponse-getoutputstream-getwriter)
+
+* 책에서도 일부러 PrintWriter를 닫지 않았지만.. 난 습관상 일부러 닫긴 했는데... 이걸 닫는 것은 컨테이너의 책임이 맞는 것 같다.
+
+* ✨ **직접 열지 않았다면 닫지 마라..가 맞는 말 같다.** 
+
+  ```java
+  // ServletResponseWrapper 클래스의 getWriter()
+  @Override
+  public PrintWriter getWriter() throws IOException {
+    return this.response.getWriter();
+  }
+  ```
+
+  
+
+   
 
 ### ✨ `@WebServlet` 설정과  web.xml을 동시에 사용할 때  안 되던 문제...
 

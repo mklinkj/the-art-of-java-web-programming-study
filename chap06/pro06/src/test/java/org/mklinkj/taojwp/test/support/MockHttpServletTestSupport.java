@@ -15,7 +15,6 @@ public abstract class MockHttpServletTestSupport<T extends HttpServlet> {
   public MockHttpServletTestSupport() {
     request = new MockHttpServletRequest();
     response = new MockHttpServletResponse();
-
     request.setContextPath("/pro06");
   }
 

@@ -24,7 +24,6 @@ dependencies {
   implementation "org.apache.commons:commons-text:${commonsTextVersion}"
 
   compileOnly "jakarta.servlet:jakarta.servlet-api:${jakartaServletApiVersion}"
-  implementation "org.glassfish.web:jakarta.servlet.jsp.jstl:${jakartaServletJspJstlVersion}"
 
   testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
   testImplementation "org.assertj:assertj-core:${assertJVersion}"

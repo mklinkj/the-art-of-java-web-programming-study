@@ -5,10 +5,25 @@
   <title>로그인 창</title>
 </head>
 <body>
+<h4>서블릿 URL 선택:</h4>
+<ul>
+  <li><input type="radio" name="servlet_name" value="login" checked> login 서블릿</li>
+  <li><input type="radio" name="servlet_name" value="login2"> login2 서블릿</li>
+</ul>
 <form name="frmLogin" method="get" action="login" enctype="application/x-www-form-urlencoded">
-    아이디: <input type="text" name="user_id"><br>
-    비밀번호: <input type="password" name="user_pw"><br>
+  아이디: <input type="text" name="user_id"><br>
+  비밀번호: <input type="password" name="user_pw"><br>
   <input type="submit" value="로그인"> <input type="reset" value="다시입력">
 </form>
+<script>
+  const formLogin = document.frmLogin;
+  formLogin.addEventListener('submit',
+      () => {
+        const servletName = document.querySelector("input[name='servlet_name']:checked").value
+        formLogin.action = servletName;
+        formLogin.submit();
+      }
+  )
+</script>
 </body>
 </html>
