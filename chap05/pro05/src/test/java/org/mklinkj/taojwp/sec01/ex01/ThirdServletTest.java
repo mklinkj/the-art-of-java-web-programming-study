@@ -10,13 +10,13 @@ import org.springframework.http.HttpStatus;
 
 class ThirdServletTest extends MockHttpServletTestSupport {
 
-  private SecondServlet servlet;
+  private ThirdServlet servlet;
 
   @BeforeEach
   public void beforeEach() {
     request.setContextPath("/pro05");
     request.setServletPath("/third");
-    servlet = new SecondServlet();
+    servlet = new ThirdServlet();
   }
 
   /** 진짜 URL을 호출해서 하는 방식은 아니여서, 메서드를 각각 호출해주었다. */
