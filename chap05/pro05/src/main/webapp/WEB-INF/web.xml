@@ -20,12 +20,15 @@
   xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
                       https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
   version="6.0"
-  metadata-complete="true">
+  >
 
   <!--
-    Gretty 환경에서는 web.xml 파일을 src/main/webapp/WEB-INF 위치에 만들어 둘 경우
+    metadata-complete="true" 옵션이 설정되면
+    web.xml 파일을 src/main/webapp/WEB-INF 위치에 만들어 둘 경우
     서블릿 클래스에 붙여둔 @WebServlet(urlPatterns = "/urlPattern") 가 동작을 안한다.
-    서블릿 매핑을 이 파일에서만 설정해야함.
+    서블릿 매핑을 web.xml 파일에서만 설정해야함.
+
+    그래서 metadata-complete="true" 설정을 제거했다.
   -->
 
   <display-name>FirstServlet</display-name>

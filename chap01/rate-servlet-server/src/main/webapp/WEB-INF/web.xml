@@ -20,14 +20,15 @@
   xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
                       https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
   version="6.0"
-  metadata-complete="true">
+  >
 
   <!--
-    web.xml 로서 사용 가능하게 두면
-    rateServlet의 서블릿 매핑설정을 제거하고 실행해도
-    RateServlet에 붙여둔 @WebServlet(urlPatterns = "/calc") 가 동작을 안한다.
+    metadata-complete="true" 옵션이 설정되면
+    web.xml 파일을 src/main/webapp/WEB-INF 위치에 만들어 둘 경우
+    서블릿 클래스에 붙여둔 @WebServlet(urlPatterns = "/urlPattern") 가 동작을 안한다.
+    서블릿 매핑을 web.xml 파일에서만 설정해야함.
 
-    그래서 참고를 위해 삭제는 하지 않고, 파일명만 web-example.xml로 둠.
+    그래서 metadata-complete="true" 설정을 제거했다.
   -->
 
 
