@@ -12,7 +12,24 @@
 
 * https://youtu.be/YW7cwYHf8Bk
 
-  
+
+
+
+### 4.3 컨테이너에서 웹 애플리케이션 실행하기
+
+* https://youtu.be/WZxRUB1-5ws
+
+#### 4.3.1 컨테이너에 웹 애플리케이션 등록 ~ 4.3.3
+
+* [webShop/main.html](webShop/main.html)
+  * 그냥 리액트 HTML 파일로 만들어 넣어봤음. 😅
+  * [webShop](webShop) 경로를 `mklink /j` 명령으로 Tomcat의 `webapp/webShop` 경로로 정션 링크 시킴
+* Tomcat 실행뒤 접속 주소
+  * `http://localhost:8090/webShop/main.html`
+
+
+
+
 
 
 
@@ -31,6 +48,18 @@
 ## 정오표
 
 * 없음.
+
+
+
+## Eclipse를 사용하지 않음으로 인헤 별도로 해야할일들..
+
+### war 압축
+
+
+
+1. 
+
+
 
 
 
