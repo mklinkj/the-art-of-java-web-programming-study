@@ -19,16 +19,19 @@
   <input type="checkbox" name="subject" value="JSP">JSP
   <input type="checkbox" name="subject" value="안드로이드">안드로이드
   <br><br>
-  <input type="button" onclick="selectServlet()" value="전송">
+  <input type="submit" value="전송">
   <input type="reset" value="다시입력">
 </form>
 <script>
-  const selectServlet = () => {
-    const servletName = document.querySelector("input[name='servlet_name']:checked").value
-    const form = document.frmLogin;
-    form.action = servletName;
-    form.submit();
-  }
+  const formLogin = document.frmLogin;
+  formLogin.addEventListener('submit', // 이렇게 써줘도 기존 submit 이벤트가 대체가 되는 건가?, WAS 로그에 요청이 중복되지 않게 들어온걸로 봐선 맞는 듯...
+      (e) => {
+        // e.preventDefault(); // 의미없는 코드 같음.. submit을 대체한 상태인데.. 뭣하러 차단하지?
+        const servletName = document.querySelector("input[name='servlet_name']:checked").value
+        formLogin.action = servletName;
+        formLogin.submit();
+      }
+  )
 </script>
 </body>
 
