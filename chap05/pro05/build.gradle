@@ -38,9 +38,15 @@ gretty {
   httpPort = 8090
   contextPath = project.name
   servletContainer = "tomcat10"
-  inplaceMode = "soft"
+  inplaceMode = "hard"
   reloadOnClassChange = true
   loggingLevel= "DEBUG"
+
+  jvmArgs = [
+      "--add-opens=java.base/java.io=ALL-UNNAMED",
+      "--add-opens=java.base/java.lang=ALL-UNNAMED",
+      "--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED"
+  ]
 }
 
 test {
