@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <title>단수 입력창</title>
+</head>
+<script
+    crossorigin
+    src="https://unpkg.com/react@18/umd/react.development.js"
+></script>
+<script
+    crossorigin
+    src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+></script>
+<script
+    crossorigin
+    src="https://unpkg.com/babel-standalone@6/babel.min.js"
+></script>
+<style>
+  table {
+    width: 100%;
+    border: 1px solid #444444;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    text-align: center;
+    border: 1px solid #444444;
+  }
+</style>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+  function InputComponent(props) {
+    return (
+        <div>
+          <div>
+            <h1>출력할 구구단의 수를 지정해주세요</h1>
+          </div>
+          <div>
+            <label>출력할 구구단: </label>
+            <input type="text" onChange={(e) => {
+              props.onChange(e.target.value)
+            }} value={props.dansu}/>
+          </div>
+          <button type={"button"} onClick={() => props.changeMode('list')}>전송</button>
+        </div>
+    )
+  }
+
+  function ListView(props) {
+    const trs = [];
+    for (let i = 1; i < 10; i++) {
+      trs.push(
+          <tr key={i}>
+            <td>{props.dansu} * {i}</td>
+            <td>{props.dansu * i}</td>
+          </tr>);
+    }
+    return (
+        <div>
+          <h1>{props.dansu}단 출력</h1>
+          <table>
+            <tbody>
+            <tr>
+              <td colSpan="2">{props.dansu}단 출력</td>
+            </tr>
+            {trs}
+            </tbody>
+          </table>
+          <button type={"button"} onClick={() => props.changeMode('input')}>입력창으로 돌아가기</button>
+        </div>
+    )
+  }
+
+  function App() {
+    const [dansu, setDansu] = React.useState(2);
+    const [mode, setMode] = React.useState('input');
+
+    let result;
+    console.log(":::", mode);
+    if (mode === 'input') {
+      result =
+          <InputComponent dansu={dansu} onChange={(dansu) =>
+              setDansu(dansu)
+          } changeMode={(mode) => {
+            setMode(mode)
+          }}/>
+    } else {
+      result =
+          <ListView dansu={dansu} changeMode={(mode) => {
+            setMode(mode)
+          }}/>
+    }
+
+    return (
+        <div>
+          {result}
+        </div>
+    );
+  }
+
+  const container = document.getElementById("root");
+  const root = ReactDOM.createRoot(container);
+  root.render(
+      <App/>
+  );
+</script>
+</body>
+</html>
