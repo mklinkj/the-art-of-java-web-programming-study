@@ -1,4 +1,4 @@
-package org.mklinkj.taojwp.sec01.ex01;
+package org.mklinkj.taojwp.sec02.ex01;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -8,21 +8,20 @@ import org.junit.jupiter.api.Test;
 import org.mklinkj.taojwp.test.support.MockHttpServletTestSupport;
 import org.springframework.http.HttpStatus;
 
-class LoginServlet5Test extends MockHttpServletTestSupport<LoginServlet5> {
+class LoginServlet2Test extends MockHttpServletTestSupport<LoginServlet2> {
 
   @BeforeEach
   void beforeEach() {
-    request.setServletPath("/login5");
-    setServlet(new LoginServlet5());
+    request.setServletPath("/login2");
+    setServlet(new LoginServlet2());
   }
 
   @Test
-  void testDoPost() throws IOException {
+  void testDoGet() throws IOException {
     request.setParameter("user_id", "park");
     request.setParameter("user_pw", "1234");
-    request.setParameter("user_address", "서울시 성북구");
 
-    servlet.doPost(request, response);
+    servlet.doGet(request, response);
 
     assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
     assertThat(response.getContentAsString())
@@ -37,7 +36,6 @@ class LoginServlet5Test extends MockHttpServletTestSupport<LoginServlet5> {
             <body>
               <h4>아이디: park</h4>
               <h4>패스워드: 1234</h4>
-              <h4>주소: 서울시 성북구</h4>
             </body>
             </html>
             """);

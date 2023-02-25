@@ -1,4 +1,4 @@
-package org.mklinkj.taojwp.sec01.ex01;
+package org.mklinkj.taojwp.sec02.ex01;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

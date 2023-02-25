@@ -1,4 +1,4 @@
-package org.mklinkj.taojwp.sec01.ex01;
+package org.mklinkj.taojwp.sec02.ex01;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,8 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.text.StringSubstitutor;
 
 @Slf4j
-@WebServlet("/login5")
-public class LoginServlet5 extends HttpServlet {
+@WebServlet("/login2")
+public class LoginServlet2 extends HttpServlet {
   private static final String UTF_8_ENCODING = StandardCharsets.UTF_8.name();
 
   @Override
@@ -22,7 +22,7 @@ public class LoginServlet5 extends HttpServlet {
   }
 
   @Override
-  protected void doPost(HttpServletRequest request, HttpServletResponse response)
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     request.setCharacterEncoding(UTF_8_ENCODING);
     response.setContentType(String.format("text/html;charset=%s", UTF_8_ENCODING));
@@ -31,12 +31,6 @@ public class LoginServlet5 extends HttpServlet {
 
     String userId = request.getParameter("user_id");
     String password = request.getParameter("user_pw");
-
-    String address = request.getParameter("user_address");
-
-    LOGGER.info("아이디: {}", userId);
-    LOGGER.info("비밀번호: {}", password);
-    LOGGER.info("주소: {}", address);
 
     out.print(
         StringSubstitutor.replace(
@@ -50,11 +44,10 @@ public class LoginServlet5 extends HttpServlet {
             <body>
               <h4>아이디: ${id}</h4>
               <h4>패스워드: ${pw}</h4>
-              <h4>주소: ${address}</h4>
             </body>
             </html>
             """,
-            Map.of("id", userId, "pw", password, "address", address)));
+            Map.of("id", userId, "pw", password)));
   }
 
   @Override

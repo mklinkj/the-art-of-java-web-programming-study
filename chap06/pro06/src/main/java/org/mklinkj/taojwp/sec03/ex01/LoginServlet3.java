@@ -1,4 +1,4 @@
-package org.mklinkj.taojwp.sec01.ex01;
+package org.mklinkj.taojwp.sec03.ex01;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,8 +9,8 @@ import java.nio.charset.StandardCharsets;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@WebServlet("/login4")
-public class LoginServlet4 extends HttpServlet {
+@WebServlet("/login3")
+public class LoginServlet3 extends HttpServlet {
   private static final String UTF_8_ENCODING = StandardCharsets.UTF_8.name();
 
   @Override
@@ -19,20 +19,7 @@ public class LoginServlet4 extends HttpServlet {
   }
 
   @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws IOException {
-    LOGGER.info("doGet 메서드 호출");
-    doHandle(request, response);
-  }
-
-  @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
-      throws IOException {
-    LOGGER.info("doPost 메서드 호출");
-    doHandle(request, response);
-  }
-
-  private void doHandle(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     request.setCharacterEncoding(UTF_8_ENCODING);
     response.setContentType(String.format("text/html;charset=%s", UTF_8_ENCODING));
