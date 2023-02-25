@@ -44,34 +44,97 @@ class GuguTestTest extends MockHttpServletTestSupport<GuguTest> {
               <table>
                 <tbody>
                   <tr style="background-color:#ffff66">
-                    <th colspan="2">2단 출력</th>
+                    <th colspan="4">2단 출력</th>
                   </tr>
                   <tr style="background-color:#81bef7">
-                    <td style="width:400px">2 * 1</td><td style="width:400px">2</td>
+                    <td style="width:200px">
+                      <input type="radio" />1
+                    </td>
+                    <td style="width:200px">
+                      <input type="checkbox" />1
+                    </td>
+                    <td style="width:400px">2 * 1</td>
+                    <td style="width:400px">2</td>
                   </tr>
                   <tr style="background-color:#acfa58">
-                    <td style="width:400px">2 * 2</td><td style="width:400px">4</td>
+                    <td style="width:200px">
+                      <input type="radio" />2
+                    </td>
+                    <td style="width:200px">
+                      <input type="checkbox" />2
+                    </td>
+                    <td style="width:400px">2 * 2</td>
+                    <td style="width:400px">4</td>
                   </tr>
                   <tr style="background-color:#81bef7">
-                    <td style="width:400px">2 * 3</td><td style="width:400px">6</td>
+                    <td style="width:200px">
+                      <input type="radio" />3
+                    </td>
+                    <td style="width:200px">
+                      <input type="checkbox" />3
+                    </td>
+                    <td style="width:400px">2 * 3</td>
+                    <td style="width:400px">6</td>
                   </tr>
                   <tr style="background-color:#acfa58">
-                    <td style="width:400px">2 * 4</td><td style="width:400px">8</td>
+                    <td style="width:200px">
+                      <input type="radio" />4
+                    </td>
+                    <td style="width:200px">
+                      <input type="checkbox" />4
+                    </td>
+                    <td style="width:400px">2 * 4</td>
+                    <td style="width:400px">8</td>
                   </tr>
                   <tr style="background-color:#81bef7">
-                    <td style="width:400px">2 * 5</td><td style="width:400px">10</td>
+                    <td style="width:200px">
+                      <input type="radio" />5
+                    </td>
+                    <td style="width:200px">
+                      <input type="checkbox" />5
+                    </td>
+                    <td style="width:400px">2 * 5</td>
+                    <td style="width:400px">10</td>
                   </tr>
                   <tr style="background-color:#acfa58">
-                    <td style="width:400px">2 * 6</td><td style="width:400px">12</td>
+                    <td style="width:200px">
+                      <input type="radio" />6
+                    </td>
+                    <td style="width:200px">
+                      <input type="checkbox" />6
+                    </td>
+                    <td style="width:400px">2 * 6</td>
+                    <td style="width:400px">12</td>
                   </tr>
                   <tr style="background-color:#81bef7">
-                    <td style="width:400px">2 * 7</td><td style="width:400px">14</td>
+                    <td style="width:200px">
+                      <input type="radio" />7
+                    </td>
+                    <td style="width:200px">
+                      <input type="checkbox" />7
+                    </td>
+                    <td style="width:400px">2 * 7</td>
+                    <td style="width:400px">14</td>
                   </tr>
                   <tr style="background-color:#acfa58">
-                    <td style="width:400px">2 * 8</td><td style="width:400px">16</td>
+                    <td style="width:200px">
+                      <input type="radio" />8
+                    </td>
+                    <td style="width:200px">
+                      <input type="checkbox" />8
+                    </td>
+                    <td style="width:400px">2 * 8</td>
+                    <td style="width:400px">16</td>
                   </tr>
                   <tr style="background-color:#81bef7">
-                    <td style="width:400px">2 * 9</td><td style="width:400px">18</td>
+                    <td style="width:200px">
+                      <input type="radio" />9
+                    </td>
+                    <td style="width:200px">
+                      <input type="checkbox" />9
+                    </td>
+                    <td style="width:400px">2 * 9</td>
+                    <td style="width:400px">18</td>
                   </tr>
                 </tbody>
               </table>

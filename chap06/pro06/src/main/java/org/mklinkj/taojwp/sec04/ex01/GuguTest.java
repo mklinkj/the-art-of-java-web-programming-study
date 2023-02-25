@@ -54,7 +54,7 @@ public class GuguTest extends HttpServlet {
               <table>
                 <tbody>
                   <tr style="background-color:#ffff66">
-                    <th colspan="2">${dan}단 출력</th>
+                    <th colspan="4">${dan}단 출력</th>
                   </tr>
             ${tableContent}    </tbody>
               </table>
@@ -79,7 +79,14 @@ public class GuguTest extends HttpServlet {
           StringSubstitutor.replace(
               """
                           <tr style="background-color:${trBgColor}">
-                            <td style="width:400px">${dan} * ${i}</td><td style="width:400px">${result}</td>
+                            <td style="width:200px">
+                              <input type="radio" />${i}
+                            </td>
+                            <td style="width:200px">
+                              <input type="checkbox" />${i}
+                            </td>
+                            <td style="width:400px">${dan} * ${i}</td>
+                            <td style="width:400px">${result}</td>
                           </tr>
                     """,
               Map.of("dan", dan, "i", i, "result", dan * i, "trBgColor", trBgColor)));
