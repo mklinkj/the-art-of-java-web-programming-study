@@ -13,6 +13,7 @@
 이후 브라우저에서 아래 주소로 접속
 
 * `http://localhost:8090/pro06/login.html`
+* `http://localhost:8090/pro06/login2.html`
 * `http://localhost:8090/pro06/input.html`
 * `http://localhost:8090/pro06/calc`
 

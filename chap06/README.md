@@ -165,7 +165,21 @@
 
 
 
+### 6.7 자바스크립트로 서블릿에 요청하기
 
+* 문서에서 form을 찾는법
+
+  ```javascript
+  const formElement = document.폼의_name속성;
+  ```
+
+* 코드 6-14를 보면 입력값 검증코드가 추가되었는데... 이부분을 javascript 라이브러리를 이번기회에 사용해볼까? 하다가 그냥 책 내용대로 하는 것이 낫겠다.
+
+* 테스트 URL
+
+  * `http://localhost:8090/pro06/login2.html` 
+
+  
 
 
 
