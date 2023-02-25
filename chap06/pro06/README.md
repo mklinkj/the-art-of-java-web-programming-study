@@ -16,6 +16,11 @@
 * `http://localhost:8090/pro06/login2.html`
 * `http://localhost:8090/pro06/input.html`
 * `http://localhost:8090/pro06/calc`
+* `http://localhost:8090/pro06/test01/login.html`
+* `http://localhost:8090/pro06/test01/gugu.html`
+  * 구구단 출력 페이지 리액트로도 만듦
+    * `http://localhost:8090/pro06/test01/guguReact.html`
+
 
 
 
