@@ -106,9 +106,24 @@
   -- 이후 scott으로 접속 확인
   ```
 
+  * 사용자 생성시 18c에서 아래와 같은 오류가 발생하면..
   
-
-
+    * `ORA-65096: 공통 사용자 또는 롤 이름이 부적합합니다.`
+  
+    ```sql
+    ALTER SESSION SET "_ORACLE_SCRIPT"=true;
+    ```
+  
+    위의 명령을 설정한 뒤에 실행해주도록 하자~
+  
+  * 18c에서는 테이블 스페이스에 대한 공간할당 권한을 정해줘야했다.
+  
+    ```sql
+    ALTER USER scott DEFAULT TABLESPACE USERS QUOTA UNLIMITED ON USERS;
+    ```
+  
+    이 설정을 하지 않았을 때, 테이블은 만들 수는 있었으나 INSERT가 안됨.
+    
 
 ### 3.8 SQL Developer 설치하기
 
