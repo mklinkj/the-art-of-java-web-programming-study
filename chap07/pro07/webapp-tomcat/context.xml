@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+  <WatchedResource>WEB-INF/web.xml</WatchedResource>
+  <Resource
+    name="jdbc/oracle" 
+    auth="Container" 
+    type="javax.sql.DataSource" 
+    driverClassName="oracle.jdbc.OracleDriver" 
+    url="jdbc:oracle:thin:@localvmdb.oracle_xe_18c:1521:XE" 
+    username="scott" 
+    password="tiger"
+    maxTotal="50"
+    maxWaitMillis="-1"
+    closeMethod="close" 
+  />
+</Context>

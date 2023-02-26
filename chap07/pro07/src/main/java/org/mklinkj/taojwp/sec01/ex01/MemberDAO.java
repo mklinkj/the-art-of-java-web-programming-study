@@ -1,12 +1,14 @@
 package org.mklinkj.taojwp.sec01.ex01;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -14,10 +16,24 @@ public class MemberDAO {
   private Statement stmt;
   private Connection con;
 
+  private DataSource dataFactory;
+
+  public MemberDAO() {
+    try {
+      InitialContext ctx = new InitialContext();
+      Context envContext = (Context) ctx.lookup("java:/comp/env");
+      dataFactory = (DataSource) envContext.lookup("jdbc/oracle");
+    } catch (Exception e) {
+      throw new IllegalStateException(e);
+    }
+  }
+
   public List<MemberVO> listMembers() {
     List<MemberVO> list = new ArrayList<>();
     try {
-      connDB();
+      con = dataFactory.getConnection();
+      stmt = con.createStatement();
+
       String query = "SELECT * FROM t_member";
       LOGGER.info(query);
       ResultSet rs = stmt.executeQuery(query);
@@ -46,19 +62,5 @@ public class MemberDAO {
       LOGGER.error(e.getMessage(), e);
     }
     return list;
-  }
-
-  private void connDB() {
-    try {
-      Class.forName("oracle.jdbc.OracleDriver");
-      LOGGER.info("Oracle 드라이버 로딩 성공");
-      con =
-          DriverManager.getConnection(
-              "jdbc:oracle:thin:@localvmdb.oracle_xe_18c:1521:XE", "scott", "tiger");
-      stmt = con.createStatement();
-      LOGGER.info("Statement 생성 성공");
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
   }
 }
