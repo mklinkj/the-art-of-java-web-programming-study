@@ -1,0 +1,61 @@
+plugins {
+  id 'java'
+  id "io.freefair.lombok" version "${lombokPluginVersion}"
+  id "org.gretty" version "${grettyVersion}"
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of("${javaVersion}")
+  }
+}
+
+compileJava.options.encoding = "${projectEncoding}"
+compileTestJava.options.encoding = "${projectEncoding}"
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation "org.apache.logging.log4j:log4j-core:${log4jVersion}"
+  implementation "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
+
+  implementation "org.apache.commons:commons-text:${commonsTextVersion}"
+
+  implementation "com.oracle.database.jdbc:ojdbc8:${ojdbcVersion}"
+
+  compileOnly "jakarta.servlet:jakarta.servlet-api:${jakartaServletApiVersion}"
+
+  testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+  testImplementation "org.assertj:assertj-core:${assertJVersion}"
+
+  testRuntimeOnly "jakarta.servlet:jakarta.servlet-api:${jakartaServletApiVersion}"
+
+  testImplementation "org.springframework:spring-test:${springVersion}"
+  testImplementation "org.springframework:spring-web:${springVersion}"
+}
+
+// gradle appRun 으로 실행
+gretty {
+  httpPort = 8090
+  contextPath = project.name
+  servletContainer = "tomcat10"
+  inplaceMode = "hard"
+  reloadOnClassChange = true
+  loggingLevel = "DEBUG"
+
+  jvmArgs = [
+      "--add-opens=java.base/java.io=ALL-UNNAMED",
+      "--add-opens=java.base/java.lang=ALL-UNNAMED",
+      "--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED"
+  ]
+}
+
+test {
+  useJUnitPlatform()
+  testLogging {
+    outputs.upToDateWhen { false }
+    showStandardStreams = true
+  }
+}

@@ -20,8 +20,31 @@
 #### 7.2.1 서블릿으로 회원 정보 테이블의 회원 정보 조회
 
 * ...
+
 * 드라이버 배치
-  * `WEB-INF/lib` 경로에 ojdbc.jar를 배치 해야하는데.. Gretty에서 Gradle의 디펜던시를 사용할 수 있으면 좋은데.. 이게 잘 될지 모르겠다.  안되면 프로젝트에 Jar포함해야할 듯.
+  * `WEB-INF/lib` 경로에 ojdbc.jar를 배치 해야하는데.. 여기서는 Gradle이 디펜던시를 관리해주므로 build.gradle에 추가만 해주면 된다.
+  
+    ```groovy
+    dependencies {
+      ...
+      implementation "com.oracle.database.jdbc:ojdbc8:${ojdbcVersion}"
+      ...
+    }      
+    ```
+  
+    * ojdbc8로 사용해보자..
+      
+
+#### 7.2.2 PreparedStatement를 이용한 회원정보 실습
+
+* ...
+* 이상없이 잘되었다.
+* 가입일을 그냥 시간없는 날짜만 저장하는 식으로 해도 되었는데, LocalDateTime을 사용하고 싶어서 시간값까지 전부 넣어서 처리했다.
+* 실제 환경에서는 회원의 가입시간까지는 그렇게 중요하지 않을 것 같긴함..😅
+
+
+
+
 
 
 
