@@ -128,3 +128,61 @@ Date date = java.sql.Timestamp.valueOf(localDateTime);
 * DBCP2가 되면서.. 프로퍼티 명이 바뀌어서 그런 것 같다.. 일단 이름만 바꿔줌.
   * maxActive `->` maxTotal
   * maxWait `->` maxWaitMillis 
+
+
+
+
+
+## JNDI 테스트
+
+테스트할 때는 JNDI 환경을 만들어두고, 데이터소스는 DriverManagerSource 같은 것을 사용하는 걸로...
+
+* https://www.javadoc.io/doc/org.springframework/spring-test/5.2.5.RELEASE/org/springframework/mock/jndi/SimpleNamingContextBuilder.html
+  * Spring 5.2까지는 `SimpleNamingContextBuilder`가 있었는데.. Depreacted 되었고, 6에서는 아예없다.
+  * Simple-JNDI를 사용하라고함.
+    * https://github.com/h-thurow/Simple-JNDI
+
+
+
+### 적용방법
+
+1. simple-jndi 라이브러리 디펜던시 추가
+
+   ```groovy
+   testImplementation "com.github.h-thurow:simple-jndi:${simpleJndiVersion}"
+   ```
+
+2. src/test/resources 경로에 jndi.properties 파일 아래 내용으로 추가
+
+   ```properties
+   java.naming.factory.initial=org.osjava.sj.SimpleContextFactory
+   org.osjava.sj.jndi.shared=true
+   org.osjava.sj.delimiter=.
+   jndi.syntax.separator=/
+   org.osjava.sj.space=java:/comp/env
+   org.osjava.sj.root=src/test/resources/jndi
+   ```
+
+3. src/test/resources/jndi 경로 만들어서 jdbc.properties 파일 추가
+
+   ```properties
+   oracle.type=javax.sql.DataSource
+   oracle.driver=oracle.jdbc.OracleDriver
+   oracle.url=jdbc:oracle:thin:@localvmdb.oracle_xe_18c:1521:XE
+   oracle.user=scott
+   oracle.password=tiger
+   ```
+
+   * 이 프로퍼티 파일명을 jndi접근시 . 앞부분 경로명으로 해주면 된다.
+
+     
+
+아주 신기하게 잘되길레... 봤더니..  simple-jndi의 데이터소스 클래스를 사용한다. 😄
+
+`org.osjava.datasource.SJDataSource`
+
+
+
+#### 참조
+
+* https://www.baeldung.com/spring-mock-jndi-datasource

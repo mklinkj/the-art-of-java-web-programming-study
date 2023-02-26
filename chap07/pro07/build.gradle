@@ -34,6 +34,8 @@ dependencies {
 
   testRuntimeOnly "jakarta.servlet:jakarta.servlet-api:${jakartaServletApiVersion}"
 
+  testImplementation "com.github.h-thurow:simple-jndi:${simpleJndiVersion}"
+
   testImplementation "org.springframework:spring-test:${springVersion}"
   testImplementation "org.springframework:spring-web:${springVersion}"
 }

@@ -62,10 +62,27 @@
 
 #### 7.3.2 JNDI
 
+* ...
 * JNDI (Java Naming and Directory Interface)
   * 필요한 자원을 키/값 쌍으로 저장한 후 필요할 때 키를 이용해 값을 얻는 방법
 
 
+
+#### 7.3.3 톰캣의 DataSource 설정 및 사용 방법
+
+* ...
+
+  
+
+#### 7.3.4 이클립스에서 톰캣 DataSource 설정
+
+* ...
+
+
+
+#### 7.3.5 톰캣의 DataSource로 연동해 회원 정보 조회 실습
+
+* ...
 
 
 

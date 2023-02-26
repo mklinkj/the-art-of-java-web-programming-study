@@ -23,6 +23,7 @@ public class MemberDAO {
       InitialContext ctx = new InitialContext();
       Context envContext = (Context) ctx.lookup("java:/comp/env");
       dataFactory = (DataSource) envContext.lookup("jdbc/oracle");
+      LOGGER.info("데이타 소스 획득 완료: {}", dataFactory.getClass().getCanonicalName());
     } catch (Exception e) {
       throw new IllegalStateException(e);
     }

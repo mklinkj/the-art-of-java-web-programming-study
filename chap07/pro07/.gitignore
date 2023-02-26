@@ -3,6 +3,9 @@ settings.gradle
 gradle.properties
 .gitattributes
 
+# Gretty가 생성하는 듯 한데, 무시하자.
+tomcat.8080
+
 # 하위 프로젝트에서는 wrapper 파일을 포함하지 않는다.
 gradlew
 gradlew.bat

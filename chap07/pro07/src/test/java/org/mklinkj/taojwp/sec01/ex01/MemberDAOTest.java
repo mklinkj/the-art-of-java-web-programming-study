@@ -14,7 +14,7 @@ class MemberDAOTest {
 
   @BeforeEach
   void beforeEach() {
-    dao = new MemberDAO();
+    this.dao = new MemberDAO();
   }
 
   @Test
