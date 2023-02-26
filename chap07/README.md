@@ -69,4 +69,5 @@
 
 ## 기타
 
-* 
+* ContextPath를 `/`로 사용하다가  `/${projectName}` 으로 사용하고 있어서 favicon 처리가 힘들다..😅 
+  * 일단 `favicon.ico` 파일은 지워놔야겠다. 이건 앞단에 HTTP WEB 서버를 두고 따로 처리해야할 것 같은데...
