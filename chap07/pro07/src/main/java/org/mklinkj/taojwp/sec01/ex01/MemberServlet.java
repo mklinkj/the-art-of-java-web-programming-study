@@ -1,11 +1,12 @@
 package org.mklinkj.taojwp.sec01.ex01;
 
+import static org.mklinkj.taojwp.common.Constants.SERVER_ENCODING;
+
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,6 @@ import org.apache.commons.text.StringSubstitutor;
 @Slf4j
 @WebServlet("/member")
 public class MemberServlet extends HttpServlet {
-  private static final String SERVER_ENCODING = StandardCharsets.UTF_8.name();
 
   @Override
   public void init() {
@@ -25,7 +25,7 @@ public class MemberServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    request.setCharacterEncoding(StandardCharsets.UTF_8.name());
+    request.setCharacterEncoding(SERVER_ENCODING);
     response.setContentType(String.format("text/html;charset=%s", SERVER_ENCODING));
 
     MemberDAO dao = new MemberDAO();

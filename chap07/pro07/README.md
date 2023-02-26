@@ -23,14 +23,13 @@
 
 * 예제 URL
   * `http://localhost:8090/pro07/member`
-
-
+  * `http://localhost:8090/pro07/memberForm.html`
 
 
 
 ## 의견
 
-* 
+* JDBC 생짜로 쓰는건 역시 힘들다.. 😅
 
 
 
@@ -179,7 +178,7 @@ Date date = java.sql.Timestamp.valueOf(localDateTime);
 
 아주 신기하게 잘되길레... 봤더니..  simple-jndi의 데이터소스 클래스를 사용한다. 😄
 
-`org.osjava.datasource.SJDataSource`
+* `org.osjava.datasource.SJDataSource`
 
 
 

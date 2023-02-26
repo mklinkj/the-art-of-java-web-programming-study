@@ -13,9 +13,13 @@ public abstract class MockHttpServletTestSupport<T extends HttpServlet> {
   protected MockHttpServletResponse response;
 
   public MockHttpServletTestSupport() {
+    resetMock();
+  }
+
+  protected void resetMock() {
     request = new MockHttpServletRequest();
     response = new MockHttpServletResponse();
-    request.setContextPath("/pro06");
+    request.setContextPath("/pro07");
   }
 
   protected void setServlet(T servlet) {
