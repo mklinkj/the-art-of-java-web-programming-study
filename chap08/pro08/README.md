@@ -2,7 +2,7 @@
 
 > * ...
 >
-> * 7장에서 프로젝트의 틀이 거의 완성되서 이제 책 내용에만 집중할 수 있겠다.
+> * 7장에서 Gradle + Gretty 프로젝트의 틀이 거의 완성되서 이제 책 내용에만 집중할 수 있겠다.
 >
 
 
@@ -18,6 +18,8 @@
 * 예제 URL
   * `http://localhost:8090/pro08/first`
   * `http://localhost:8090/pro08/first2`
+  * `http://localhost:8090/pro08/first3`
+  * `http://localhost:8090/pro08/dispatchForwardFirst`
 
 
 

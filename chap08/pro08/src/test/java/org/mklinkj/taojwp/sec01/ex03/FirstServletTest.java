@@ -12,7 +12,7 @@ class FirstServletTest extends MockHttpServletTestSupport<FirstServlet> {
 
   @BeforeEach
   void beforeEach() {
-    request.setServletPath("/first2");
+    request.setServletPath("/first3");
     setServlet(new FirstServlet());
   }
 
