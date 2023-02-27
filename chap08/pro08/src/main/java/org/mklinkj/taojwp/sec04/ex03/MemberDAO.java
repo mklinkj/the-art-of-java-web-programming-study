@@ -1,0 +1,124 @@
+package org.mklinkj.taojwp.sec04.ex03;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+public class MemberDAO {
+  private PreparedStatement psmt;
+  private Connection con;
+
+  private final DataSource dataFactory;
+
+  public MemberDAO() {
+    try {
+      InitialContext ctx = new InitialContext();
+      Context envContext = (Context) ctx.lookup("java:/comp/env");
+      dataFactory = (DataSource) envContext.lookup("jdbc/oracle");
+      LOGGER.info("데이타 소스 획득 완료: {}", dataFactory.getClass().getCanonicalName());
+    } catch (Exception e) {
+      throw new IllegalStateException(e);
+    }
+  }
+
+  public List<MemberVO> listMembers() {
+    List<MemberVO> list = new ArrayList<>();
+    try {
+      con = dataFactory.getConnection();
+      Statement stmt = con.createStatement();
+
+      String query = "SELECT * FROM t_member";
+      LOGGER.info(query);
+      ResultSet rs = stmt.executeQuery(query);
+
+      while (rs.next()) {
+        String id = rs.getString("id");
+        String pwd = rs.getString("pwd");
+        String name = rs.getString("name");
+        String email = rs.getString("email");
+        LocalDateTime joinDate = rs.getTimestamp("joinDate").toLocalDateTime();
+
+        MemberVO vo = new MemberVO();
+        vo.setId(id);
+        vo.setPwd(pwd);
+        vo.setName(name);
+        vo.setEmail(email);
+        vo.setJoinDate(joinDate);
+
+        list.add(vo);
+      }
+      rs.close();
+      stmt.close();
+      con.close();
+
+    } catch (Exception e) {
+      LOGGER.error(e.getMessage(), e);
+    }
+    return list;
+  }
+
+  public void addMember(MemberVO vo) {
+    try {
+      con = dataFactory.getConnection();
+
+      String id = vo.getId();
+      String pwd = vo.getPwd();
+      String name = vo.getName();
+      String email = vo.getEmail();
+
+      String query =
+          """
+          INSERT INTO t_member (id, pwd, name, email)
+          VALUES (?, ?, ? ,?)
+          """;
+      LOGGER.info(query);
+
+      psmt = con.prepareStatement(query);
+      psmt.setString(1, id);
+      psmt.setString(2, pwd);
+      psmt.setString(3, name);
+      psmt.setString(4, email);
+
+      psmt.executeUpdate();
+      psmt.close();
+      con.close();
+    } catch (Exception e) {
+      LOGGER.error(e.getMessage(), e);
+    }
+  }
+
+  public int delMember(String id) {
+    try {
+      con = dataFactory.getConnection();
+
+      String query = "DELETE FROM t_member WHERE id = ?";
+
+      LOGGER.info(query);
+
+      psmt = con.prepareStatement(query);
+      psmt.setString(1, id);
+
+      return psmt.executeUpdate();
+    } catch (Exception e) {
+      LOGGER.error(e.getMessage(), e);
+    } finally {
+      try {
+        psmt.close();
+        con.close();
+      } catch (SQLException e) {
+        throw new RuntimeException(e);
+      }
+    }
+    return 0;
+  }
+}

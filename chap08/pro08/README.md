@@ -21,6 +21,8 @@
   * `http://localhost:8090/pro08/first3`
   * `http://localhost:8090/pro08/redirectForwardFirst`
   * `http://localhost:8090/pro08/dispatchForwardFirst`
+  * `http://localhost:8090/pro08/member`
+    * `http://localhost:8090/pro08/viewMembers`
 
 
 
