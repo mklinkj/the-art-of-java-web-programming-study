@@ -119,6 +119,16 @@
 
 * ...
 
+* 서버측 포워딩을 할 때, 다른 서블릿으로 전달할 파라미터는 URL 쓰듯이 쓰면 됨.
+
+  ```java
+  RequestDispatcher dispatch = request.getRequestDispatcher("dispatchForwardSecond?name=lee");
+  ```
+
+* POST 디스패치는 테스트 하지 않았는데.. 메서드만 다르게 똑같이 되는 것 같다.
+
+  * https://stackoverflow.com/questions/1940306/does-a-requestdispatcher-forward-maintain-the-original-requests-http-method
+
 
 
 

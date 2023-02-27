@@ -18,8 +18,10 @@ class DispatchForwardSecondServletTest
 
   @Test
   void testDoGet() throws IOException {
+    request.setParameter("name", "자바");
     servlet.doGet(request, response);
     assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
     assertThat(response.getContentAsString()).contains("dispatch를 이용한 forward 실습입니다.");
+    assertThat(response.getContentAsString()).contains("이름: 자바");
   }
 }

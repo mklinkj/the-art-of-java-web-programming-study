@@ -18,7 +18,7 @@ public class DispatchForwardFirstServlet extends HttpServlet {
       throws IOException, ServletException {
     request.setCharacterEncoding(SERVER_ENCODING);
     response.setContentType(HTML_CONTENT_TYPE);
-    RequestDispatcher dispatch = request.getRequestDispatcher("dispatchForwardSecond");
+    RequestDispatcher dispatch = request.getRequestDispatcher("dispatchForwardSecond?name=자바");
     dispatch.forward(request, response);
   }
 }

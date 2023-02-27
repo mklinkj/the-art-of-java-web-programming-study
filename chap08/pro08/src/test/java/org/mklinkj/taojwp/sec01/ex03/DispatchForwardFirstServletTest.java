@@ -22,7 +22,7 @@ class DispatchForwardFirstServletTest
   void testDoGet() throws IOException, ServletException {
     servlet.doGet(request, response);
     assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-    assertThat(response.getForwardedUrl()).isEqualTo("dispatchForwardSecond");
+    assertThat(response.getForwardedUrl()).isEqualTo("dispatchForwardSecond?name=자바");
     assertThat(response.getContentAsString())
         .isEqualTo("")
         .describedAs("디스패치 포워딩이 설정되어있는 서블릿을 요청하는 테스트에서 여기서는 대상 서블릿 호출 결과까지 나타내진 않는다.");
