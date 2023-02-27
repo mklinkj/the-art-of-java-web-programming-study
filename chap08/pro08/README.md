@@ -17,7 +17,7 @@
 
 * 예제 URL
   * `http://localhost:8090/pro08/first`
-  * 
+  * `http://localhost:8090/pro08/first2`
 
 
 
