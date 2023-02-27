@@ -131,6 +131,30 @@
 
 
 
+### 8.4 바인딩
+
+* 바인딩(Binding) : 서블릿 또는 JSP로 대량의 데이터를 공유하거나 전달하고 싶을 때 사용
+  * request에 paramter하고 attribute 가 좀 해깔렸었다.. 이제 확실헤진 것 같다. 👍
+* ...
+  
+
+#### 8.4.1 HttpServletRequest를 이용한 redirect 포워딩 시 바인딩
+
+* ...
+
+* 주소를 설정한 request는 이미 종료됬음..
+
+  * second 서블릿의 request는 브라우저가 새로 요청한 request임
+  * 그러므로 주소가 null로 나오게 됨.
+
+  
+
+
+
+
+
+
+
 
 
 
