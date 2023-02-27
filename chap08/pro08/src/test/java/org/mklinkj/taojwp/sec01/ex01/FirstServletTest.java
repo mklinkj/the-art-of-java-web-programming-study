@@ -20,6 +20,6 @@ class FirstServletTest extends MockHttpServletTestSupport<FirstServlet> {
   void testDoGet() throws IOException {
     servlet.doGet(request, response);
     assertThat(response.getStatus()).isEqualTo(HttpStatus.FOUND.value());
-    assertThat(response.getRedirectedUrl()).isEqualTo("second?forwardingType=sendRedirect");
+    assertThat(response.getRedirectedUrl()).isEqualTo("second?forwardingType=sendRedirect&name=lee");
   }
 }

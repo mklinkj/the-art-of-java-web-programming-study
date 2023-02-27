@@ -12,6 +12,6 @@ public class FirstServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) {
     response.setContentType(HTML_CONTENT_TYPE);
-    response.addHeader("Refresh", "1;url=second?forwardingType=refresh");
+    response.addHeader("Refresh", "1;url=second?forwardingType=refresh&name=lee");
   }
 }

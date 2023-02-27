@@ -19,7 +19,7 @@ public class FirstServlet extends HttpServlet {
     out.print(
         """
         <script type='text/javascript'>
-        location.href='second?forwardingType=location';
+        location.href='second?forwardingType=location&name=lee';
         </script>
         """);
   }

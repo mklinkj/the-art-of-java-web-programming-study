@@ -23,6 +23,6 @@ class FirstServletTest extends MockHttpServletTestSupport<FirstServlet> {
         .isEqualTo(HttpStatus.OK.value())
         .describedAs("location JavaScript 코드설정을 통한 응답은 200으로 받음");
     assertThat(response.getContentAsString()) //
-        .contains("location.href='second?forwardingType=location';");
+        .contains("location.href='second?forwardingType=location&name=lee';");
   }
 }

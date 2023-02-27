@@ -22,6 +22,6 @@ class FirstServletTest extends MockHttpServletTestSupport<FirstServlet> {
         .isEqualTo(HttpStatus.OK.value())
         .describedAs("Refresh 헤더 설정을 통한 응답은 200으로 받음");
     assertThat(response.getHeader("Refresh")) //
-        .isEqualTo("1;url=second?forwardingType=refresh");
+        .isEqualTo("1;url=second?forwardingType=refresh&name=lee");
   }
 }

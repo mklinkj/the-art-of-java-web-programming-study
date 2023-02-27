@@ -19,9 +19,12 @@ class SecondServletTest extends MockHttpServletTestSupport<SecondServlet> {
   @Test
   void testDoGet() throws IOException {
     request.setParameter("forwardingType", "sendRedirect");
+    request.setParameter("name", "lee");
     servlet.doGet(request, response);
     assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
     assertThat(response.getContentAsString())
         .contains("<h4>sendRedirect를 이용한 redirect 실습입니다.</h4>");
+    assertThat(response.getContentAsString()) //
+        .contains("<h4>이름: lee</h4>");
   }
 }

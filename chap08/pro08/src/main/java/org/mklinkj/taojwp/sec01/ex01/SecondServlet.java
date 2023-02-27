@@ -18,6 +18,8 @@ public class SecondServlet extends HttpServlet {
       throws IOException {
     response.setContentType(HTML_CONTENT_TYPE);
     String forwardingType = request.getParameter("forwardingType");
+    String name = request.getParameter("name");
+
     PrintWriter out = response.getWriter();
 
     out.print(
@@ -31,9 +33,10 @@ public class SecondServlet extends HttpServlet {
             </head>
             <body>
               <h4>${forwardingType}를 이용한 redirect 실습입니다.</h4>
+              <h4>이름: ${name}</h4>
             </body>
             </html>
             """,
-            Map.of("forwardingType", forwardingType)));
+            Map.of("forwardingType", forwardingType, "name", name)));
   }
 }
