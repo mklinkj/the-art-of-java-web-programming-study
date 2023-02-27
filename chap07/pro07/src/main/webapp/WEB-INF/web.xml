@@ -5,7 +5,7 @@
   xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
                       https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
   version="6.0"
-  >
+>
 
   <!--
     metadata-complete="true" 옵션이 설정되면
@@ -17,6 +17,10 @@
   -->
 
   <display-name>Chap07_Servlet</display-name>
+
+  <listener>
+    <listener-class>org.mklinkj.taojwp.common.JDBCDriverCleaner</listener-class>
+  </listener>
 
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
