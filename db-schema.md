@@ -34,7 +34,13 @@ COMMIT;
 
 
 
-* 
+* USER테이블 스페이스에 권한 없다고 나오면 SYSTEM이나 SYS 계정으로 로그인해서 USER 테이블 스패이스 권한을 할당해주도록 하자..
+
+  ```sql
+  ALTER USER scott DEFAULT TABLESPACE USERS QUOTA UNLIMITED ON USERS;
+  ```
+
+  
 
 
 
