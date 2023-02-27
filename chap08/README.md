@@ -49,7 +49,41 @@
 
 * ...
 
+#### 8.2.2  redirect를 이용한 포워딩 실습
 
+* ...
+
+* Spring Web의 HttpStatus 클래스의 응답 코드 정의한 것을 보면...
+
+  ```java
+  	/**
+  	 * {@code 302 Found}.
+  	 * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.4.3">HTTP/1.1: Semantics and Content, section 6.4.3</a>
+  	 */
+  	FOUND(302, Series.REDIRECTION, "Found"),
+  	/**
+  	 * {@code 302 Moved Temporarily}.
+  	 * @see <a href="https://tools.ietf.org/html/rfc1945#section-9.3">HTTP/1.0, section 9.3</a>
+  	 * @deprecated in favor of {@link #FOUND} which will be returned from {@code HttpStatus.valueOf(302)}
+  	 */
+  	@Deprecated
+  	MOVED_TEMPORARILY(302, Series.REDIRECTION, "Moved Temporarily"),
+  ```
+
+  * 302 코드에 대해서 ... `MOVED_TEMPORARILY`이 Deprecated 되고 FOUND로 쓰라는 것 같다.
+
+    ```
+    6.4.3 . 302 Found
+    
+    302(Found) 상태 코드는 대상 리소스가 일시적으로 다른 URI 아래에 있음을 나타냅니다. 경우에 따라 리디렉션이 변경될 수 있으므로 클라이언트는 향후 요청에 대해 유효한 요청 URI를 계속 사용해야 합니다.
+    ```
+
+    
+
+#### 8.2.3 refresh를 이용한 포워딩
+
+* ...
+* 최초 요청 서블릿은 여러개로 쓰더라도 화면 표시 서블릿은 하나로 써야겠다. 그러기 위해선 파라미터를 전달해야할듯.. 
 
 
 

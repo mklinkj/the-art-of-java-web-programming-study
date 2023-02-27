@@ -18,6 +18,7 @@ class SecondServletTest extends MockHttpServletTestSupport<SecondServlet> {
 
   @Test
   void testDoGet() throws IOException {
+    request.setParameter("forwardingType", "sendRedirect");
     servlet.doGet(request, response);
     assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
     assertThat(response.getContentAsString())

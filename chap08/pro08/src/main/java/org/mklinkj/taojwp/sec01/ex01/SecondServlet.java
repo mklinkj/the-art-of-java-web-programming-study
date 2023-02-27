@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
+import org.apache.commons.text.StringSubstitutor;
 
 @WebServlet("/second")
 public class SecondServlet extends HttpServlet {
@@ -15,20 +17,23 @@ public class SecondServlet extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     response.setContentType(HTML_CONTENT_TYPE);
+    String forwardingType = request.getParameter("forwardingType");
     PrintWriter out = response.getWriter();
 
     out.print(
-        """
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <title>포워딩 실습</title>
-        </head>
-        <body>
-          <h4>sendRedirect를 이용한 redirect 실습입니다.</h4>
-        </body>
-        </html>
-        """);
+        StringSubstitutor.replace(
+            """
+            <!DOCTYPE html>
+            <html lang="ko">
+            <head>
+              <meta charset="UTF-8">
+              <title>포워딩 실습</title>
+            </head>
+            <body>
+              <h4>${forwardingType}를 이용한 redirect 실습입니다.</h4>
+            </body>
+            </html>
+            """,
+            Map.of("forwardingType", forwardingType)));
   }
 }

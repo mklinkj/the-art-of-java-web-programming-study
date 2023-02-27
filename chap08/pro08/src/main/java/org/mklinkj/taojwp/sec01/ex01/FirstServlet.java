@@ -14,6 +14,6 @@ public class FirstServlet extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     response.setContentType(HTML_CONTENT_TYPE);
-    response.sendRedirect("second");
+    response.sendRedirect("second?forwardingType=sendRedirect");
   }
 }
