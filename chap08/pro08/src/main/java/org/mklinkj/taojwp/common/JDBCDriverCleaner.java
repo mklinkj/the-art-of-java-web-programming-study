@@ -14,21 +14,26 @@ public class JDBCDriverCleaner implements ServletContextListener {
     Collections.list(DriverManager.getDrivers())
         .forEach(
             driver -> {
+              LOGGER.trace(
+                  "### {} 드라이버의 클래스 로더: {}",
+                  driver.getClass().getCanonicalName(),
+                  driver.getClass().getClassLoader().getClass().getCanonicalName());
+              LOGGER.trace(
+                  "### 현재 서블릿 컨텍스트의 클래스 로더: {}",
+                  servletContext.getClassLoader().getClass().getCanonicalName());
+              LOGGER.trace(
+                  "### 현재 서블릿 컨텍스트의 부모 클래스 로더: {}",
+                  servletContext.getClassLoader().getParent().getClass().getCanonicalName());
+
               // Gretty 환경에서는...
               // driver.getClass().getClassLoader(): java.net.URLClassLoader
               // servletContext.getClassLoader(): TomcatEmbeddedWebappClassLoader 가 됨.
 
               // Tomcat에서 데이터소스를 생성하지 않고, 웹애플리케이션 코드내에서 생성했으면
               // 아래 조건이 맞아서 잘 되었을지는 모르겠는데... 이 프로젝트는 이렇게 유지해보자.
-              if (driver.getClass().getClassLoader()
-                  == servletContext.getClassLoader().getParent()) {
-                LOGGER.trace(
-                    "### {} 드라이버의 클래스 로더: {}",
-                    driver.getClass().getCanonicalName(),
-                    driver.getClass().getClassLoader());
-                LOGGER.trace("### 현재 서블릿 컨텍스트의 클래스 로더: {}", servletContext.getClassLoader());
-                LOGGER.trace(
-                    "### 현재 서블릿 컨텍스트의 부모 클래스 로더: {}", servletContext.getClassLoader().getParent());
+              if (driver.getClass().getClassLoader() == servletContext.getClassLoader()
+                  || driver.getClass().getClassLoader()
+                      == servletContext.getClassLoader().getParent()) {
                 try {
                   DriverManager.deregisterDriver(driver);
                   LOGGER.info("### {} 드라이버 등록 해제", driver.getClass().getCanonicalName());
