@@ -3,6 +3,7 @@ package org.mklinkj.taojwp.sec01.ex04;
 import static org.mklinkj.taojwp.common.Constants.HTML_CONTENT_TYPE;
 import static org.mklinkj.taojwp.common.Constants.SERVER_ENCODING;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,15 +14,15 @@ import java.util.Map;
 import org.apache.commons.text.StringSubstitutor;
 
 @WebServlet("/dispatchBindingSecond")
-class DispatchBindingSecondServlet extends HttpServlet {
+public class DispatchBindingSecondServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws IOException {
+      throws IOException, ServletException {
     request.setCharacterEncoding(SERVER_ENCODING);
     response.setContentType(HTML_CONTENT_TYPE);
     PrintWriter out = response.getWriter();
 
-    String address = (String) request.getAttribute("address");
+    Object address = request.getAttribute("address");
     address =
         (address == null)
             ? "null"

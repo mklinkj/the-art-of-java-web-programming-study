@@ -18,6 +18,7 @@ public class RedirectBindingFirstServlet extends HttpServlet {
       throws IOException, ServletException {
     request.setCharacterEncoding(SERVER_ENCODING);
     response.setContentType(HTML_CONTENT_TYPE);
+
     request.setAttribute("address", "서울시 성북구");
     response.sendRedirect("redirectBindingSecond");
   }

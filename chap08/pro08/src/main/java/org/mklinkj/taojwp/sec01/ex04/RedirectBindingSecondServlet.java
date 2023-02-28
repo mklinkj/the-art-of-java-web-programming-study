@@ -21,7 +21,7 @@ public class RedirectBindingSecondServlet extends HttpServlet {
     response.setContentType(HTML_CONTENT_TYPE);
     PrintWriter out = response.getWriter();
 
-    String address = (String) request.getAttribute("address");
+    Object address = request.getAttribute("address");
     address =
         (address == null)
             ? "null"
