@@ -192,7 +192,70 @@
 #### 8.5.3 ServletContext의 매개변수 설정 기능
 
 * ...
-* 
+
+
+
+#### 8.5.4 ServletContext의 파일 입출력 기능
+
+* ...
+
+* 저자님의 코드에서 아래와 같이 읽어온 부분이 있는데...
+
+  ```java
+  context.getResourceAsStream("/WEB-INF/bin/init.txt")
+  ```
+
+  이때 태스트가 좀 애매해진다..
+
+  일단은 `src/mian/resource` 이하 경로에 `WEB-INF/bin/init.txt` 을 동일하게 만들어두고,
+
+  ```java
+  getClass().getResourceAsStream("/WEB-INF/bin/init.txt")
+  ```
+
+  컨테이너가 만든 ServletContext 객체기준이아니고 기준위치를 지금 실행중인 서블릿 클래스 기준으로하면   `src/main/resource` 이하로 잘 찾는다.
+
+  * 참고:
+    * https://stackoverflow.com/questions/2699181/unit-test-in-maven-requires-access-to-the-src-main-webapp-directory
+
+  
+
+  그런데 이렇게 했을 때....
+
+  - [x] 실제 Tomcat에 배포했을 때 잘 돌아가는지도 확인해야할 것 같다. 계속 Greety 기반으로 돌리고 있어서...😅
+
+    ```
+    Tomcat의 webapp
+        ├─pro08
+        │  ├─META-INF
+        │  └─WEB-INF
+        │      ├─classes
+        │      │  ├─org
+        │      │  │  └─mklinkj
+        │      │  │      └─taojwp
+        │      │  │          ├─common
+        │      │  │          ├─sec01
+        │      │  │          │  ├─ex01
+        │      │  │          │  ├─ex02
+        │      │  │          │  ├─ex03
+        │      │  │          │  └─ex04
+        │      │  │          ├─sec04
+        │      │  │          │  └─ex03
+        │      │  │          └─sec05
+        │      │  │              ├─ex01
+        │      │  │              ├─ex02
+        │      │  │              └─ex03
+        │      │  └─WEB-INF
+        │      │      └─bin // init.txt 가 위치
+        │      └─lib
+        ...
+    ```
+
+    Tomcat의 webapp에 WAR파일 만들어서(`gradle war`) 배포했을 때..
+
+    경로문제 없이 잘됨을 확인했다.. Gretty에 끼워서 실행하는 것보다 속도가 엄청 빠른 것 같은..👍
+
+
 
 
 
