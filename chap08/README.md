@@ -266,7 +266,7 @@
 
 
 
-8.5.6 `@WebServlet` 애너테이션을 이용한 서블릿 설정
+#### 8.5.6 `@WebServlet` 애너테이션을 이용한 서블릿 설정
 
 * ...
 
@@ -294,20 +294,55 @@ public class InitParamServlet extends HttpServlet {
 
 
 
+## 8.6 load-on-startup 기능 사용하기
+
+* ...
+  
+
+#### 8.6.1 애너테이션을 이용하는 방법
+
+* ...
+
+* load-in-startup의 특징
+  * 톰캣 컨테이너가 실행되면서 미리 서블릿을 실행
+  * 지정한 숫자가 0보다 크면 톰캣 컨테이너가 실행되면서 서블릿이 초기화됨
+  * 지정한 숫자는 우선 순위를 의미하며 작은 숫자 부터 먼저 추기화됨.
+
+* 확실히 요청을 기다리지 않고 미리 실행됨.
+
+  ```
+  ...
+  02:24:23.907 [main] INFO  org.mklinkj.taojwp.sec06.ex02.LoadAppConfig - LoadAppConfig의 init 메서드 호출
+  02:24:23 INFO  Tomcat 10.1.6 started and listening on port 8090
+  02:24:23 INFO  pro08 runs at:
+  02:24:23 INFO    http://localhost:8090/pro08
+  ...
+  ```
+
+  
+
+#### 8.6.2 web.xml에 설정하는 방법
+
+* ...
+
+* 이 부분은 책만 봄 코드로 만들지 않음. web.xml의 해당 서블릿 설정에 `<load-on-startup>1</load-on-startup>` 같은 설정 추가해주면 된다.
+
+  
+
 
 
 ## 의견
 
-* 
+* 테스트가 점점 복잡해지긴해도 Spring Test 모듈의 도움을 많이 받고 있다. 👍👍👍
 
   
 
 ## 정오표
 
-* 
+* 없음
 
 
 
 ## 기타
 
-* 
+* ...

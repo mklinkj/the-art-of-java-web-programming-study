@@ -1,5 +1,6 @@
 package org.mklinkj.taojwp.test.support;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServlet;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -23,17 +24,17 @@ public abstract class MockHttpServletTestSupport<T extends HttpServlet> {
 
   protected void resetMock() {
     servletContext = createMockServletContext();
-    servletConfig = createMockServletConfig();
+    servletConfig = createMockServletConfig(servletContext);
     request = new MockHttpServletRequest(servletContext);
     response = new MockHttpServletResponse();
     request.setContextPath("/pro07");
   }
 
-  private MockServletConfig createMockServletConfig() {
-    return new MockServletConfig();
+  private MockServletConfig createMockServletConfig(ServletContext context) {
+    return new MockServletConfig(context);
   }
 
-  protected MockServletContext createMockServletContext() {
+  private MockServletContext createMockServletContext() {
     return new MockServletContext();
   }
 

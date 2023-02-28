@@ -27,6 +27,7 @@
   * `http://localhost:8090/pro08/cfile`
   * `http://localhost:8090/pro08/sInit`
   * `http://localhost:8090/pro08/sInit2`
+  * `http://localhost:8090/pro08/loadConfig`
 
 
 
