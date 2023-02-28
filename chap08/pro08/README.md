@@ -23,6 +23,10 @@
   * `http://localhost:8090/pro08/dispatchForwardFirst`
   * `http://localhost:8090/pro08/member`
     * `http://localhost:8090/pro08/viewMembers`
+  * `http://localhost:8090/pro08/initMenu`
+  * `http://localhost:8090/pro08/cfile`
+  * `http://localhost:8090/pro08/sInit`
+  * `http://localhost:8090/pro08/sInit2`
 
 
 

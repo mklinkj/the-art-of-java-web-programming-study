@@ -1,44 +1,35 @@
-package org.mklinkj.taojwp.sec05.ex03;
+package org.mklinkj.taojwp.sec06.ex01;
 
 import static org.mklinkj.taojwp.common.Constants.HTML_CONTENT_TYPE;
-import static org.mklinkj.taojwp.common.Constants.SERVER_ENCODING;
 
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebInitParam;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.Map;
-import java.util.StringTokenizer;
 import org.apache.commons.text.StringSubstitutor;
 
-@WebServlet("/cfile")
-public class ContextFileServlet extends HttpServlet {
+@WebServlet(
+    name = "InitParamServlet",
+    value = {"/sInit", "/sInit2"},
+    initParams = {
+      @WebInitParam(name = "email", value = "admin@jweb.com"),
+      @WebInitParam(name = "tel", value = "010-1111-2222")
+    })
+public class InitParamServlet extends HttpServlet {
+
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     response.setContentType(HTML_CONTENT_TYPE);
     PrintWriter out = response.getWriter();
-    String menu;
-    String menuMember = "null";
-    String menuOrder = "null";
-    String menuGoods = "null";
-    try (BufferedReader br =
-        new BufferedReader(
-            new InputStreamReader(getClass().getResourceAsStream("/WEB-INF/bin/init.txt"), SERVER_ENCODING))) {
 
-      while ((menu = br.readLine()) != null) {
-        StringTokenizer tokens = new StringTokenizer(menu, ",");
-        menuMember = tokens.nextToken();
-        menuOrder = tokens.nextToken();
-        menuGoods = tokens.nextToken();
-      }
-    }
+    String email = getInitParameter("email");
+    String tel = getInitParameter("tel");
 
     out.print(
         StringSubstitutor.replace(
@@ -59,7 +50,7 @@ public class ContextFileServlet extends HttpServlet {
               <table>
                 <thead>
                   <tr style="background-color:lightgreen">
-                    <th>메뉴 이름</th>
+                    <th>@WebInitParam 테스트</th>
                   </tr>
                 </thead>
                 <tbody>${tableContent}</tbody>
@@ -68,23 +59,20 @@ public class ContextFileServlet extends HttpServlet {
             </body>
             </html>
             """,
-            Map.of("tableContent", createTableContent(menuMember, menuOrder, menuGoods))));
+            Map.of("tableContent", createTableContent(email, tel))));
   }
 
-  private String createTableContent(String menuMember, String menuOrder, String menuGoods) {
+  private String createTableContent(String email, String tel) {
 
     return StringSubstitutor.replace(
         """
         <tr>
-          <td>${menuMember}</td>
+          <td>${email}</td>
         </tr>
         <tr>
-          <td>${menuOrder}</td>
-        </tr>
-        <tr>
-          <td>${menuGoods}</td>
+          <td>${tel}</td>
         </tr>
         """,
-        Map.of("menuMember", menuMember, "menuOrder", menuOrder, "menuGoods", menuGoods));
+        Map.of("email", email, "tel", tel));
   }
 }

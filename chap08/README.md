@@ -257,7 +257,40 @@
 
 
 
+#### 8.5.5 ServletConfig
 
+* ...
+* ServletConfig가 제공하는 기능
+  * ServletContext 객체를 얻는 기능
+  * 서블릿에 대한 초기화 작업 기능
+
+
+
+8.5.6 `@WebServlet` 애너테이션을 이용한 서블릿 설정
+
+* ...
+
+* IntelliJ에서도 Servlet 추가 메뉴가 있긴 있음..
+
+  ![image-20230301015106002](doc-resources/image-20230301014905006.png)
+
+InteliJ에서는  기본으로 아래처럼만 만들어주는줌.. Eclipse 처럼 상세 메뉴는 없음
+
+```java
+@WebServlet(name = "InitParamServlet", value = "/InitParamServlet")
+public class InitParamServlet extends HttpServlet {
+
+  @Override
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+  }
+
+  @Override
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+  }
+}
+```
 
 
 
