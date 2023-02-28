@@ -156,12 +156,42 @@
 #### 8.4.3 두 서블릿 간 회원 정보 조회 바인딩 실습
 
 * ... 
-
 * 추가, 삭제 기능도 연동되게 수정하였다.
 
   * 테스트 코드가 점점 복잡해지고 있다. 🤪
 
+
+
+
+### 8.5 ServletContext와 ServletConfig 사용법
+
+* ...
+* https://youtu.be/OiQ4qmW2oOQ
+* ServletContext는 컨택스트당 생성
+* ServletConfig는 각 서블릿마다 생성
+
+
+
+#### 8.5.2 ServletContext 바인딩 기능
+
+* ...
+
+* ServletContext 관련 메서드를 사용하는 서블릿을 테스트 할 때.. 오류가 남.
+
+  * 관련 부분은 처음에 아래 글 보고 Mockito로 처리 했었는데...
+
+    * https://stackoverflow.com/a/22611270
+
+  * Spring Test에서 이미 MockServletContext 란 것을 제공해줌
+
+    * request와 테스트할 서블릿의 ServletContext 동기화만 해주면 Mockito 없이도 테스트를 잘 할 수 있음.
+      * MockHttpServletTestSupport와 SetServletContextTest, GetServletContextTest 를 참고 할 것. 😄
+
     
+
+    
+
+
 
 
 
@@ -182,4 +212,3 @@
 ## 기타
 
 * 
-  
