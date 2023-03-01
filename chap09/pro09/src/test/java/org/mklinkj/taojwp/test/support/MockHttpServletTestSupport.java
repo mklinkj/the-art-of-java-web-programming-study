@@ -55,4 +55,20 @@ public abstract class MockHttpServletTestSupport<T extends HttpServlet> {
   }
 
   protected abstract String getServletPath();
+
+  /**
+   * Given - When - Then 패턴 모양으로 실행을 도와주는 메서드
+   *
+   * @param given 테스트 준비 코드
+   * @param when 테스트 실행
+   * @param then 테스트 검증
+   * @throws Exception 테스트 코드 실행 중, 어떤 예외든 발생할 수 있으므로 Exception으로 정의
+   */
+  protected void runGivenWhenThen(
+      ExceptionableRunnable given, ExceptionableRunnable when, ExceptionableRunnable then)
+      throws Exception {
+    given.run();
+    when.run();
+    then.run();
+  }
 }
