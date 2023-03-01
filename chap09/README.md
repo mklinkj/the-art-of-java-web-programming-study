@@ -184,9 +184,11 @@ private static int nextId = 1;
 
 따로 외부에서 초기화 시켜주는 public 메서드가 없어서 해당 인스턴스를 새로 넣더라도 초기화가 되는 값이 아님.
 
-SessionTestTest에서 testDoGetWithNoSession()에는 명시적으로 id값을 0으로 주었고, 
+(JVM 종료 하고 다시시작해야 확실히 초기화됨.)
 
-testDoGet()는 서블릿에서 얻을 때, 자동으로 생성된 것 받아가게 설정했음.
+SessionTestTest에서 testDoGetWithExistingSession()에는 명시적으로 id값을 0으로 주었고, 
+
+testDoGetWithNewSession()는 서블릿에서 얻을 때, 자동으로 생성된 것 받아가게 설정했음.
 
 > 이거 처음엔 메서드 테스트 메서드 시작할 때마다 new로 새로운 값을 넣는데.. 왜그러지? ㅠㅠ 혼란이 왔음.😂
 

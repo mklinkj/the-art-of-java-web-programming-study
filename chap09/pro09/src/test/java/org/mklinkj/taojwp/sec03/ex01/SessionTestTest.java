@@ -9,7 +9,7 @@ import org.springframework.mock.web.MockHttpSession;
 
 class SessionTestTest extends MockHttpServletTestSupport<SessionTest> {
   @Test
-  void testDoGet() throws Exception {
+  void testDoGetWithNewSession() throws Exception {
     runGivenWhenThen(
         () -> {
           // SessionTest 서블릿에서 getSession()을 할 때 새로 MockHttpSession이 만들어진다.
@@ -30,7 +30,7 @@ class SessionTestTest extends MockHttpServletTestSupport<SessionTest> {
   }
 
   @Test
-  void testDoGetWithNoSession() throws Exception {
+  void testDoGetWithExistingSession() throws Exception {
     runGivenWhenThen(
         () -> {
           // 이미 세션이 있었다고 간주
