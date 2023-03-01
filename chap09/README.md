@@ -92,9 +92,30 @@
 
   
 
+#### 9.4.5 쿠키를 이용해 팝업창 제한하기
 
+* ...
 
+* 팝업창 제어는 자바스크립트 상에서만 다룸.
 
+* 여기서 책보고 따라 치다가 실수를 했는데...
+
+  ```javascript
+  cookieName = cookieName.replace(/^\s*/, ''); 
+  ```
+
+  공백제거를 다시 cookieName 으로 재할당을 하지 않아서 notShowPop의 값을 조회하려할 때 문제가 생긴점.
+
+* 처음에는 부모 페이지와 팝업 페이지간 path 설정을 잘못해서 쿠키가 이중으로 생겼던 부분..😅
+  * 역시 팜업이 추가되면 머리가 아픔...😅😅😅
+
+#### 참고 주소
+
+* https://ko.javascript.info/cookie
+* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toUTCString
+  * toGMTString() 대신 toUTCString()으로 사용하라고 한다.
+* https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite
+  * 이건 Firefox에서 경고로 나오긴 하는데.. 나중에 알아보자..
 
 
 

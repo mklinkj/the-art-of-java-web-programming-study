@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>자바스크립트에서 쿠키 사용 - 팝업 테스트</title>
+  <script>
+    window.onload = pageLoad;
+
+    function pageLoad() {
+      const notShowPop = getCookieValue();
+      if (notShowPop != "true") {
+        window.open("popUp.html", "pop",
+            "width=400,height=500,history=no,resizable=no,status=no,scrollbars=yes,menubar=no");
+      }
+    }
+
+    function getCookieValue() {
+      let result = "false";
+      if (document.cookie != "") {
+        let cookie = document.cookie.split(";");
+        for (let i = 0; i < cookie.length; i++) {
+          let element = cookie[i].split("=")
+          let cookieName = element[0];
+          cookieName = cookieName.replace(/^\s*/, ''); // 재할당하는 걸 내가 빼먹어서.. 제대로 처리가 안되었었다..
+          console.log(`### cookieName: ${cookieName}, value: ${element[1]}`);
+          if (cookieName == "notShowPop") {
+            result = element[1];
+          }
+        }
+        return result;
+      }
+    }
+
+    function deleteCookie() {
+      document.cookie = "notShowPop=false; path=/; expires=-1";
+    }
+  </script>
+</head>
+<body>
+<form>
+  <input type="button" value="쿠키삭제" onclick="deleteCookie()">
+</form>
+
+</body>
+</html>
