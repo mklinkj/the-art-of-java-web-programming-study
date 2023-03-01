@@ -67,6 +67,7 @@ public abstract class MockHttpServletTestSupport<T extends HttpServlet> {
   protected void runGivenWhenThen(
       ExceptionableRunnable given, ExceptionableRunnable when, ExceptionableRunnable then)
       throws Exception {
+    resetMock();
     given.run();
     when.run();
     then.run();
