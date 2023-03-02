@@ -149,7 +149,7 @@
 #### 9.4.3 서블릿에서 세션 API 이용하기
 
 * ...
-* 테스트에서 MockHttpSession 의 nextId 필드가 static 인 덕분에 시간이 많이 걸림..😅
+* 테스트에서 MockHttpSession 의 nextId 필드가 static 인 덕분에 해깔려서 🎃 시간이 많이 걸림..😅
 
 
 
@@ -182,11 +182,79 @@
 
 
 
+### 9.5 encodeURL() 사용법
+
+* ...
+* jsessionId가 URL 창에 파라미터로 노출될때, 원인이 좀 해깔렸는데.. 이번에 좀 알 수 있을 것 같다.
+* 쿠키를 사용할 수 없는 브라우저
+  * 서버에서 URL Rewriting으로 JSESSIONID를 보내서 클라가 서버에 요청할 때. JSESSIONID를 파라미터에 담아 보내게끔 함.
+  * 이 값이 나타날때가 브라우저에서 쿠키 사용이 안되어서 그랬나? 🎈
 
 
 
+#### 9.5.1 브라우저 쿠키 사용 금지하기 
+
+* localhost에 한해서만 쿠키 차단이 되어서 그렇게 해봄.
+
+  ![image-20230302235704545](doc-resources\image-20230302235704545.png)
+
+* 이렇게 했을 때, 서버측에 세션을 생성을 할 수는 있는데, 브라우저가 ID가 없어서 재접속시 서버측 세션을 사용할 수가 없음.
+
+  * web.xml에 아래 내용을 추가해보면 코드 수정없이 그냥 URL 파라미터로 붙여주나 했는데.. 안됨
+
+    ```xml
+      <!-- https://tomcat.apache.org/tomcat-10.1-doc/servletapi/jakarta/servlet/SessionTrackingMode.html -->
+      <session-config>
+        <tracking-mode>URL</tracking-mode>
+      </session-config>
+    ```
+
+  * 이게 그냥 되는건 아니고 `<c:url>` 같은 JSTL 태그로 주소를 만들때 붙여주는 것같다.
+
+    * JSP 붙여서 확인해보니 진짜 잘 붙음.
+
+      ```
+      <c:url value=""/>출력값: http://localhost:8090/pro09/;jsessionid=8ADA87C4EF01407551C3724EF4E20DE6
+      ```
+
+      
+
+      
+
+  * 그런데 나는 정적으로 주소를 적어두어서. 안되는 듯...
+
+* 프로젝트에 JSP, JSTL 라이브러리를 추가해고 최신 JSTL 3.0.1을 추가했는데.. IntelliJ에서 `jakarta.tags.core`에 대한 자동완성을 지원해주지 않는다. 
+
+  ```jsp
+  <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+  <%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
+  
+  <h4>&lt;c:url value=""/&gt;출력값: <c:url value=""/></h4>
+  ```
+
+  이렇게 하면 IDE 화면에서는 오류 밑줄이 그어지지만, 실행은 잘됨.
+
+  * 최신 JSTL 라이브러리에 이전 1.2 버전 tld파일이 포함되어 있어서 이전 이름을 사용하더라도 동작은 함.
+
+  몇몇 유저가 이슈를 JetBrains에 이슈를 올려놧는데.. 이번 년초내로 고쳐질 것 같다.
+
+  * https://youtrack.jetbrains.com/issue/IDEA-308542/JSTL-Jakarta-Standard-Tag-Library-3.0.0-has-a-new-namespace-and-URI-for-TLD-files-IntelliJ-does-not-recognise-this
 
 
+
+#### 9.5.2 encodeURL() 메서드를 이용한 세션 사용 실습
+
+* HttpServletResponse의 encodeURL('주소') 를 수행하면 여기에 JSESSIONID를 파라미터로 붙혀줌.
+
+  ```
+  http://localhost:8090/pro09/blockCookieSessionLogin;jsessionid=372E086696C5A73AA53D76E558AF214E
+  ```
+
+* Mock테스트로는 재현이 힘들다.
+
+  * MockHttpServletRequest의 encodeURL()은 입력받은 값 그대로 반환함.
+
+  
 
 
 

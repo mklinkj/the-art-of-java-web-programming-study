@@ -1,4 +1,4 @@
-package org.mklinkj.taojwp.sec03.ex04;
+package org.mklinkj.taojwp.sec04.ex01;
 
 import static org.mklinkj.taojwp.common.Constants.HTML_CONTENT_TYPE;
 import static org.mklinkj.taojwp.common.Constants.SERVER_ENCODING;
@@ -13,8 +13,8 @@ import java.io.PrintWriter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@WebServlet("/sessionLogin")
-public class SessionTest4 extends HttpServlet {
+@WebServlet("/blockCookieSessionLogin")
+public class SessionTest5 extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -39,20 +39,19 @@ public class SessionTest4 extends HttpServlet {
 
     String userId = request.getParameter("user_id");
 
-    String loginUrl = request.getParameter("login_url");
-
     if (session.isNew()) {
       if (userId == null || userId.isBlank()) {
-        out.printf("<a href='%s'>다시 로그인 하세요!!</a>%n", loginUrl);
+        out.printf("<a href='login3.html'>다시 로그인 하세요!!</a>%n");
         session.invalidate();
       } else {
         session.setAttribute("user_id", userId);
-        out.printf("<a href='sessionLogin?login_url=%s'>로그인 상태 확인</a>", loginUrl);
+        String encodedUrl = response.encodeURL("blockCookieSessionLogin");
+        out.printf("<a href='%s'>로그인 상태 확인</a>", encodedUrl);
       }
     } else {
       String userIdFromSession = (String) session.getAttribute("user_id");
       if (userIdFromSession == null || userIdFromSession.isBlank()) {
-        out.printf("<a href='%s'>다시 로그인 하세요!!</a>%n", loginUrl);
+        out.printf("<a href='login3.html'>다시 로그인 하세요!!</a>%n");
         session.invalidate();
       } else {
         out.printf("<h4>안녕하세요 %s님!!!</h4>%n", userIdFromSession);

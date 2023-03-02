@@ -7,7 +7,9 @@
 <body>
 <h4>서블릿 URL 선택:</h4>
 <ul>
-  <li><input type="radio" name="servlet_name" value="sessionLogin" checked>세션 login 서블릿</li>
+  <li><input type="radio" name="servlet_name" value="blockCookieSessionLogin" checked>쿠키 차단 대응 - 세션
+    login 서블릿
+  </li>
 </ul>
 <h4>요청방식 선택:</h4>
 <ul>
@@ -18,7 +20,6 @@
 <form name="frmLogin" method="post">
   아이디: <input type="text" name="user_id"><br>
   비밀번호: <input type="text" name="user_pw"><br>
-  <input type="hidden" name="login_url" value="login2.html">
   <input type="submit" value="로그인">
   <input type="reset" value="다시 입력">
 </form>

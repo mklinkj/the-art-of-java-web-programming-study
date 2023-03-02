@@ -29,5 +29,11 @@
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
 
+  <!-- https://tomcat.apache.org/tomcat-10.1-doc/servletapi/jakarta/servlet/SessionTrackingMode.html -->
+  <!--
+  <session-config>
+    <tracking-mode>COOKIE</tracking-mode>
+  </session-config>
+  -->
 
 </web-app>
