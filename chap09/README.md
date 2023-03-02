@@ -164,6 +164,19 @@
 
 
 
+#### 9.4.5 세션을 이용한 로그인 정보 바인딩 실습
+
+* Tomcat 10.1.6의 context.xml에서는 다음과 같이 되어있던데.. 
+
+  ```xml
+  <!-- Uncomment this to enable session persistence across Tomcat restarts -->
+  <!--
+    <Manager pathname="SESSIONS.ser" />
+  -->
+  ```
+
+  내 경우는 주석된 채로 두는 것이 나을 것 같다.
+
 
 
 
