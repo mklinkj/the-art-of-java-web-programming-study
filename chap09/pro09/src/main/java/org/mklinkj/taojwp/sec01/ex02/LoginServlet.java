@@ -1,5 +1,6 @@
 package org.mklinkj.taojwp.sec01.ex02;
 
+import static org.mklinkj.taojwp.common.CommonUtils.ifNullToNullString;
 import static org.mklinkj.taojwp.common.Constants.HTML_CONTENT_TYPE;
 import static org.mklinkj.taojwp.common.Constants.SERVER_ENCODING;
 
@@ -58,15 +59,15 @@ public class LoginServlet extends HttpServlet {
             """,
             Map.of(
                 "userId",
-                userId,
+                ifNullToNullString(userId),
                 "userPw",
-                userPw,
+                ifNullToNullString(userPw),
                 "userAddress",
-                userAddress,
+                ifNullToNullString(userAddress),
                 "userEmail",
-                userEmail,
+                ifNullToNullString(userEmail),
                 "userHp",
-                userHp,
+                ifNullToNullString(userHp),
                 "contextPath",
                 request.getContextPath())));
   }

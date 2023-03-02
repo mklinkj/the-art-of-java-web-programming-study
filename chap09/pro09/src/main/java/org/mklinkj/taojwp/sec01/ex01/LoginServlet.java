@@ -1,5 +1,6 @@
 package org.mklinkj.taojwp.sec01.ex01;
 
+import static org.mklinkj.taojwp.common.CommonUtils.ifNullToNullString;
 import static org.mklinkj.taojwp.common.Constants.HTML_CONTENT_TYPE;
 import static org.mklinkj.taojwp.common.Constants.SERVER_ENCODING;
 
@@ -23,7 +24,18 @@ public class LoginServlet extends HttpServlet {
   }
 
   @Override
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws IOException {
+    doHandle(request, response);
+  }
+
+  @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
+      throws IOException {
+    doHandle(request, response);
+  }
+
+  private void doHandle(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
 
     request.setCharacterEncoding(SERVER_ENCODING);
@@ -57,14 +69,14 @@ public class LoginServlet extends HttpServlet {
             """,
             Map.of(
                 "userId",
-                userId,
+                ifNullToNullString(userId),
                 "userPw",
-                userPw,
+                ifNullToNullString(userPw),
                 "userAddress",
-                userAddress,
+                ifNullToNullString(userAddress),
                 "userEmail",
-                userEmail,
+                ifNullToNullString(userEmail),
                 "userHp",
-                userHp)));
+                ifNullToNullString(userHp))));
   }
 }
