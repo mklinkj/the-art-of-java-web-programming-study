@@ -32,6 +32,8 @@ dependencies {
   compileOnly "jakarta.servlet.jsp:jakarta.servlet.jsp-api:${jakartaServletJspApiVersion}"
   implementation "org.glassfish.web:jakarta.servlet.jsp.jstl:${jakartaServletJspJstlVersion}"
 
+  implementation "org.springframework:spring-jdbc:${springVersion}"
+
   testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
   testImplementation "org.assertj:assertj-core:${assertJVersion}"
   testImplementation "org.mockito:mockito-core:${mockitoVersion}"

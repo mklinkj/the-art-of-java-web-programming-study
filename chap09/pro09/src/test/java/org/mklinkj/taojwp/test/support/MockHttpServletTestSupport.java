@@ -4,6 +4,7 @@ import static org.mklinkj.taojwp.test.support.TestConstants.CONTEXT_PATH;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServlet;
+import org.mklinkj.taojwp.common.DBUtils;
 import org.mockito.Mockito;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -71,5 +72,10 @@ public abstract class MockHttpServletTestSupport<T extends HttpServlet> {
     given.run();
     when.run();
     then.run();
+  }
+
+  /** DB 데이터 초기화 필요시 호출 */
+  protected void resetDB() {
+    DBUtils.resetDB();
   }
 }

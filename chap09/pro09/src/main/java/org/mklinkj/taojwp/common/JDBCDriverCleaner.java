@@ -3,12 +3,14 @@ package org.mklinkj.taojwp.common;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
+import jakarta.servlet.annotation.WebListener;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Collections;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@WebListener("서버 종료시 DB 드라이버 등록 해제")
 public class JDBCDriverCleaner implements ServletContextListener {
   protected void deregisterJdbcDrivers(ServletContext servletContext) {
     Collections.list(DriverManager.getDrivers())

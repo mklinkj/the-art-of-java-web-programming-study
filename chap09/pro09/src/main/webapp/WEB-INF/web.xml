@@ -18,10 +18,6 @@
 
   <display-name>Chap09_Servlet</display-name>
 
-  <listener>
-    <listener-class>org.mklinkj.taojwp.common.JDBCDriverCleaner</listener-class>
-  </listener>
-
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.xhtml</welcome-file>
