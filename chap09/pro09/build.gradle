@@ -30,6 +30,7 @@ dependencies {
 
   compileOnly "jakarta.servlet:jakarta.servlet-api:${jakartaServletApiVersion}"
   compileOnly "jakarta.servlet.jsp:jakarta.servlet.jsp-api:${jakartaServletJspApiVersion}"
+  implementation "jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:${jakartaServletJspJstlApiVersion}"
   implementation "org.glassfish.web:jakarta.servlet.jsp.jstl:${jakartaServletJspJstlVersion}"
 
   implementation "org.springframework:spring-jdbc:${springVersion}"
