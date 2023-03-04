@@ -10,9 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @WebServlet("/sessionLogin")
 public class SessionTest4 extends HttpServlet {
 

@@ -3,13 +3,11 @@ package org.mklinkj.taojwp.sec03.ex04;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Objects;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.mklinkj.taojwp.test.support.MockHttpServletTestSupport;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpSession;
 
-@Slf4j
 class SessionTest4Test extends MockHttpServletTestSupport<SessionTest4> {
   @Test
   void testFirstLoginSuccess() throws Exception {
