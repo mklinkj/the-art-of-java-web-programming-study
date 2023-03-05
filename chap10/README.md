@@ -32,6 +32,24 @@
 
 
 
+### 10.2 서블릿의 여러가지 URL 패턴
+
+* ...
+* URL 패턴: 반드시 /로 시작해야함.
+
+
+
+#### 10.2.1 서블릿에 여러가지 URL 패턴 적용 실습
+
+* ...
+  * 완전일치가 최우선
+  * 그 다음 경로
+  * 그 다음 와일드 카드 확장자 매핑
+
+
+
+
+
 
 
 ## 의견
@@ -49,4 +67,28 @@
 
 ## 기타
 
-* ...
+* p360~361 예제 보니 request로 부터 얻은 PrintWriter를 close하는 코드가 들어가던데.. 이걸 닫는 건 컨테이너의 책임이라고 생각해서.. 나는 닫지 말자..
+
+* String으로 HTML을 치는 일이 많은데 기본 형태를 IntellJ의 Live Template로 지정해두자
+
+  ```java
+  """
+  <!DOCTYPE html>
+  <html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>   
+    </style>
+  </head>
+  <body>
+    
+  </body>
+  </html>
+  """
+  ```
+
+  ![image-20230306031402963](doc-resources/image-20230306031402963.png)
+
+  * jhtml 치면 바로 템플릿 문자열 추가됨, 변수화 시키는 부분도 있는 것 같은데.. 그부분은 나중에..😄
+
