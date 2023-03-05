@@ -1,4 +1,4 @@
-package org.mklinkj.taojwp.sec01.ex02;
+package org.mklinkj.taojwp.sec02.ex01;
 
 import static org.mklinkj.taojwp.common.Constants.HTML_CONTENT_TYPE;
 import static org.mklinkj.taojwp.common.Constants.SERVER_ENCODING;
@@ -34,7 +34,7 @@ public class TestServlet2 extends HttpServlet {
           <title>%s</title>
           <style>
             body {
-              background-color:%s; 
+              background-color:%s;
             }
           </style>
         </head>

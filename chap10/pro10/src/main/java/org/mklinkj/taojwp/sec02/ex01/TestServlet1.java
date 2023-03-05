@@ -1,4 +1,4 @@
-package org.mklinkj.taojwp.sec01.ex02;
+package org.mklinkj.taojwp.sec02.ex01;
 
 import static org.mklinkj.taojwp.common.Constants.HTML_CONTENT_TYPE;
 import static org.mklinkj.taojwp.common.Constants.SERVER_ENCODING;
@@ -11,9 +11,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("*.do") // 앞에 '/' 붙이지 않는 것이 주의
-//@WebServlet("/*") // 모든 요청 URL 패턴, 그래도 경로와 완전일치가 매핑하는게 있으면 그것이 우선이다.
-public class TestServlet3 extends HttpServlet {
+@WebServlet("/first/test")
+public class TestServlet1 extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -35,7 +34,7 @@ public class TestServlet3 extends HttpServlet {
           <title>%s</title>
           <style>
             body {
-              background-color:%s; 
+              background-color:%s;
             }
           </style>
         </head>
@@ -46,6 +45,6 @@ public class TestServlet3 extends HttpServlet {
           <h3>URI: %s</h3>
         </body>
         </html>
-        """, getClass().getSimpleName(), "red", context, url, mapping, uri);
+        """, getClass().getSimpleName(), "green", context, url, mapping, uri);
   }
 }

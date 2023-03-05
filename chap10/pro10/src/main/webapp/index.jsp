@@ -19,7 +19,10 @@
     <h4>TestServlet2 : <a href="<c:url value="/first/a" />">/first/a</a></h4>
     <h4>TestServlet3 : <a href="<c:url value="/a.do" />">/a.do</a></h4>
   </li>
-
+  <li>
+    <h3>10.3.2 Filter를 이용한 한글 인코딩 실습</h3>
+    <h4>TestServlet1 : <a href="<c:url value="/login.html" />">/login.html</a></h4>
+  </li>
 </ul>
 
 </body>

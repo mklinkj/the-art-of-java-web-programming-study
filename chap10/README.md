@@ -48,6 +48,41 @@
 
 
 
+### 10.3 Filter API
+
+* ...
+* 서블릿에서 반복적으로 처리해야하는 작업을 필터 클래스로 설정해두면 좋음 👍
+
+
+
+#### 10.3.1 사용자 정의 Filter 만들기
+
+* ...
+
+
+
+#### 10.3.2 Filter를 이용한 한글 인코딩 실습
+
+* ...
+
+* Tomcat 10.1.7의 경우 request, response 인코딩에 대해 기본으로 UTF-8 설정이 들어가 있다..
+
+  * tomcat conf의 web.xml
+
+    ```xml
+      <!-- Set the default request and response character encodings to UTF-8.   -->
+      <request-character-encoding>UTF-8</request-character-encoding>
+      <response-character-encoding>UTF-8</response-character-encoding>
+    ```
+
+    한글이 깨지는 것을 확인하려면 저 내용을 주석 처리해야함.
+
+    * 책의 환경과 맞춰야하니 주석으로 바꿔두었다.
+
+
+
+
+
 
 
 
@@ -61,7 +96,11 @@
 
 ## 정오표
 
-* ...
+* p372: 코드 10-8
+  * request.getRealPath(pathinfo) `->` this.context.getRealPath(pathinfo)
+  * getRealPath()메서드가 ServletContext에 있다.
+    * https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/servletcontext#getRealPath-java.lang.String-
+
 
 
 

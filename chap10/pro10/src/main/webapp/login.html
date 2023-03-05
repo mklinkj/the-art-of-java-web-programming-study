@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>로그인 창</title>
+</head>
+<body>
+<h4>서블릿 URL 선택:</h4>
+<ul>
+  <li><input type="radio" name="servlet_name" value="login" checked>login 서블릿</li>
+</ul>
+<h4>요청방식 선택:</h4>
+<ul>
+  <li><input type="radio" name="request_method" value="POST" checked>POST 방식</li>
+  <li><input type="radio" name="request_method" value="GET">GET 방식</li>
+</ul>
+
+<form name="frmLogin">
+  이름: <input type="text" name="user_name"><br>
+  비밀번호: <input type="text" name="user_pw"><br>
+  <input type="submit" value="로그인">
+  <input type="reset" value="다시 입력">
+</form>
+<script>
+  const formLogin = document.frmLogin;
+  formLogin.addEventListener('submit',
+      (e) => {
+        e.preventDefault();
+        const servletName = document.querySelector("input[name='servlet_name']:checked").value
+        formLogin.action = servletName;
+
+        const method = document.querySelector("input[name='request_method']:checked").value
+        formLogin.method = method;
+
+        formLogin.submit();
+      }
+  )
+</script>
+</body>
+</html>
