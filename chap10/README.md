@@ -81,6 +81,17 @@
 
 
 
+#### 10.3.3 응답 필터 사용
+
+* ...
+* chain.doFilter() 메서드 기준으로 위쪽에 위치한 코드는 요청 필터 기능 수행, 그 아래는 응답 필터 기능 수행.
+
+
+
+#### 10.3.4 응답 필터 기능으로 작업 시간 구하기
+
+* ...
+
 
 
 
@@ -93,14 +104,33 @@
 
   
 
-
 ## 정오표
 
-* p372: 코드 10-8
-  * request.getRealPath(pathinfo) `->` this.context.getRealPath(pathinfo)
-  * getRealPath()메서드가 ServletContext에 있다.
-    * https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/servletcontext#getRealPath-java.lang.String-
+* ...
 
+
+
+
+
+
+
+### 최신환경과 호환되지 않는 내용
+
+* p372: 코드 10-8
+
+  * request.getRealPath(pathinfo) `->` this.context.getRealPath(pathinfo)
+
+  * getRealPath()메서드가 ServletContext에 있다.
+
+    * https://jakarta.ee/specifications/platform/10/apidocs/jakarta/servlet/servletcontext#getRealPath-java.lang.String-
+
+  * JavaEE 6 API(Servlet Spec 3.0)를 보니 예전에 있었는데.. 이미 Deprecated 된 상태였고, Jakarta EE 10(Servlet Spec 6) 에서는 메서드가 삭제됨
+
+    ```
+    Deprecated. As of Version 2.1 of the Java Servlet API, use ServletContext#getRealPath instead.
+    ```
+
+    * https://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#getRealPath(java.lang.String)
 
 
 

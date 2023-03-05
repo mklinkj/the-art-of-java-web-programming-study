@@ -39,10 +39,13 @@ public class EncoderFilter implements Filter { // HttpFilter 구현체가 있긴
     LOGGER.info("""
         Context 정보: {}
         URI 정보: {}
-        물리적 경로: {}        
+        물리적 경로: {}
         """, context, pathInfo, realPath);
 
+    long begin = System.currentTimeMillis();
     chain.doFilter(request, response); // 다음 필터로 넘기는 작업
+    long end = System.currentTimeMillis();
+    LOGGER.info("작업시간 :{}ms", end - begin);
   }
 
   @Override
