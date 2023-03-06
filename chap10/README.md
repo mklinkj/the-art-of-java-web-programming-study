@@ -107,27 +107,45 @@
 
 
 
+#### 10.4.2 HttpSessionListener 이용해 로그인 접속자수 표시
 
+* ...
 
+* 앞에 index페이지로 jsp파일을 두었는데.. 이러면 인덱스 페이지 접근만으로도 일단 세션이 생긴 것으로 간주된다.
 
+  * 그래서 p381에서 세션이 이미 있다고 간주되서 최초 접속시 ID가 안들어감. 우선 index.jsp를 다시 html로 바꿈.
 
+* LogoutTest 클래스에서 특이한 부분..
 
+  ```java
+      List<String> userList = (List<String>) context.getAttribute("userList");
+      userList.remove(userId);
+      // userList가 컨텍스트에 존재하는 동일한 참조인데.. 참조만 지웠다가 재할당하는 부분이 필요한 부분인지?
+      // 새로 복사해서 만들었다면 재할당하는게 맞긴한데...
+      // context.removeAttribute("userList");
+      // context.setAttribute("userList", userList);
+  ```
 
+  읻단 컨텍스트에대해 특별한 이벤트리스너가 걸려있지 않은 이상은 불필요한 부분 같은데... ❓❓❓
 
+* 그리고 context.xml에는 아래 설정 넣기로 했다. `""` 로 설멍하면 세션을 명시적으로 직렬화하지 않겠다는 의미가 확실해져서...
+
+  ```xml
+    <!-- "" 으로 직접 명시하면 세션의 직렬화를 하지 않겠다고, 정확하게 정의하는 것이여서 저자님 말씀대로 빈 문자열을 설정해두는 것이 낫겠다.-->
+    <Manager pathname="" />
+  ```
+
+  
 
 ## 의견
 
-* 
+* 이번 장도 중요한 내용이였다... 빨리 Spring 직전까진 진도가 나가야되는데...😓
 
   
 
 ## 정오표
 
 * ...
-
-
-
-
 
 
 
@@ -177,4 +195,28 @@
   ![image-20230306031402963](doc-resources/image-20230306031402963.png)
 
   * jhtml 치면 바로 템플릿 문자열 추가됨, 변수화 시키는 부분도 있는 것 같은데.. 그부분은 나중에..😄
+
+
+
+### Mock 생성 변경
+
+서블릿 클래스의 Mock을 다음과 같이 생성했었는데..
+
+```java
+T mockServlet = Mockito.mock(servletClass, Mockito.CALLS_REAL_METHODS);
+```
+
+이렇게 할경우 서블릿에 다음과 같이 필드 초기화 코드가 있을 경우 초기화가 안되고 null인 상태로 있게된다.
+
+```java
+private final List<String> userList = new CopyOnWriteArrayList<>();
+```
+
+그래서 Mock 초기화를 아래처럼 바꿈.
+
+```java
+T mockServlet = Mockito.spy(servletClass);
+```
+
+
 

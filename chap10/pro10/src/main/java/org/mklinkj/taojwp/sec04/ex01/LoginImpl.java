@@ -3,10 +3,12 @@ package org.mklinkj.taojwp.sec04.ex01;
 import jakarta.servlet.http.HttpSessionBindingEvent;
 import jakarta.servlet.http.HttpSessionBindingListener;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginImpl implements HttpSessionBindingListener {
