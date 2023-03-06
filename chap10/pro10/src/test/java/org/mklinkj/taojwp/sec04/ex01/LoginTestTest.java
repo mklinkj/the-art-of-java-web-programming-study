@@ -1,4 +1,4 @@
-package org.mklinkj.taojwp.sec03.ex01;
+package org.mklinkj.taojwp.sec04.ex01;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,7 +12,7 @@ class LoginTestTest extends MockHttpServletTestSupport<LoginTest> {
   void testDoPost() throws Exception {
     runGivenWhenThen(
         () -> {
-          request.setParameter("user_name", "한글이름");
+          request.setParameter("user_id", "아이디01");
           request.setParameter("user_pw", "1234");
         },
         () -> servlet.doPost(request, response),
@@ -20,8 +20,9 @@ class LoginTestTest extends MockHttpServletTestSupport<LoginTest> {
           assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
 
           assertThat(response.getContentAsString()) //
-              .contains("이름은 한글이름")
-              .contains("비밀번호는 1234");
+              .contains("아이디는 아이디01")
+              .doesNotContain("총 접속자수 0")
+              .containsPattern("총 접속자수 \\d+");
         });
   }
 
@@ -32,6 +33,6 @@ class LoginTestTest extends MockHttpServletTestSupport<LoginTest> {
 
   @Override
   protected String getServletPath() {
-    return "*.do";
+    return "/userCountLogin";
   }
 }

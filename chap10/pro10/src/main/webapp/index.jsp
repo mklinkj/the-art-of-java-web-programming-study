@@ -21,7 +21,9 @@
   </li>
   <li>
     <h3>10.3.2 Filter를 이용한 한글 인코딩 실습</h3>
-    <h4>TestServlet1 : <a href="<c:url value="/login.html" />">/login.html</a></h4>
+    <h4>login.html : <a href="<c:url value="/login.html" />">/login.html</a></h4>
+    <h3>10.4.1 HttpSerssionBindingListener 이용해 로그인 접숙자수 표시</h3>
+    <h4>longin2.html : <a href="<c:url value="/login2.html" />">/login2.html</a></h4>
   </li>
 </ul>
 
