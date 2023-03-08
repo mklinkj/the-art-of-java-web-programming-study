@@ -56,7 +56,32 @@
 
   
 
+## 12.3 스크립트릿 사용하기
 
+* ...
+
+  ```jsp
+  <% 자바 코드 %>
+  ```
+
+  
+
+
+
+### 12.3.1 JSP에서 스크립트릿 실습
+
+* 스크립트릿으로 작성한 코드는 _jspService() 메서드 내에 코드가 위치하게 된다.
+
+  ```java
+    public void _jspService(final jakarta.servlet.http.HttpServletRequest request, final jakarta.servlet.http.HttpServletResponse response)
+        throws java.io.IOException, jakarta.servlet.ServletException {
+        ...
+        String age = request.getParameter("age"); 
+        ...
+    }
+  ```
+
+  
 
 
 
