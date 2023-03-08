@@ -282,7 +282,24 @@
 
   
 
+## 12.9 JSP welcome 파일 지정하기
 
+* ...
+
+* 이 부분은 그냥 읽어만보고 넘어가도 되겠다.. 이미 index.html을 welcome 파일로 사용하고 있어서...
+
+* web.xml
+
+  ```xml
+    <welcome-file-list>
+      <welcome-file>index.html</welcome-file>
+      <welcome-file>index.xhtml</welcome-file>
+      <welcome-file>index.htm</welcome-file>
+      <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+  ```
+
+  
 
 
 
