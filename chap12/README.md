@@ -120,6 +120,50 @@
 
 
 
+## 12.5 JSP 주석문 사용하기
+
+* ...
+* JSP 페이지에서 사용되는 주석문들..
+  * HTML 주석
+  * 자바 주석
+  * JSP 주석
+
+
+
+### 12.5.1 JSP 페이지에서 주석문 사용하기
+
+* ...
+
+* Java 주석과 HTML 주석은 변환된 Java 파일에 기록이됨
+
+  ```java
+    /* // 자바 주석문
+    String age = request.getParameter("age");
+    */
+  
+        out.write("\r\n");
+        out.write("\r\n");
+        out.write("<!DOCTYPE html>\r\n");
+        out.write("<!-- HTML 주석문 -->\r\n");
+        out.write("<html lang=\"ko\">\r\n");
+        out.write("<head>\r\n");
+        out.write("  <title>주석문 연습</title>\r\n");
+        out.write("</head>\r\n");
+        out.write("<body>\r\n");
+        out.write("  <h1>주석문 예제입니다!!</h1>\r\n");
+        out.write("  ");
+        out.write(' ');
+        out.write("\r\n");
+        out.write("</body>\r\n");
+        out.write("</html>\r\n");
+  ```
+
+  그러나 JSP 주석은 남지 않음.
+
+
+
+
+
 
 
 
