@@ -64,8 +64,6 @@
   <% 자바 코드 %>
   ```
 
-  
-
 
 
 ### 12.3.1 JSP에서 스크립트릿 실습
@@ -81,7 +79,48 @@
     }
   ```
 
+
+
+
+
+## 12.4 표현식 사용하기
+
+* ...
+
+* 표현식: JSP 페이지의 정항 위치에 값을 출력하는 기능
+
+  ```jsp
+  <%=값 or 자바 변수 or 자바 식 %>
+  ```
+
   
+
+### 12.4.1 JSP 페이지에서 표현식 실습
+
+* ...
+
+* 표현식 영역은 out.print() 로 출력됨
+
+  ```java
+        out.write("  <h1>안녕하세요 ");
+        out.print(name );
+        out.write("님!!</h1>\r\n");
+        out.write("  <h1>나이는 ");
+        out.print(age );
+        out.write("입니다.!!</h1>\r\n");
+        out.write("  <h1>키는 ");
+        out.print(180 );
+        out.write("입니다.!!</h1>\r\n");
+        out.write("  <h1>나이 + 10은 ");
+        out.print(Integer.parseInt(age) + 10 );
+        out.write("입니다.!!</h1>\r\n");
+  ```
+
+  
+
+
+
+
 
 
 
