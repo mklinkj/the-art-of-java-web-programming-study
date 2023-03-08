@@ -299,6 +299,39 @@
     </welcome-file-list>
   ```
 
+
+
+## 12.10 스크립트 요소 이용해 회원 정보 조회하기
+
+#### 실수가 있었다. 😅
+
+* `java.sql.SQLException: ORA-01008: 일부 변수가 바인드되지 않았습니다`. - 예외 발생관련....
+
+  MemberDAO를 수정할 때... 
+
+  ````java
+        con = dataFactory.getConnection();
+        String query = "SELECT id, pwd, name, email, joinDate FROM t_member";
+  
+        if(_name == null || _name.isBlank()) {
+          psmt = con.prepareStatement(query);
+        } else {
+          query = query.concat(" WHERE name=?");
+          psmt = con.prepareStatement(query);
+          psmt.setString(1, _name);  // 쿼리 및 파라미터를 준비 해놓고...
+        }
+        LOGGER.info("query: {}", query);
+        ResultSet rs = psmt.executeQuery(query); // 이전 쿼리로 돌려버림
+  ````
+
+  PreparedStatement의 setString으로 파라미터를 설정해놓고 다시 ?가 포함된 쿼리로 돌려버림..😅
+
+  ```java
+        ResultSet rs = psmt.executeQuery(); // 인자 없이 실행해주자~
+  ```
+
+  
+
   
 
 
