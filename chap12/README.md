@@ -248,8 +248,11 @@
 * 처음에... `<%=exception.printStackTrace() %>` 로 잘못보고 왜 void반환인데 표현식에 넣으셨지? 하고 다음과 같이 쓰긴 했는데... (지면에도 이클립스 콘솔로 예외 메시지를 출력할거라고 잘 써있음 😅)
 
   ```jsp
-  <textarea cols="100" rows="35" readonly><%=Arrays.stream(exception.getStackTrace()).map(a -> a.toString()).collect(
-      Collectors.joining(String.format("%n    "))) %></textarea>
+  <textarea cols="100" rows="35" readonly><%=
+      Arrays.stream(exception.getStackTrace())
+          .map(StackTraceElement::toString)
+          .collect(Collectors.joining(String.format("%n    ")))
+  %></textarea>
   ```
 
   책을 다시 보니 `<% exception.printStackTrace() %>` 표현식이 아니고 스크립트릿이였음..😅
@@ -261,6 +264,23 @@
 ### 12.8.3 JSP 페이지의 오류 페이지 종류
 
 * ...
+
+
+
+### 12.8.4 에러 코드에 따른 예외 페이지 지정
+
+* ...
+
+* web.xml
+
+  ```xml
+  <error-page>
+    <error-code>오류 코드</error-code>
+    <location>오류 페이지 위치</location>
+  <error-page>
+  ```
+
+  
 
 
 
