@@ -224,6 +224,38 @@
 
 
 
+## 12.8 JSP 페이지 예외 처리하기
+
+* ...
+* 
+
+> 그런데 환경에 따라 오류 메시지 본문중 JSP 내부의 한글이 깨져보이는 컴퓨터가 있고, 안깨져 보이는 컴퓨터가 있음? 
+>
+> IntelliJ의 Tomcat 콘솔은 명령프롬프트(CMD)와 다르게 UTF-8 출력을 정상 지원하기 때문에 file.encoding만 제대로 설정해주면 안깨질 것 같긴함.
+
+
+
+### 12.8.1 JSP 페에지 예외 처리 과정
+
+* ...
+* 예외 JSP 처리 페이지의 isErrorPage 속성 true 설정
+* 일반 JSP 페이지에서 errorPage 를 예외 처리 페이지 이름으로 지정
+
+
+
+### 12.8.2 JSP 페이지 예외 처리 실습
+
+* 처음에... `<%=exception.printStackTrace() %>` 로 잘못보고 왜 void반환인데 표현식에 넣으셨지? 하고 다음과 같이 쓰긴 했는데... (지면에도 이클립스 콘솔로 예외 메시지를 출력할거라고 잘 써있음 😅)
+
+  ```jsp
+  <textarea cols="100" rows="35" readonly><%=Arrays.stream(exception.getStackTrace()).map(a -> a.toString()).collect(
+      Collectors.joining(String.format("%n    "))) %></textarea>
+  ```
+
+  책을 다시 보니 `<% exception.printStackTrace() %>` 표현식이 아니고 스크립트릿이였음..😅
+
+  그런데 그냥 서버 콘솔의 Std Out에만 쓰는 동작이기 때문에.. 내가 바꿔서 한대로 하는게 낫겠다.
+
 
 
 
