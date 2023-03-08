@@ -16,7 +16,7 @@
     그래서 metadata-complete="true" 설정을 제거했다.
   -->
 
-  <display-name>Chap09_Servlet</display-name>
+  <display-name>Chap11_Servlet</display-name>
 
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
