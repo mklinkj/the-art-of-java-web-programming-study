@@ -74,7 +74,46 @@
 
 
 
+### 11.4.3 인클루드 디렉티브 태그 정의와 사용법
 
+* ...
+
+* 이건 tiles와 함께 많이 써봣다.
+
+  ```jsp
+  <%@ include file="공통기능.jsp" %>
+  ```
+
+* include 한 내용을 보았을 때...
+
+  ```java
+        out.write("\r\n");
+        out.write("<html>\r\n");
+        out.write("<head>\r\n");
+        out.write("  <title>인클루드 디렉티브</title>\r\n");
+        out.write("</head>\r\n");
+        out.write("<body>\r\n");
+        out.write("  <h1>안녕하세요. 쇼핑몰 중심 JSP 시작입니다.!!!</h1>\r\n");
+        out.write("  ");
+        out.write("\r\n");
+        out.write("<html>\r\n"); // include 영역 시작
+        out.write("<head>\r\n");
+        out.write("  <title>스마일 이미지</title>\r\n");
+        out.write("</head>\r\n");
+        out.write("<body>\r\n");
+        out.write("<img src=\"image/smiling-eyes.png\">\r\n");
+        out.write("</body>\r\n");
+        out.write("</html>\r\n"); // include 영역 끝
+        out.write("\r\n");
+        out.write("  <h1>안녕하세요. 쇼핑몰 중심 JSP 끝 부분입니다.!!!</h1>\r\n");
+        out.write("\r\n");
+        out.write("</body>\r\n");
+        out.write("</html>\r\n");
+  ```
+
+  페이지 내용이 그대로 포함됨.
+
+  java, class 파일은 포함자 딱 한개만 생성됨.
 
 
 
@@ -83,6 +122,8 @@
 ---
 
 ## 의견
+
+* 이번 11장은 그다지 내용이 많지 않았다. 다음 장부터 좀 많은듯...
 
 * ...
 
