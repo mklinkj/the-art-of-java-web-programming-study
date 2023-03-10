@@ -17,7 +17,11 @@
 
   * 인클루드 액션 태크는 포함되는 JSP가 각각 자바 파일로 생성
 
-    ```
+    ```jsp
+    <jsp:include page="smile_image.jsp" flush="true">
+        <jsp:param name="name" value="스마일"/>
+        <jsp:param name="imgName" value="smile.png"/>
+      </jsp:include>
     ```
 
   * 인클루드 디렉티브 태크는 합쳐져서 하나의 자바 파일로 생성
@@ -38,7 +42,21 @@
     org.apache.jasper.runtime.JspRuntimeLibrary.include(request, response, "smile_image.jsp" + "?" + org.apache.jasper.runtime.JspRuntimeLibrary.URLEncode("name", request.getCharacterEncoding())+ "=" + org.apache.jasper.runtime.JspRuntimeLibrary.URLEncode("스마일", request.getCharacterEncoding()) + "&" + org.apache.jasper.runtime.JspRuntimeLibrary.URLEncode("imgName", request.getCharacterEncoding())+ "=" + org.apache.jasper.runtime.JspRuntimeLibrary.URLEncode("smile.png", request.getCharacterEncoding()), out, true);
     ```
 
-    
+
+
+## 13.2 포워드 액션 태그 사용하기
+
+* 포워드 액션 태그의 형식
+
+  ```jsp
+  <jsp:forward page="포워딩할 JSP 페이지">
+    ...
+  </jsp:forward>
+  ```
+
+* ...
+
+
 
 
 
