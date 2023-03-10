@@ -90,7 +90,7 @@
   <jsp:setProperty name="m" property="id" value='<%=request.getParameter("id")%>' />
   ```
 
-  value를 `"`감싸면 안에 있는 내용의 `"`를 이스케이프 처리하려해서 오류나는 것 같다. Tomcat 서버 설정의 strictQuoteEscaping를 false로 바꿔줘도 된다지만.. 그냥 `'`로 감싸서 해결하는게 낫겠다.
+  value를 쌍따옴표로(`"`)감싸면 값 내용 중의 쌍따옴표를 이스케이프 처리하려해서 오류나는 것 같다. Tomcat 서버 설정의 strictQuoteEscaping를 false로 바꿔줘도 된다지만.. 그냥 따옴표(`'`)로 감싸서 해결하는게 낫겠다.
 
   
 
