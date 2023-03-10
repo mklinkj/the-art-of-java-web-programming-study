@@ -1,0 +1,88 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="static org.mklinkj.taojwp.common.Constants.SERVER_ENCODING" %>
+<%@ page import="org.mklinkj.taojwp.sec01.ex01.MemberBean" %>
+<%
+  request.setCharacterEncoding(SERVER_ENCODING);
+%>
+
+<%--new Member()과 동일--%>
+<jsp:useBean id="m" class="org.mklinkj.taojwp.sec01.ex01.MemberBean" scope="page" />
+
+<jsp:setProperty name="m" property="*" />
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>회원 목록 창</title>
+  <style>
+    table {
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+    }
+
+    table, th, td {
+      border: 0px solid black;
+    }
+
+    th {
+      background-color: #99ccff;
+    }
+
+    td {
+      text-align: center;
+    }
+
+    .th-id {
+      width: 7%;
+    }
+
+    .th-pw {
+      width: 7%;
+    }
+
+    .th-name {
+      width: 5%;
+    }
+
+    .th-email {
+      width: 11%;
+    }
+
+    .n-f-m-td {
+      text-align: center;
+    }
+
+    .n-f-m-span {
+      font-size: 9pt;
+    }
+    .foot-td {
+      height: 1px;
+      background-color: #99ccff;
+    }
+  </style>
+</head>
+<body>
+<table>
+  <tbody>
+  <tr>
+    <th class="th-id">아이디</th>
+    <th class="th-pw">비밀번호</th>
+    <th class="th-name">이름</th>
+    <th class="th-email">이메일</th>
+  </tr>
+  <tr>
+    <td><jsp:getProperty name="m" property="id"/></td>
+    <td><jsp:getProperty name="m" property="pwd"/></td>
+    <td><jsp:getProperty name="m" property="name"/></td>
+    <td><jsp:getProperty name="m" property="email"/></td>
+  </tr>
+  <tr>
+    <td class="foot-td" colspan="4"></td>
+  </tr>
+  </tbody>
+</table>
+<button type="button" onclick="location.href='memberForm.html'">이전으로 돌아가기 ... </button>
+</body>
+</html>

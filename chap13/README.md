@@ -72,19 +72,35 @@
 
 * ...
 
+### 13.3.3 setProperty/getProperty 액션 태그를 이용한 회원 정보 조회 실습
 
+* ...
 
+#### 예외
 
+* `/member3.jsp (행: [13], 열: [50]) 속성 값 [request.getParameter("id")]이(가)  ["]을(를) 사용하여 인용부 처리되어 있는데, 이는 값 내에서 사용될 때에는 반드시 escape되어야 하는 것입니다.`
 
+  ```jsp
+  <jsp:setProperty name="m" property="id" value="<%=request.getParameter("id")%>" />
+  ```
 
+  value 를 `"` 대신에 `'`로 감싸주면 정상 처리된다.
 
+  ```jsp
+  <jsp:setProperty name="m" property="id" value='<%=request.getParameter("id")%>' />
+  ```
 
+  value를 `"`감싸면 안에 있는 내용의 `"`를 이스케이프 처리하려해서 오류나는 것 같다. Tomcat 서버 설정의 strictQuoteEscaping를 false로 바꿔줘도 된다지만.. 그냥 `'`로 감싸서 해결하는게 낫겠다.
+
+  
+
+  
 
 ---
 
 ## 의견
 
-* ...
+* 13장도 무사히 마쳤다..🎉
 
   
 
