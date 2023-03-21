@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <title>표현 언어에서 사용되는 데이터emf</title>
+  <title>표현 언어에서 사용되는 데이터들</title>
 </head>
 <body>
   <h1>표현 언어에서 사용되는 데이터들</h1>
