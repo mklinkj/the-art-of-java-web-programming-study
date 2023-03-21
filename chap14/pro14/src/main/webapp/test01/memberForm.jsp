@@ -67,6 +67,7 @@
           <li><input type="button" onclick="actionSubmit('member1.jsp')" value="가입하기 (member1.jsp)"></li>
           <li><input type="button" onclick="actionSubmit('forward.jsp')" value="가입하기 (forward.jsp > member2.jsp)"></li>
           <li><input type="button" onclick="actionSubmit('member3.jsp')" value="가입하기 (member3.jsp)"></li>
+          <li><input type="button" onclick="actionSubmit('member4.jsp')" value="가입하기 (member4.jsp)"></li>
           <li><input type="reset" value="다시입력"></li>
         </ul>
       </td>
