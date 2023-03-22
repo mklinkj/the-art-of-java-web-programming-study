@@ -125,7 +125,7 @@
 
   ```groovy
   implementation "jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:${jakartaServletJspJstlApiVersion}"
-    implementation "org.glassfish.web:jakarta.servlet.jsp.jstl:${jakartaServletJspJstlVersion}"
+  implementation "org.glassfish.web:jakarta.servlet.jsp.jstl:${jakartaServletJspJstlVersion}"
   ```
 
   * 최신 구현이라도 1.2 구현도 그대로 사용할 수 있었다. (1.2버전 tld파일도 포함되어있음.)
@@ -133,7 +133,13 @@
 
 
 
+## 14.6 Core 태그 라이브러리 사용하기
 
+* ...
+
+### 14.6.1 `<c:set>` 태그를 이용한 실습
+
+* ...
 
 
 
