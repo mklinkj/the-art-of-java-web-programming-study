@@ -65,6 +65,7 @@
       <td colspan="2">
         <ul>
           <li><input type="button" onclick="actionSubmit('member1.jsp')" value="가입하기 (member1.jsp)"></li>
+          <li><input type="button" onclick="actionSubmit('member9.jsp')" value="가입하기 (member9.jsp)"></li>
           <li><input type="reset" value="다시입력"></li>
         </ul>
       </td>
