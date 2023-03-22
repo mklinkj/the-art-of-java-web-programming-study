@@ -105,6 +105,38 @@
 
 
 
+## 14.4 커스텀 태그
+
+* JSTL (JSP Standard Tag Library) 와 개발자가 만든 커스텀 태그
+
+
+
+## 14.5 JSP 표준 태그 라이브러리 (JSTL)
+
+* ...
+
+* JSTL 1.2 구현을 받을 수 있긴한데... 
+
+  * https://tomcat.apache.org/download-taglibs.cgi
+
+* 최신 Jakarta Standard Tag Library 3.0 이 구현된 라이브러리를 포함시켜놨다.
+
+  * https://jakarta.ee/specifications/tags/
+
+  ```groovy
+  implementation "jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:${jakartaServletJspJstlApiVersion}"
+    implementation "org.glassfish.web:jakarta.servlet.jsp.jstl:${jakartaServletJspJstlVersion}"
+  ```
+
+  * 최신 구현이라도 1.2 구현도 그대로 사용할 수 있었다. (1.2버전 tld파일도 포함되어있음.)
+  * Impl(`glassfish 구현체`)과 Spec(`api`) 은 대응되는 것을 넣은 것 같고, EL과 Compat는 지금 시점에 따로 안넣어줘도 되는 것 같다.
+
+
+
+
+
+
+
 
 
 
@@ -125,3 +157,4 @@
 ## 기타
 
 * 현시점에는 `isELIgnored="false"`가 기본값이기 때문에 따로 명시하지 않아도 되긴하지만.. 이번 장에서만 그냥 써주자..😅
+
