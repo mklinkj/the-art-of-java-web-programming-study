@@ -117,7 +117,7 @@
   ![image-20230310155005316](doc-resources/image-20230310155005316.png)
 
   ```jsp
-  <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+  <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
   <!DOCTYPE html>
   <html lang="ko">
     <head>
