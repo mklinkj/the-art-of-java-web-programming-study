@@ -9,10 +9,19 @@
 <jsp:useBean id="m1" class="org.mklinkj.taojwp.sec01.ex01.MemberBean"/>
 <jsp:setProperty name="m1" property="*"/>
 <jsp:useBean id="membersList" class="java.util.ArrayList" />
+<jsp:useBean id="membersMap" class="java.util.HashMap" />
+<%
+  membersMap.put("id", "park2");
+  membersMap.put("pwd", "4321");
+  membersMap.put("name", "박지성");
+  membersMap.put("email", "park2@test.com");
+%>
+
 <%
   MemberBean m2 = new MemberBean("son", "1234", "손흥민", "son@test.com");
   membersList.add(m1);
   membersList.add(m2);
+  membersMap.put("membersList", membersList);
 %>
 
 
@@ -67,16 +76,22 @@
     <th class="th-email">이메일</th>
   </tr>
   <tr>
-    <td>${membersList[0].id}</td>
-    <td>${membersList[0].pwd}</td>
-    <td>${membersList[0].name}</td>
-    <td>${membersList[0].email}</td>
+    <td>${membersMap.id}</td>
+    <td>${membersMap.pwd}</td>
+    <td>${membersMap.name}</td>
+    <td>${membersMap.email}</td>
   </tr>
   <tr>
-    <td>${membersList[1].id}</td>
-    <td>${membersList[1].pwd}</td>
-    <td>${membersList[1].name}</td>
-    <td>${membersList[1].email}</td>
+    <td>${membersMap.membersList[0].id}</td>
+    <td>${membersMap.membersList[0].pwd}</td>
+    <td>${membersMap.membersList[0].name}</td>
+    <td>${membersMap.membersList[0].email}</td>
+  </tr>
+  <tr>
+    <td>${membersMap.membersList[1].id}</td>
+    <td>${membersMap.membersList[1].pwd}</td>
+    <td>${membersMap.membersList[1].name}</td>
+    <td>${membersMap.membersList[1].email}</td>
   </tr>
   </tbody>
 </table>

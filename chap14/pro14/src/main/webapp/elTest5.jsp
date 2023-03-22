@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
 <jsp:useBean id="m1" class="org.mklinkj.taojwp.sec01.ex01.MemberBean" scope="page"/>
 <jsp:setProperty name="m1" property="name" value="이순신"/>
