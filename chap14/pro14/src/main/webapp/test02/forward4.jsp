@@ -1,0 +1,20 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ page import="static org.mklinkj.taojwp.common.Constants.SERVER_ENCODING" %>
+
+<%
+  request.setCharacterEncoding(SERVER_ENCODING);
+  request.setAttribute("id", "hong");
+  request.setAttribute("pwd", "1234");
+  session.setAttribute("name", "홍길동");
+  application.setAttribute("email", "hong@test.com");
+  request.setAttribute("address", "서울시 강남구");
+%>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <title>forward4</title>
+</head>
+<body>
+  <jsp:forward page="member4.jsp"></jsp:forward>
+</body>
+</html>
