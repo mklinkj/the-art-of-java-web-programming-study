@@ -16,6 +16,6 @@
   매개변수3: <input type="text" name="param3"> <br>
   <input type="submit" value="업로드">
 </form>
-
+<a href="${contextPath}/index.html">처음으로 돌아가기...</a>
 </body>
 </html>

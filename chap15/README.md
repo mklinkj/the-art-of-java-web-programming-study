@@ -19,7 +19,8 @@
 
 * https://jakarta.ee/specifications/servlet/6.0/jakarta-servlet-spec-6.0.html#file-upload
 
-3.2. 파일 업로드
+##### 3.2. 파일 업로드
+
 서블릿 컨테이너를 사용하면 데이터가 multipart/form-data로 전송될 때 파일을 업로드할 수 있습니다.
 
 서블릿 컨테이너는 다음 조건 중 하나라도 충족되면 multipart/form-data 처리를 제공합니다.
@@ -163,10 +164,7 @@ public class FileUpload extends HttpServlet {
 ## 15.2 JSP에서 파일 다운로드
 
 * ...
-
-
-
-
+* 이부분은 서블릿 스팩이나 기타 라이브러리하고는 크게 관련은 없긴하다. Java의 기능으로 시스템의 파일을 응답으로 내려주는 것이여서... 😅
 
 
 
@@ -177,7 +175,9 @@ public class FileUpload extends HttpServlet {
 
 ## 의견
 
-* ...
+* 이번 장은 commons-upload를 쓰지 않고 진행을 해보긴 했는데... 그런대로 잘 되긴 한 것 같다. 😅 무사히 마쳤음.🎉
+
+* 테스트를 어떤식으로 할지는 아직 잘 모르겠는데.. 나중에 천천히 추가해보자..😅
 
   
 

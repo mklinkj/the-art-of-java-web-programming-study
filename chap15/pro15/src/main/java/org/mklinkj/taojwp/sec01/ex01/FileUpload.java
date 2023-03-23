@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @WebServlet("/upload.do")
 @MultipartConfig(
-    fileSizeThreshold = 1 * MEGA_BYTE,
+    fileSizeThreshold = MEGA_BYTE,
     maxFileSize = 10 * MEGA_BYTE,
     maxRequestSize = 15 * MEGA_BYTE,
     location = "C:\\upload\\art_of_java_web")
