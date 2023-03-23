@@ -303,10 +303,29 @@
 
 * 575쪽
   * 안쪽 `<c:choose>`의 A학점 조건에서 100점도 포함되도록 `=`를 추가해야함
+
 * 596쪽
+
   * 뉴욕에 대한 ZoneId가 잘못됨
     * `"America/New York"`> `"America/New_York"`
 
+* 599쪽
+
+  ```jsp
+  fn:substring(title1, 3, 6) = ${fn:substring(title1, 3, 6)}<br> <!-- "lo " -->
+  fn:substring('01234567890', 3, 6) = ${fn:substring('01234567890', 3, 6)}<br> <!-- "345" -->
+  ```
+
+  입력이 둘다 인덱스인데...
+
+  ```
+  beginIndex – the beginning index, inclusive.
+  endIndex – the ending index, exclusive.
+  ```
+
+  3번인덱스 부터 6번 인덱스 전까지 잘라서 보여주는 것이니..
+
+  문자열에서 4 ~ 6 번째 문자열을 반환한다고 설명이 붙는게 맞는 것 같다.
 
 
 
