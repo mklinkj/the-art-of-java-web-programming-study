@@ -208,7 +208,8 @@
 
 * IntelliJ에서는 이미 해당 기능이 포함되어있다.
 
-  * UTF-8로 먼저 읽고 실패시 ISO-8859-1로 읽음 (Java 9 부터.. Java 8 환경이라면 ISO-8859-1로 인코딩하고 한글 같은 것은 유니코드로 이스케이프해야함.)
+  * Java 9 부터.. UTF-8로 먼저 읽고 실패시 ISO-8859-1로 읽음 (Java 8 환경이라면 ISO-8859-1로 인코딩하고 한글 같은 것은 유니코드로 이스케이프해야함.)
+  * 결국 아래 설정은 다시 UTF-8로 바꾸고 `명확한 Native에서 ASCII로 변환` 체크도 해제함..😅
   
   ![image-20230323012643802](doc-resources/image-20230323012643802.png)
   
@@ -241,7 +242,43 @@
 
 * ...
 
+* 그런데 지금 JSTL 3.0에서는 LocalDate, LocalDateTime을 처리할 수 있는지? 알아봐야겠다..
 
+  * 이전 것들이 안되어서, `https://github.com/sargue/java-time-jsptags` 이 라이브러리를 써오긴 했음.
+
+  * IntelliJ에서 에디터 상에 오류가 표시되도 3.0 으로 tld 선언을 한뒤에 확인해보면 되겠다.
+
+    ```jsp
+    <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+    <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+    ```
+
+    역시 확인해보니.. foramatDate는 Date만 가능하다.. 내부에서는 
+
+    `org.apache.taglibs.standard.tag.rt.fmt.FormatDateTag`를 사용하는데 Date 입력만 받음. 😅
+
+    formatDate에 대한 스팩이 바뀐것은 없나보다..
+
+* ✨ `java-time-jsptags` 예제를 추가해봄 잘 동작한다.
+
+  ```jsp
+    <h2>java-time-jsptags 모듈 사용 예제</h2>
+    <c:set var="localDateTime" value="<%=LocalDateTime.now() %>" />
+    <javatime:format value="${localDateTime}" style="F-" /><br>
+    <javatime:format value="${localDateTime}" style="S-" /><br>
+    <javatime:format value="${localDateTime}" style="-M" /><br>
+    <javatime:format value="${localDateTime}" style="FF" /><br>
+    <javatime:format value="${localDateTime}" pattern="yyyy-MM-dd hh:mm:ss" /><br><br>
+  
+    <c:set var="zonedDateTime" value="<%=ZonedDateTime.now() %>" />
+    한국 현재 시간:
+    <javatime:format value="${zonedDateTime}" style="FF" /><br>
+    뉴욕 현재 시간:
+    <javatime:format value="${zonedDateTime}" style="FF" zoneId="America/New_York" /><br>
+    <br><br>
+  ```
+
+  
 
 
 
@@ -260,6 +297,10 @@
 
 * 575쪽
   * 안쪽 `<c:choose>`의 A학점 조건에서 100점도 포함되도록 `=`를 추가해야함
+* 596쪽
+  * 뉴욕에 대한 ZoneId가 잘못됨
+    * `"America/New York"`> `"America/New_York"`
+
 
 
 
