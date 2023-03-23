@@ -194,6 +194,47 @@
 
 
 
+## 14.8 다국어 태그 라이브러리 사용하기
+
+* ...
+
+
+
+## 14.9 한글을 아스키 코드로 변환하기
+
+* 한글을 유니코드의 코드값으로 저장하는 것 같은데...
+
+* Eclipse가 아니니 Properties Editor는 따로 설치할 수 없고, IntelliJ에서 확인해보자!!
+
+* IntelliJ에서는 이미 해당 기능이 포함되어있다.
+
+  * 중요한 건... 프로퍼티 파일을  ISO 8859-1 인코딩으로 저장해야함.
+  
+  * 관련 프로퍼티를 읽는 Java의 클래스가 프러퍼티 파일의 인코딩이 ISO08859-1일 것으로 간주하고 한글 같은 것은 유니코드 값으로 읽어들임.
+  
+    ![image-20230323012643802](doc-resources\image-20230323012643802.png)
+  
+* 내 환경의 경우는 그냥 `src/main/resouces`에 `messages` 폴더 하나 만들고 거기에 메시지 프로퍼티 파일을 모아둠.
+
+  ![image-20230323112703822](doc-resources/image-20230323112703822.png)
+
+* JSP에서는 아래와 같이 사용함.
+
+  ```jsp
+  <fmt:setLocale value="en_US" />
+  <%--<fmt:setLocale value="ko_KR" />--%>
+  <h1>
+    회원정보<br><br>
+    <fmt:bundle basename="messages.member" prefix="mem." >
+      이름:<fmt:message key="name" /><br>
+      주소:<fmt:message key="address" /><br>
+      직업:<fmt:message key="job" />
+    </fmt:bundle>
+  </h1>
+  ```
+
+  
+
 
 
 
