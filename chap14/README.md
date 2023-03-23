@@ -286,7 +286,48 @@
 
 
 
+## 14.12 표현 언어와 JSTL을 이용한 회원 관리 실습
 
+* ...
+
+* 아래처럼 써보고 싶었는데... 힘들다..
+
+  ```jsp
+  <jsp:useBean  id="m" class="org.mklinkj.taojwp.sec02.ex01.MemberBean" />
+  <jsp:setProperty name="m" property="*" />
+  
+  <%
+    final MemberDAO memberDAO = new MemberDAO();
+    Optional.ofNullable(m.getId()) //
+        .filter(id -> !id.isBlank()) //
+        .ifPresent(c ->
+            memberDAO.addMember(m)
+        );
+    List<MemberBean> memberList = memberDAO.listMembers();
+    request.setAttribute("memberList", memberList);
+  %>
+  ```
+
+  람다식 내부에서 사용하는 외부의 m변수가 final이 아니여서 오류남..
+
+  ```jsp
+  <jsp:useBean  id="m" class="org.mklinkj.taojwp.sec02.ex01.MemberBean" />
+  <jsp:setProperty name="m" property="*" />
+  
+  <%
+    final MemberBean member = m;  // final 참조로 옮겨담아주면 되긴함. 🎃
+    final MemberDAO memberDAO = new MemberDAO();
+    Optional.ofNullable(m.getId()) //
+        .filter(id -> !id.isBlank()) // id를 강제로 null로 고정했을 때, 여기서 NPE발생할지 궁금했는데.. 안남.
+        .ifPresent(c ->
+            memberDAO.addMember(member)
+        );
+    List<MemberBean> memberList = memberDAO.listMembers();
+    request.setAttribute("memberList", memberList);
+  %>
+  ```
+
+  위와 같이 하면 되긴된다... 😅
 
 
 
@@ -295,13 +336,14 @@
 
 ## 의견
 
-* ...
+* 14장 거의 100 페이지가 넘는... 대분량이였는데.. 잘 마쳤다.. 👍
 
   
 
 ## 정오표
 
 * 575쪽
+
   * 안쪽 `<c:choose>`의 A학점 조건에서 100점도 포함되도록 `=`를 추가해야함
 
 * 596쪽
