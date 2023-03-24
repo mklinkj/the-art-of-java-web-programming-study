@@ -27,7 +27,7 @@ dependencies {
   implementation "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
 
   implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonDatabindVersion}"
-  
+
   runtimeOnly "com.oracle.database.jdbc:ojdbc8:${ojdbcVersion}"
 
   grettyRunnerTomcat10 "org.apache.tomcat:tomcat-dbcp:${tomcat10Version}"
@@ -52,6 +52,22 @@ dependencies {
 
   testImplementation "org.springframework:spring-test:${springVersion}"
   testImplementation "org.springframework:spring-web:${springVersion}"
+
+  implementation "org.webjars:jquery:${jqueryVersion}"
+}
+
+tasks.register('expandPropsWebapp', Copy) {
+  from 'src/main/webapp'
+  into "$buildDir/expandPropsWebapp"
+  filesMatching(["**/*.html", "**/*.jsp"], {
+    expand(jqueryVersion: "${jqueryVersion}")
+  })
+  filteringCharset = 'UTF-8'
+}
+
+war {
+  dependsOn('expandPropsWebapp')
+  webAppDirectory = file("$buildDir/expandPropsWebapp")
 }
 
 // gradle appRun 으로 실행

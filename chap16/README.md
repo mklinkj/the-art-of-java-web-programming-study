@@ -27,6 +27,32 @@
 
 
 
+## 16.3 제이쿼리 주요 개념
+
+* ...
+
+* webjars로 한번 써볼까해서 넣어봤는데...
+
+  * https://www.webjars.org/documentation#servlet3
+
+  * https://www.webjars.org/documentation#servlet2
+
+  * 지금 서블릿 3.0이상이기 때문에 특별히 추가할 것은..
+
+    ```groovy
+    implementation 'org.webjars:jquery:3.6.3'
+    ```
+
+    위의 내용만 추가하고 사용처에서는 단지... 아래 내용만 추가해주면 되는 것 같다.
+
+    ```html
+    <script src="webjars/jquery/3.6.3/jquery.min.js"></script>
+    ```
+
+    버전을 빼는 방법을 해보려했는데.. 잘안된다... locator를 추가해도 잘 안되는 듯..😓
+
+  
+
 
 
 
