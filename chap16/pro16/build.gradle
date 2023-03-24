@@ -58,7 +58,7 @@ dependencies {
 
 tasks.register('expandPropsWebapp', Copy) {
   from 'src/main/webapp'
-  into "$buildDir/expandPropsWebapp"
+  into "$buildDir/inplaceWebapp"
   filesMatching(["**/*.html", "**/*.jsp"], {
     expand(jqueryVersion: "${jqueryVersion}")
   })
@@ -66,8 +66,11 @@ tasks.register('expandPropsWebapp', Copy) {
 }
 
 war {
+  webAppDirectory = file("$buildDir/inplaceWebapp")
+}
+
+processResources {
   dependsOn('expandPropsWebapp')
-  webAppDirectory = file("$buildDir/expandPropsWebapp")
 }
 
 // gradle appRun 으로 실행
@@ -75,7 +78,7 @@ gretty {
   httpPort = 8090
   contextPath = project.name
   servletContainer = "tomcat10"
-  inplaceMode = "hard"
+  inplaceMode = "soft"
   loggingLevel = "DEBUG"
   contextConfigFile = "${project.webAppDir}/META-INF/context.xml"
   enableNaming = true
