@@ -2,17 +2,17 @@ package org.mklinkj.taojwp.sec01.ex01;
 
 import static org.mklinkj.taojwp.common.CommonUtils.fileNameOnly;
 import static org.mklinkj.taojwp.common.Constants.MEGA_BYTE;
-import static org.mklinkj.taojwp.common.Constants.SERVER_ENCODING;
+import static org.mklinkj.taojwp.common.Constants.UTF_8_ENCODING;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.UUID;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -31,7 +31,7 @@ public class FileUpload extends AbstractHttpServlet {
   @Override
   protected void doHandle(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
-    request.setCharacterEncoding(SERVER_ENCODING);
+    request.setCharacterEncoding(UTF_8_ENCODING);
 
     Collection<Part> parts = request.getParts();
     for (Part p : parts) {
@@ -41,8 +41,9 @@ public class FileUpload extends AbstractHttpServlet {
         LOGGER.info("매개변수 이름: {}", p.getName());
         LOGGER.info("파일 이름: {}", p.getSubmittedFileName());
         LOGGER.info("파일 크기: {}", p.getSize());
-
-        p.write(UUID.randomUUID() + "__" + fileNameOnly(p.getSubmittedFileName()));
+        if (p.getSize() > 0) {
+          p.write(UUID.randomUUID() + "__" + fileNameOnly(p.getSubmittedFileName()));
+        }
       }
     }
     response.sendRedirect("test01/uploadForm.jsp");

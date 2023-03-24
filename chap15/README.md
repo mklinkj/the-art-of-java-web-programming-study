@@ -189,5 +189,42 @@ public class FileUpload extends HttpServlet {
 
 ## 기타
 
-* ...
+### Commons FileUpload 테스트를 위해 Servlet 4 프로젝트 추가
+
+> 그냥 넘어가려다가.. 지금 환경에서 프로젝트를 분기하는 것이 어려운 일은 아니여서 진행해보았다.
+>
+> * Servlet 4 + Tomcat 9
+
+common-fileupload가 Servlet API 의 클래스들을 사용하고 있고, Servlet 6 부터는 패키지 변경으로 호환성이 끊어져서, 사용이 불가능하다... 
+
+Servlet 4까지는 두 방법 모두 사용가능함을 확인했다.
+
+![image-20230324220241852](doc-resources/image-20230324220241852.png)
+
+#### 프로젝트
+
+* [pro15-servlet4](pro15-servlet4)
+
+
+
+
+
+### Threshold 가 초과하는 파일이 업로드 될 때...
+
+```java
+    DiskFileItemFactory factory = new DiskFileItemFactory();
+
+    factory.setSizeThreshold(uploadProps.threshold);
+    // 설정을 하지 않으면 시스템 OS 임시 폴더경로에 저장을 할 텐데,
+    // 최종 업로드 경로를 지정하는 것이 아니고 메모리 처리 한계를 넘늠 파일이 업로드 될 때,
+    // 보조 기억 장치(HDD, SSD)에 임시 저장하는 경로 설정이다.
+    // threshold를 1MB로 설정했으므로, 1MB 넘는 것은 임시 디렉토리에 저장되면서 처리될 수 있다.
+    factory.setRepository(uploadProps.uploadTempDir.toFile());
+```
+
+
+
+![image-20230324215806629](doc-resources/image-20230324215806629.png)
+
+로컬에서 테스트 할 때..  Threshold가 넘어가는 파일을 업로드하더라도 파일 업로드가 제대로 되는지 확인을 잘 못하는 경우가 있는데.. 빨리처리되서 그런 듯 하다.. 2GB이상의 Rocky Linux 이미지를 업로드 할 때는 temp 경로에 임시 파일이 만들어지는 것을 확인할 수 있다.
 

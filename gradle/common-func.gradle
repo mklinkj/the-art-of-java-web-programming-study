@@ -1,0 +1,16 @@
+// 윈도우 환경일 경우 upload 파일 디렉토리가 없을 경우 만듦.
+ext.makeUploadDir = { ->
+  if (!System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+    return
+  }
+
+  def uploadDir = new File("C:/upload/art_of_java_web")
+  if (!uploadDir.exists()) {
+    uploadDir.mkdirs()
+  }
+  
+  def uploadTempDir = new File("C:/upload/art_of_java_web/temp")
+  if (!uploadTempDir.exists()) {
+    uploadTempDir.mkdirs()
+  }
+}
