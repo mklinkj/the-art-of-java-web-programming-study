@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>ID 선택자 연습2</title>
+  <script src="@contextPath@/webjars/jquery/@jqueryVersion@/jquery.min.js"></script>
+</head>
+<body>
+<div>
+  <p id="article"></p>
+</div>
+<input type="button" value="추가하기" onclick="addHtml()">
+<script>
+  function addHtml() {
+    $("#article").html('안녕하세요<br>')
+  }
+</script>
+</body>
+</html>

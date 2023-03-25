@@ -56,11 +56,12 @@ dependencies {
   implementation "org.webjars:jquery:${jqueryVersion}"
 }
 
+import org.apache.tools.ant.filters.ReplaceTokens
 tasks.register('expandPropsWebapp', Copy) {
   from 'src/main/webapp'
   into "$buildDir/inplaceWebapp"
   filesMatching(["**/*.html", "**/*.jsp"], {
-    expand(jqueryVersion: "${jqueryVersion}")
+    filter(ReplaceTokens, tokens: [jqueryVersion: jqueryVersion, contextPath: "/" + project.name])
   })
   filteringCharset = 'UTF-8'
 }

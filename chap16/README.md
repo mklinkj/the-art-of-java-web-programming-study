@@ -35,7 +35,7 @@
 
   * https://www.webjars.org/documentation#servlet3
 
-  * https://www.webjars.org/documentation#servlet2
+  * 
 
   * 지금 서블릿 3.0이상이기 때문에 특별히 추가할 것은..
 
@@ -50,8 +50,32 @@
     ```
 
     버전을 빼는 방법을 해보려했는데.. 잘안된다... locator를 추가해도 잘 안되는 듯..😓
-
+    
+    * Gradle Build 스크립트에서 버전부분을 치환해주는 방법으로 해결했다. 😄
+    
+      * https://github.com/mklinkj/the-art-of-java-web-programming-study/issues/7
+    
+    * 그런데... 약간의 이슈가... IDE에디터에서 편집을 할 때..
+    
+      ```html
+      <script src="/webjars/jquery/${jqueryVersion}/jquery.min.js"></script>
+      ```
+    
+      위와 같이 처리되어 있는 부분에 대해서 
+    
+      ![image-20230325184458259](doc-resources/image-20230325184458259.png)
+    
+      위처럼 경고가 나타나긴 하는데, 에러로 간주하진 않고 실제 코드를 입력하면서 참조할 때.. 선언선택으로 실제 경로를 선택해서 구현을 볼 수 있음.
   
+  
+
+## 16.4 제이쿼리의 여러가지 기능
+
+* ...
+
+### 16.4.1 제이쿼리 선택자 사용 실습
+
+* ...
 
 
 
