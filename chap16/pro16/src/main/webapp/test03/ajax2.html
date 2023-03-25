@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>jQuery AJAX 요청 테스트</title>
+  <script src="@contextPath@/webjars/jquery/@jqueryVersion@/jquery.min.js"></script>
+</head>
+<body>
+  <input type="button" value="책 목록 요청" onclick="fn_process()"><br><br>
+  <div id="bookInfo"></div>
+  <script type="text/javascript">
+    function fn_process() {
+      $.ajax({
+        dataType: "text",
+        async: false,
+        url: "http://localhost:8090@contextPath@/ajaxTest2",
+        dataType: "xml",
+        success: function (data, textStatus) {
+          $(data).find("book").each(function() {
+            const title = $(this).find("title").text();
+            const writer = $(this).find("writer").text();
+            const image = $(this).find("image").text();
+
+            $("#bookInfo").append(
+                "<p>" + title + "</p>" +
+                "<p>" + writer + "</p>" +
+                `<img src='${image}' />`
+            );
+          });
+
+
+        },
+        error: function (data, textStatus) {
+          alert("에러가 발생했습니다.");
+        },
+        complete: function (data, textStatus) {
+          alert("작업을 완료했습니다.");
+        }
+      });
+    }
+  </script>
+</body>
+</html>
