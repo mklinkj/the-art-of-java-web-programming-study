@@ -30,6 +30,8 @@ dependencies {
 
   runtimeOnly "com.oracle.database.jdbc:ojdbc8:${ojdbcVersion}"
 
+  implementation "org.mybatis:mybatis:${mybatisVersion}"
+
   grettyRunnerTomcat10 "org.apache.tomcat:tomcat-dbcp:${tomcat10Version}"
 
   compileOnly "jakarta.servlet:jakarta.servlet-api:${jakartaServletApiVersion}"

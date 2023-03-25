@@ -95,6 +95,26 @@
 
 * ...
 
+### 16.5.4 ID 중복 여부 확인하기
+
+> MyBatis에서는 이미 잘 알고 있으니, 책에 JDBC 코드 사용 부분 MyBatis로 전환하자. 
+>
+> 책의 코드는 한번 내용만 보고, MyBatis나 Hibernate로 바꿔서 적용하는게 지루하지 않겠다. 👍
+
+* MyBatis를 잘 추가하였다.. Spring이 다 알아서 해주는 환경에서만 쓰다보니... 잘몰랐던 점이 있는데...
+
+  * MyBatis의 openSession()으로 얻을 때.. 인자주지 않으면 autoCommit이 false이다.
+
+  * 테스트 할 때.. autoCommit을 false로 설정한다는 로그가 보여서 뭔가?했음...
+
+    ```
+    00:55:57.332 [Test worker] DEBUG org.apache.ibatis.transaction.jdbc.JdbcTransaction - Opening JDBC Connection
+    00:55:57.363 [Test worker] DEBUG org.apache.ibatis.transaction.jdbc.JdbcTransaction - Setting autocommit to false on JDBC Connection [oracle.jdbc.driver.T4CConnection@3a5c2626]
+    ...
+    ```
+
+    
+
 
 
 

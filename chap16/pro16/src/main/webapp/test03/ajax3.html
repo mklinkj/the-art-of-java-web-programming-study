@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>ID 중복 여부 확인하기</title>
+  <script src="@contextPath@/webjars/jquery/@jqueryVersion@/jquery.min.js"></script>
+</head>
+<body>
+<input type="text" id="t_id">
+<input type="button" id="btn_duplicate" value="ID 중복 체크하기" onclick="fn_process()"><br><br>
+<div id="message"></div>
+
+<script type="text/javascript">
+  function fn_process() {
+    const _id = $("#t_id").val();
+    if (_id == '') {
+      alert("ID를 입력하세요");
+      return;
+    }
+
+    $.ajax({
+      dataType: "text",
+      async: false,
+      url: "http://localhost:8090@contextPath@/mem",
+      dataType: "text",
+      data: {id: _id},
+      success: function (data, textStatus) {
+        if (data == 'usable') {
+          $('#message').text("사용할 수 있는 ID 입니다.");
+          $('#btn_duplicate').prop("disabled", true);
+        } else {
+          $('#message').text("사용할 수 없는 ID 입니다.");
+        }
+      },
+      error: function (data, textStatus) {
+        console.log("에러가 발생했습니다.");
+      },
+      complete: function (data, textStatus) {
+        console.log("작업을 완료했습니다.");
+      }
+    });
+  }
+</script>
+</body>
+</html>
