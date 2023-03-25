@@ -1,7 +1,6 @@
 package org.mklinkj.taojwp.sec01.ex01;
 
 import static org.mklinkj.taojwp.common.CommonUtils.fileNameOnly;
-import static org.mklinkj.taojwp.common.Constants.MEGA_BYTE;
 import static org.mklinkj.taojwp.common.Constants.UTF_8_ENCODING;
 
 import java.io.IOException;
@@ -20,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.mklinkj.taojwp.common.ProjectDataUtils;
 
 @Slf4j
 @WebServlet("/commonsFileUpload.do")
@@ -80,11 +80,14 @@ public class FileCommonsUpload extends AbstractHttpServlet {
   @ToString
   public static class UploadProps {
     /** 파일이 디스크에 직접 기록되는 크기 임계값 */
-    @Default public int threshold = MEGA_BYTE;
+    @Default public int threshold = ProjectDataUtils.getIntProperty("fileUpload.threshold");
 
     /** 임시로 저장할 파일 경로 */
-    @Default private Path uploadDir = Paths.get("C:\\upload\\art_of_java_web");
+    @Default
+    private Path uploadDir = Paths.get(ProjectDataUtils.getProperty("fileUpload.uploadDir"));
 
-    @Default private Path uploadTempDir = Paths.get("C:\\upload\\art_of_java_web\\temp");
+    @Default
+    private Path uploadTempDir =
+        Paths.get(ProjectDataUtils.getProperty("fileUpload.uploadTempDir"));
   }
 }
