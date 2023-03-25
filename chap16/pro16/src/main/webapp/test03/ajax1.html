@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>jQuery AJAX 요청 테스트</title>
+  <script src="@contextPath@/webjars/jquery/@jqueryVersion@/jquery.min.js"></script>
+</head>
+<body>
+  <input type="button" value="전송하기" onclick="fn_process()"><br><br>
+  <div id="message"></div>
+  <script type="text/javascript">
+    function fn_process() {
+      $.ajax({
+        dataType: "text",
+        async: false,
+        url: "http://localhost:8090@contextPath@/ajaxTest1",
+        data: {param: "Hello, jQuery"},
+        success: function (data, textStatus) {
+          $('#message').append(data);
+        },
+        error: function (data, textStatus) {
+          alert("에러가 발생했습니다.");
+        },
+        complete: function (data, textStatus) {
+          alert("작업을 완료했습니다.");
+        }
+      });
+    }
+  </script>
+</body>
+</html>
