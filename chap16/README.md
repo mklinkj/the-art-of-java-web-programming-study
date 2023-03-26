@@ -135,7 +135,28 @@
         );
   ```
 
-  
+
+
+### 16.6.2 Ajax 이용해 서버와 JSON 데이터 주고받기
+
+> 나는 jackson-databind를 사용했다.
+
+* JSON 응답 검증에 `JsonUnit`이 상당히 좋아보인다. 적용해봤다. 👍
+
+  * https://github.com/lukas-krecan/JsonUnit
+
+    ```java
+    assertThatJson(response.getContentAsString())
+      .and( //
+          a -> a.node("name").isEqualTo("박지성"), //
+          a -> a.node("age").isEqualTo(25),
+          a -> a.node("gender").isEqualTo("남자"),
+          a -> a.node("nickname").isEqualTo("날센돌이"));
+    ```
+
+  * ...
+
+
 
 
 
@@ -144,8 +165,13 @@
 
 ## 의견
 
-* ...
+* 16장을 마쳤다...  jQuery 쓰지않고 최신 ES 자바스크립트 코드로 바꾸는 것은 안하기로 했음..😂
 
+* 앞으로도 책의 코드에 대한 테스트를 추가하고, 단순화하는 식으로 진행하는 것이 좋겠다. 👍 다음에 할 17장 내용이 확실히 복잡할 것 같긴함..
+
+  * 최대한 레거시 코드를 단순화할 수 있는 오픈소스 활용하기.. 그렇다고 너무 고도화되게 쓰진 말기.. 그러면 책에서 전달하고자하는 의미를 모르게되서.. 😅
+  * 답글 구현에 Oracle 쿼리의 기능으로 되어있는데... 이부분은 MariaDB나 HSQLDB 쿼리로 바꿀 수 있는지도 해봐야겠다.
+  
   
 
 

@@ -11,5 +11,7 @@ public class Constants {
   public static final String HTML_CONTENT_TYPE =
       String.format("text/html;charset=%s", UTF_8_ENCODING);
 
+  public static final String JSON_CONTENT_TYPE = "application/json";
+
   public static final int MEGA_BYTE = 1024 * 1024;
 }
