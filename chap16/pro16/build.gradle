@@ -5,10 +5,6 @@ plugins {
   id 'war'
 }
 
-apply from: "../../gradle/common-func.gradle"
-
-makeUploadDir()
-
 java {
   toolchain {
     languageVersion = JavaLanguageVersion.of("${javaVersion}")

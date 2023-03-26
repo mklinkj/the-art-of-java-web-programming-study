@@ -103,7 +103,7 @@
 
 * MyBatis를 잘 추가하였다.. Spring이 다 알아서 해주는 환경에서만 쓰다보니... 잘몰랐던 점이 있는데...
 
-  * MyBatis의 openSession()으로 얻을 때.. 인자주지 않으면 autoCommit이 false이다.
+  * MyBatis의 openSession()으로 얻을 때.. 아무 인자 없이 사용하면 autoCommit이 false이다.
 
   * 테스트 할 때.. autoCommit을 false로 설정한다는 로그가 보여서 뭔가?했음...
 
@@ -115,7 +115,15 @@
 
     
 
+## 16.6 제이쿼리에서 JSON 사용하기
 
+> 저자님은 json-simple 이라는 라이브러리 사용하셨는데, 나는 현시점으로 보편적인 jackson-databind를 사용하자.
+
+* ...
+
+### 16.6.1 JSON의 자료형 사용 실습
+
+* ...
 
 
 

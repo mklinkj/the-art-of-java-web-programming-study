@@ -33,7 +33,7 @@ public class MemberServlet extends AbstractHttpServlet {
     MemberDAO memberDAO = new MemberDAO();
     boolean overlappedId = memberDAO.overlappedId(id);
 
-    if (overlappedId == true) {
+    if (overlappedId) {
       writer.print("not_usable");
     } else {
       writer.print("usable");
