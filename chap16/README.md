@@ -125,6 +125,18 @@
 
 * ...
 
+* JSP에서 백틱 안 변수참조를 사용할 때는... `$`를 이스케이프하자.
+
+  ```javascript
+        jsonInfo.name.forEach(
+            (i) => {
+              output += `\${i}<br>`; // 이지점에서는
+            }
+        );
+  ```
+
+  
+
 
 
 
@@ -139,7 +151,13 @@
 
 ## 정오표
 
-* ...
+* p651 코드 16-17의 주석
+  
+  * JSON.parse() 가 제이쿼리의 기능으로 설명이라고 되어있는데, 이 메서드는 브라우저의 기본 메서드.
+    * IE 9부터 제공되었던 것 같다.
+  
+  * jQuery에서 제공하는 JSON 파싱 메서드는 $.parseJSON() 이고, jquery 1.4.1 ~ 2.x 버전에서 사용가능, 3.x에서는 Deprecated됨
+    * https://api.jquery.com/jquery.parsejson/
   
   
 
