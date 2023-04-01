@@ -11,4 +11,10 @@ public interface MemberMapper {
   int addMember(MemberVO memberVO);
 
   List<MemberVO> listMembers();
+
+  MemberVO findMember(String id);
+
+  int modMember(MemberVO memberVO);
+
+  int delMember(String id);
 }

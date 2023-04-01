@@ -13,4 +13,24 @@
       FROM t_member
      ORDER BY joinDate DESC
   </select>
+
+  <select id="findMember" parameterType="string" resultType="member">
+    SELECT id, pwd, name, email, joinDate
+      FROM t_member
+     WHERE id=#{id}
+  </select>
+
+  <update id="modMember" parameterType="member">
+    UPDATE t_member
+       SET pwd = #{pwd}
+         , name = #{name}
+         , email = #{email}
+     WHERE id = #{id}
+  </update>
+
+  <delete id="delMember" parameterType="string">
+    DELETE
+      FROM T_MEMBER
+     WHERE id = #{id}
+  </delete>
 </mapper>

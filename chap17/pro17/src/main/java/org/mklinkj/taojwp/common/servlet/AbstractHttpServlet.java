@@ -4,7 +4,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Collections;
 
 public abstract class AbstractHttpServlet extends HttpServlet {
 
@@ -22,4 +24,28 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 
   protected void doHandle(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {}
+
+  private static final String FLASH_KEY_PREFIX = "flash___";
+
+  protected void setFlashAttribute(HttpServletRequest request, String key, Object value) {
+    request.getSession().setAttribute(FLASH_KEY_PREFIX + key, 1);
+    request.getSession().setAttribute(key, value);
+  }
+
+  protected void cleanFlashAttribute(HttpServletRequest request) {
+    HttpSession session = request.getSession();
+    Collections.list(request.getSession().getAttributeNames())
+        .forEach(
+            n -> {
+              if (n.startsWith(FLASH_KEY_PREFIX)) {
+                int count = (int) session.getAttribute(n);
+                if (count == 1) {
+                  session.setAttribute(n, 0);
+                } else {
+                  session.removeAttribute(n);
+                  session.removeAttribute(n.replace(FLASH_KEY_PREFIX, ""));
+                }
+              }
+            });
+  }
 }

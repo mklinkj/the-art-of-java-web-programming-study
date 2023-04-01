@@ -34,7 +34,7 @@ class MemberControllerTest extends MockHttpServletTestSupport<MemberController> 
         () -> servlet.doHandle(request, response), //
         () -> {
           assertThat(response.getStatus()).isEqualTo(HttpStatus.FOUND.value());
-          assertThat(response.getRedirectedUrl()).isEqualTo("/member/listMembers.do");
+          assertThat(response.getRedirectedUrl()).isEqualTo("/member1/listMembers.do");
         });
   }
 
@@ -47,6 +47,6 @@ class MemberControllerTest extends MockHttpServletTestSupport<MemberController> 
   protected String getServletPath() {
     // 구동해서 로그 찍어봄..
     // /member/* 게 설정되어있을 때.. 뒤에 무슨 값이 나오든.. 앞의 경로까지만 들어온다.
-    return "/member";
+    return "/member1";
   }
 }

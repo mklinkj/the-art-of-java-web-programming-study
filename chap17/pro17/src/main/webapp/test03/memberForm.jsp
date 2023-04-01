@@ -19,7 +19,7 @@
 
 <div class="card d-flex justify-content-center mx-auto col-6">
   <div class="card-body ">
-    <form method="post" action="${contextPath}/member1/addMember.do">
+    <form method="post" action="${contextPath}/member2/addMember.do">
       <div class="row mb-3">
         <label for="inputId3" class="col-sm-3 col-form-label">아이디</label>
         <div class="col-sm-8">
