@@ -60,7 +60,10 @@
 ### 17.3.3 회원 정보 수정 및 삭제 기능 구현
 
 * ...
-* 
+* Spring의 FlashAttribute 비슷하게 구현해서 추가
+* 결과 alert에 대해 BootStrap의 modal로 적용
+* https://getbootstrap.com/docs/5.2/forms/form-control/#readonly
+  * 5.2 환경에서 readonly의 배경 색은 흰색임.
 
 
 

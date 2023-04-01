@@ -80,8 +80,13 @@ public class MemberController extends AbstractHttpServlet {
 
     } else if (action.equals("/delMember.do")) {
       String id = request.getParameter("id");
-      memberDAO.delMember(id);
-      setFlashAttribute(request, "msg", "deleted");
+      int deletedCount = memberDAO.delMember(id);
+      if (deletedCount != 1) {
+        setFlashAttribute(request, "msg", "no deleted");
+      } else {
+        setFlashAttribute(request, "msg", "deleted");
+      }
+
       nextPage = String.format("redirect:%s/listMembers.do", request.getServletPath());
     }
 

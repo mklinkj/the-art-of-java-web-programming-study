@@ -28,8 +28,9 @@ public abstract class AbstractHttpServlet extends HttpServlet {
   private static final String FLASH_KEY_PREFIX = "flash___";
 
   protected void setFlashAttribute(HttpServletRequest request, String key, Object value) {
-    request.getSession().setAttribute(FLASH_KEY_PREFIX + key, 1);
-    request.getSession().setAttribute(key, value);
+    HttpSession session = request.getSession();
+    session.setAttribute(FLASH_KEY_PREFIX + key, 1);
+    session.setAttribute(key, value);
   }
 
   protected void cleanFlashAttribute(HttpServletRequest request) {
