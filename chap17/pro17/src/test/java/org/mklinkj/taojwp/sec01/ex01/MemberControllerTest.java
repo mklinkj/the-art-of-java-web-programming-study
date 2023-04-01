@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 class MemberControllerTest extends MockHttpServletTestSupport<MemberController> {
 
   @Test
-  void testDoHandle_exist_Id() throws Exception {
+  void testDoHandle_list() throws Exception {
     runGivenWhenThen(
         () -> servlet.init(), //
         () -> servlet.doHandle(request, response), //

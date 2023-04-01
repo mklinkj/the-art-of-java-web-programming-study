@@ -11,9 +11,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockServletConfig;
 import org.springframework.mock.web.MockServletContext;
 
-/**
- * Mock HTTP Servlet 테스트를 위한 공통 테스트 지원 클래스
- */
+/** Mock HTTP Servlet 테스트를 위한 공통 테스트 지원 클래스 */
 public abstract class MockHttpServletTestSupport<T extends HttpServlet> {
 
   protected T servlet;
@@ -41,7 +39,7 @@ public abstract class MockHttpServletTestSupport<T extends HttpServlet> {
   }
 
   private MockServletContext createMockServletContext() {
-    return new MockServletContext();
+    return new MockServletContext(getContextPath());
   }
 
   private T mockServlet() {
@@ -64,8 +62,8 @@ public abstract class MockHttpServletTestSupport<T extends HttpServlet> {
    * Given - When - Then 패턴 모양으로 실행을 도와주는 메서드
    *
    * @param given 테스트 준비 코드
-   * @param when  테스트 실행
-   * @param then  테스트 검증
+   * @param when 테스트 실행
+   * @param then 테스트 검증
    * @throws Exception 테스트 코드 실행 중, 어떤 예외든 발생할 수 있으므로 Exception으로 정의
    */
   protected void runGivenWhenThen(
@@ -77,9 +75,7 @@ public abstract class MockHttpServletTestSupport<T extends HttpServlet> {
     then.run();
   }
 
-  /**
-   * DB 데이터 초기화 필요시 호출
-   */
+  /** DB 데이터 초기화 필요시 호출 */
   protected void resetDB() {
     DBUtils.resetDB();
   }
