@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Collections;
+import java.util.Enumeration;
 
 public abstract class AbstractHttpServlet extends HttpServlet {
 
@@ -35,18 +35,19 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 
   protected void cleanFlashAttribute(HttpServletRequest request) {
     HttpSession session = request.getSession();
-    Collections.list(request.getSession().getAttributeNames())
-        .forEach(
-            n -> {
-              if (n.startsWith(FLASH_KEY_PREFIX)) {
-                int count = (int) session.getAttribute(n);
-                if (count == 1) {
-                  session.setAttribute(n, 0);
-                } else {
-                  session.removeAttribute(n);
-                  session.removeAttribute(n.replace(FLASH_KEY_PREFIX, ""));
-                }
-              }
-            });
+    Enumeration<String> names = request.getSession().getAttributeNames();
+
+    while (names.hasMoreElements()) {
+      String KeyName = names.nextElement();
+      if (KeyName.startsWith(FLASH_KEY_PREFIX)) {
+        int count = (int) session.getAttribute(KeyName);
+        if (count == 1) {
+          session.setAttribute(KeyName, 0);
+        } else {
+          session.removeAttribute(KeyName);
+          session.removeAttribute(KeyName.replace(FLASH_KEY_PREFIX, ""));
+        }
+      }
+    }
   }
 }
