@@ -3,7 +3,6 @@ package org.mklinkj.taojwp.sec01.ex01;
 import static org.mklinkj.taojwp.common.constant.Constants.HTML_CONTENT_TYPE;
 import static org.mklinkj.taojwp.common.constant.Constants.UTF_8_ENCODING;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,7 +33,6 @@ public class MemberController extends AbstractHttpServlet {
 
     request.setAttribute("memberList", memberList);
 
-    RequestDispatcher dispatch = request.getRequestDispatcher("/test01/listMembers.jsp");
-    dispatch.forward(request, response);
+    forwardOrRedirect(request, response, "/test01/listMembers.jsp");
   }
 }

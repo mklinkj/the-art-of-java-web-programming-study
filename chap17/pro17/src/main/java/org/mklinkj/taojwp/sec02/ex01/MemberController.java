@@ -3,7 +3,6 @@ package org.mklinkj.taojwp.sec02.ex01;
 import static org.mklinkj.taojwp.common.constant.Constants.HTML_CONTENT_TYPE;
 import static org.mklinkj.taojwp.common.constant.Constants.UTF_8_ENCODING;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -57,15 +56,6 @@ public class MemberController extends AbstractHttpServlet {
       nextPage = "/test02/memberForm.jsp";
     }
 
-    if (nextPage == null) {
-      response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-    } else if (nextPage.startsWith("redirect:")) {
-      String redirectUrl = getServletContext().getContextPath() + nextPage.replace("redirect:", "");
-      LOGGER.info("redirectUrl: {}", redirectUrl);
-      response.sendRedirect(redirectUrl);
-    } else {
-      RequestDispatcher dispatch = request.getRequestDispatcher(nextPage);
-      dispatch.forward(request, response);
-    }
+    forwardOrRedirect(request, response, nextPage);
   }
 }

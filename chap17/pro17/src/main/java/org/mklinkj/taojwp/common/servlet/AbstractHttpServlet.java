@@ -1,5 +1,6 @@
 package org.mklinkj.taojwp.common.servlet;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -7,7 +8,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Enumeration;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public abstract class AbstractHttpServlet extends HttpServlet {
 
   @Override
@@ -48,6 +51,22 @@ public abstract class AbstractHttpServlet extends HttpServlet {
           session.removeAttribute(KeyName.replace(FLASH_KEY_PREFIX, ""));
         }
       }
+    }
+  }
+
+  protected void forwardOrRedirect(
+      HttpServletRequest request, HttpServletResponse response, String nextPage)
+      throws IOException, ServletException {
+    if (nextPage == null) {
+      response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+    } else if (nextPage.startsWith("redirect:")) {
+      String redirectUrl = getServletContext().getContextPath() + nextPage.replace("redirect:", "");
+      LOGGER.info("redirectUrl: {}", redirectUrl);
+      response.sendRedirect(redirectUrl);
+    } else {
+      LOGGER.info("forwardUrl: {}", nextPage);
+      RequestDispatcher dispatch = request.getRequestDispatcher(nextPage);
+      dispatch.forward(request, response);
     }
   }
 }
