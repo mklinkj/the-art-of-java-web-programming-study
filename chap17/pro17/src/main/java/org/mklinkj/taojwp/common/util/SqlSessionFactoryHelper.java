@@ -31,6 +31,7 @@ public final class SqlSessionFactoryHelper {
       TransactionFactory transactionFactory = TransactionFactoryHelper.transactionFactory();
       Environment environment = new Environment("dev", transactionFactory, dataSource);
       Configuration configuration = new Configuration(environment);
+      configuration.setMapUnderscoreToCamelCase(true);
       // 매퍼를 등록하기전에 별칭을 추가해야 잘됌
       configuration.getTypeAliasRegistry().registerAlias("member", MemberVO.class);
       configuration.addMappers("org.mklinkj.taojwp.mapper");

@@ -67,6 +67,31 @@
 
 
 
+## 17.4 모델2로 답변형 게시판 구현하기
+
+* ...
+
+
+
+
+#### 물리 모델
+
+* Visual Paradigm으로 그리긴 했는데, 여기는 타입이 고정되어있다. SQL 정식 타입만 사용할 수 있는 듯, 대략적으로 맞춰서 그렸다.
+
+  ![20230403043310620](doc-resources\image-20230403043310620.png)
+
+  * exERD를 사용하면 좋은데, 요즘은 개인 사용자 프리라이선스를 안준다. (2019년 1월 1일 부터)
+
+  * DB컬럼명이 정리가 안되어있어서 컬럼명들을 스네이크 케이스로 이름을 바꿨다.. 
+
+  * myBatis 옵션에서 `mapUnderscoreToCamelCase`는 설정해봄.. 기본 값은 false인듯한데, 기존 코드에도 영향은 없을 것 같다.
+
+    ```java
+    configuration.setMapUnderscoreToCamelCase(true);
+    ```
+
+* 트랜젝션이 언급되었는데, Connection에 대해 AutoCommit false로 하고 여러개 쿼리 실행시키고 commit 하는 부분은 아직 없을 것 같은데... 진행해보면서 확인해보자..
+
 
 
 
@@ -81,8 +106,16 @@
 
 ## 정오표
 
-* ...
-  
+* 695쪽 표에는 NOT NULL인데, 697에는 NOT NULL이 지정되지 않은 컬럼 들이 있다.
+
+  * parentNO
+
+  * content
+
+  * id 
+
+    
+
 
 ## 기타
 
