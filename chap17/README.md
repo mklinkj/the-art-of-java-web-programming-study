@@ -94,6 +94,131 @@
 
 
 
+### 17.4.1 게시판 글 목록 보기 구현
+
+* ...
+
+* Oracle 계층 쿼리
+
+  ```sql
+  SELECT LEVEL
+       , article_no
+       , parent_no
+       , LPAD(' ', 4 * (LEVEL-1)) || title AS title
+       , content
+       , write_date
+       , id
+    FROM t17_board
+   START WITH parent_no = 0
+   CONNECT BY PRIOR article_no = parent_no
+   ORDER SIBLINGS BY article_no DESC;
+  ```
+
+  결과는 잘 나오는데, 의미는 대략적으로 알겠다.. 😅
+
+  * `START WITH parent_no = 0`
+    * 계층형 구조에서 최상위 계층의 ROW를 식별하는 조건 명시
+  * ` CONNECT BY PRIOR article_no = parent_no`
+    * 계층 구조가 어떤 식으로 연결되는지를 기술하는 부분
+  * ` ORDER SIBLINGS BY article_no DESC`
+    * 동일한 부모를 가진 형제들 기준으로 내림차순 정렬
+    * 계층구조는 그대로 유지하면서 동일 부모를 가진 자식들끼리의 정렬 기준을 주는 것
+
+* 아래는 AI 한태 물어봄 위에거, MySQL 쿼리로 바꿀 수 없는지?
+
+  ```sql
+  WITH RECURSIVE cte (level, article_no, parent_no, title, content, write_date, id) AS (
+      SELECT 1, article_no, parent_no, CONCAT(REPEAT(' ', 4 * (1-1)), title) AS title, content, write_date, id
+      FROM t17_board
+      WHERE parent_no = 0
+      UNION ALL
+      SELECT cte.level + 1, t17_board.article_no, t17_board.parent_no,
+             CONCAT(REPEAT(' ', 4 * (cte.level)), t17_board.title) AS title,
+             t17_board.content,
+             t17_board.write_date,
+             t17_board.id
+      FROM t17_board JOIN cte ON cte.article_no = t17_board.parent_no
+  )
+  SELECT * FROM cte
+  ORDER BY parent_no, article_no DESC;
+  ```
+
+  - [ ] 내가 확인을 해서 정렬 보정해야될 것 같음.
+
+#### MySQL 용 데이터 입력
+
+```sql
+CREATE TABLE t17_member
+(
+    id        VARCHAR(10) PRIMARY KEY,
+    pwd       VARCHAR(100) NOT NULL,
+    name      VARCHAR(50) NOT NULL ,
+    email     VARCHAR(50) NOT NULL ,
+    join_date DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+INSERT INTO t17_member (id, pwd, name, email, join_date)
+VALUES ('mklinkj', '1234', '정션링크', 'mklinkj@github.com','2023-02-01 10:00:00');
+
+INSERT INTO t17_member (id, pwd, name, email, join_date)
+VALUES ('hong', '1212', '홍길동', 'hong@gamil.com','2023-02-02 11:00:00');
+
+INSERT INTO t17_member (id, pwd, name, email, join_date)
+VALUES ('lee', '1212', '이순신', 'lee@test.com','2023-02-03 12:00:00');
+
+INSERT INTO t17_member (id, pwd, name, email, join_date)
+VALUES ('kim', '1212', '김유신', 'hong@gamil.com', '2023-02-04 13:00:00');
+
+CREATE TABLE t17_board
+(
+    article_no          INTEGER(10) PRIMARY KEY,
+    parent_no           INTEGER(10) DEFAULT 0,
+    title               VARCHAR(500) NOT NULL,
+    content             VARCHAR(4000),
+    image_file_name     VARCHAR(100),
+    write_date          DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    id                  VARCHAR(10),
+    CONSTRAINT FK_ID FOREIGN KEY(id)
+    REFERENCES t17_member(id)
+);
+
+
+INSERT INTO t17_board (article_no, parent_no, title, content, image_file_name, write_date, id)
+VALUES (1, 0, '테스트글입니다.', '테스트글입니다.', null, '2023-04-03 12:00:00', 'hong');
+
+INSERT INTO t17_board (article_no, parent_no, title, content, image_file_name, write_date, id)
+VALUES (2, 0, '안녕하세요.', '상품 후기 입니다.', null, '2023-04-03 13:00:00', 'hong');
+
+INSERT INTO t17_board (article_no, parent_no, title, content, image_file_name, write_date, id)
+VALUES (3, 2, '답변입니다..', '상품 후기에 대한 답변입니다.', null, '2023-04-03 14:00:00', 'hong');
+
+INSERT INTO t17_board (article_no, parent_no, title, content, image_file_name, write_date, id)
+VALUES (5, 3, '답변입니다..', '상품 좋습니다.', null, '2023-04-03 14:30:00', 'lee');
+
+INSERT INTO t17_board (article_no, parent_no, title, content, image_file_name, write_date, id)
+VALUES (4, 0, '김유신입니다.', '김유신 테스트 글입니다.', null, '2023-04-03 14:40:00', 'kim');
+
+INSERT INTO t17_board (article_no, parent_no, title, content, image_file_name, write_date, id)
+VALUES (6, 2, '상품 후기입니다..', '이순신씨의 상품 사용 후기를 올립니다!!.', null, '2023-04-03 15:00:00', 'lee');
+
+```
+
+* MySQL에 데이터는 위와 같이넣었었는데... LPAD 처리에서 문제가 있고, 내가아직 잘 몰라서 이건 17장을 다 진행하고 해봐야겠다.
+  * [ ] 17장 완료 후...
+  * [ ] Oracle 계층 쿼리를 잘 이해하게 되었을 때.. 다시 해보기.. 😅
+
+
+
+### UI관련해서는...
+
+* 부트스트랩으로 적용하고 있는데.. 있는 클래스 가지고 잘 쓰니 코드가 단순해지고 있다. 😄
+  * https://getbootstrap.com/docs/4.0/utilities/spacing/
+  * `<span class="m-${article.level}"></span>` 빈 여백도 이렇게 주면 됨.
+
+
+
+
+
 
 ---
 

@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.mklinkj.taojwp.sec01.ex01.MemberVO;
+import org.mklinkj.taojwp.sec03.brd01.ArticleVO;
 
 /**
  * SqlSessionFactory는 애플리케이션 스코프로, 싱글톤이 될 필요가 있다.
@@ -34,6 +35,7 @@ public final class SqlSessionFactoryHelper {
       configuration.setMapUnderscoreToCamelCase(true);
       // 매퍼를 등록하기전에 별칭을 추가해야 잘됌
       configuration.getTypeAliasRegistry().registerAlias("member", MemberVO.class);
+      configuration.getTypeAliasRegistry().registerAlias("article", ArticleVO.class);
       configuration.addMappers("org.mklinkj.taojwp.mapper");
 
       FACTORY = new SqlSessionFactoryBuilder().build(configuration);
