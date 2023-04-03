@@ -1,13 +1,16 @@
 package org.mklinkj.taojwp.common.util;
 
+import static org.mklinkj.taojwp.common.util.SqlSessionFactoryHelper.sqlSessionFactory;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
+import java.util.function.Function;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.EncodedResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
@@ -45,5 +48,13 @@ public class DBUtils {
 
   public static void resetDB() {
     runInitSqlScript("sql/oracle/init-sql.sql", getDataSourceFromJNDI());
+  }
+
+  public static <M, T> T executeMapper(
+      Function<M, T> function, Class<M> mapperClass, boolean autoCommit) {
+    try (SqlSession sqlSession = sqlSessionFactory().openSession(autoCommit)) {
+      M mapper = sqlSession.getMapper(mapperClass);
+      return function.apply(mapper);
+    }
   }
 }

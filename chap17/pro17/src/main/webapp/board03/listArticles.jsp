@@ -45,10 +45,10 @@
               <c:when test="${article.level > 1}">
                 <span class="m-${article.level}"></span>
                 <span class="text-secondary">[답변]</span>
-                <a class="text-decoration-none" href="${contextPath}/board2/viewArticle.do?articleNo=${article.articleNo}">${article.title}</a>
+                <a class="text-decoration-none" href="${contextPath}/board4/viewArticle.do?articleNo=${article.articleNo}">${article.title}</a>
               </c:when>
               <c:otherwise>
-                <a class="text-decoration-none" href="${contextPath}/board2/viewArticle.do?articleNo=${article.articleNo}">${article.title}</a>
+                <a class="text-decoration-none" href="${contextPath}/board4/viewArticle.do?articleNo=${article.articleNo}">${article.title}</a>
               </c:otherwise>
             </c:choose>
           </td>
@@ -62,7 +62,7 @@
 </table>
 
 <div class="text-center">
-  <a class="text-decoration-none" href="${contextPath}/board2/articleForm.do">글쓰기</a>
+  <a class="text-decoration-none" href="${contextPath}/board4/articleForm.do">글쓰기</a>
 </div>
 
 <div class="modal" tabindex="-1">

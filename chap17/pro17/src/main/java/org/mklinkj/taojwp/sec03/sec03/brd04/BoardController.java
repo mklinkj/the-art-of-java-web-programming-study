@@ -1,4 +1,4 @@
-package org.mklinkj.taojwp.sec03.brd02;
+package org.mklinkj.taojwp.sec03.sec03.brd04;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static org.mklinkj.taojwp.common.constant.Constants.HTML_CONTENT_TYPE;
@@ -22,14 +22,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
 import org.mklinkj.taojwp.common.domain.ModalMessage;
 import org.mklinkj.taojwp.common.servlet.AbstractHttpServlet;
 import org.mklinkj.taojwp.sec03.brd01.ArticleVO;
 import org.mklinkj.taojwp.sec03.brd01.BoardService;
 
 @Slf4j
-@WebServlet("/board2/*")
+@WebServlet("/board4/*")
 @MultipartConfig(
     fileSizeThreshold = MEGA_BYTE,
     maxFileSize = 10 * MEGA_BYTE,
@@ -60,10 +59,10 @@ public class BoardController extends AbstractHttpServlet {
     if (action == null || action.equals("/listArticles.do")) {
       articleList = boardService.listArticles();
       request.setAttribute("articleList", articleList);
-      nextPage = "/board02/listArticles.jsp";
+      nextPage = "/board03/listArticles.jsp";
 
     } else if (action.equals("/articleForm.do")) {
-      nextPage = "/board02/articleForm.jsp";
+      nextPage = "/board03/articleForm.jsp";
 
     } else if (action.equals("/addArticle.do")) {
 
@@ -94,12 +93,15 @@ public class BoardController extends AbstractHttpServlet {
       setFlashAttribute(
           request,
           "msg",
-          ModalMessage.builder().title("🎊 등록 성공 🎊").content("새 게시글을 등록 성공하였습니다.🎉").build());
+          ModalMessage.builder().title("🎊 등록 성공 🎊").content("새 게시글 등록에 성공하였습니다.🎉").build());
       nextPage = String.format("redirect:%s/listArticles.do", request.getServletPath());
+
     } else if (action.equals("/viewArticle.do")) {
-      setFlashAttribute(
-          request, "msg", ModalMessage.builder().title("✨알림✨").content("조회 기능이 없습니다. 😅").build());
-      nextPage = String.format("redirect:%s/listArticles.do", request.getServletPath());
+      String articleNo = request.getParameter("articleNo");
+      ArticleVO articleVO = boardService.viewArticle(Integer.parseInt(articleNo));
+      request.setAttribute("article", articleVO);
+      nextPage = "/board03/viewArticle.jsp";
+
     } else {
       nextPage = null;
     }

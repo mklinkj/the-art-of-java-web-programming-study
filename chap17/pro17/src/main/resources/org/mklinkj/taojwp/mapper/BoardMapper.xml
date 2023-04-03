@@ -27,4 +27,10 @@
     VALUES (#{articleNo}, #{parentNo}, #{title}, #{content}, #{imageFileName}, #{id})
   </insert>
 
+  <select id="selectOne" parameterType="article" resultType="article">
+    SELECT article_no, parent_no, title, content, image_file_name, write_date, id
+      FROM t17_board
+     WHERE article_no = #{articleNo}
+  </select>
+
 </mapper>

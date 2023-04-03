@@ -1,30 +1,33 @@
 package org.mklinkj.taojwp.sec03.brd01;
 
-import static org.mklinkj.taojwp.common.util.SqlSessionFactoryHelper.sqlSessionFactory;
+import static org.mklinkj.taojwp.common.util.DBUtils.executeMapper;
 
 import java.util.List;
-import org.apache.ibatis.session.SqlSession;
+import java.util.function.Function;
 import org.mklinkj.taojwp.mapper.BoardMapper;
 
 public class BoardDAO {
 
+  private <T> T execute(Function<BoardMapper, T> function, boolean autoCommit) {
+    return executeMapper(function, BoardMapper.class, autoCommit);
+  }
+
   public List<ArticleVO> selectAllArticles() {
-    try (SqlSession sqlSession = sqlSessionFactory().openSession()) {
-      BoardMapper boardMapper = sqlSession.getMapper(BoardMapper.class);
-      return boardMapper.selectAllArticles();
-    }
+    return execute(BoardMapper::selectAllArticles, false);
   }
 
   public int insertNewArticle(ArticleVO article) {
-    try (SqlSession sqlSession = sqlSessionFactory().openSession(true)) {
+    return execute(
+        boardMapper -> {
+          int newArticleNo = boardMapper.selectMaxArticleNo() + 1;
+          article.setArticleNo(newArticleNo);
+          boardMapper.insertArticle(article);
+          return newArticleNo;
+        },
+        true);
+  }
 
-      BoardMapper boardMapper = sqlSession.getMapper(BoardMapper.class);
-      int newArticleNo = boardMapper.selectMaxArticleNo() + 1;
-      article.setArticleNo(newArticleNo);
-
-      boardMapper.insertArticle(article);
-
-      return newArticleNo;
-    }
+  public ArticleVO selectArticle(int articleNo) {
+    return execute(boardMapper -> boardMapper.selectOne(articleNo), false);
   }
 }

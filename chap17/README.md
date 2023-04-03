@@ -280,7 +280,40 @@ VALUES (6, 2, '상품 후기입니다..', '이순신씨의 상품 사용 후기�
   }
   ```
 
-  
+
+
+
+### 17.4.3 글 상세 기능 구현
+
+* commons-io의 moveFileToDirectory는 이동시킬 파일이 이미 대상 디렉토리에 이미 존재하면 예외를 던진다.
+
+  ```java
+   FileUtils.moveFileToDirectory(srcFile, destDir, true);
+  ```
+
+* Files.move()로 바꿈.
+
+  ```java
+  Files.move(srcFile.toPath(), destFile.toPath(), REPLACE_EXISTING);
+  ```
+
+* 부트스트랩 하면서 레이어위치 모르겠을 때는 div에 border 검은색 실선으로 나타나게 하고 클래스를 바꿔보는게 가장 좋은 것 같다.
+
+    ```html
+    <div class="container">
+      <div class="row">
+        <div class="col-2" style="border: 1px solid black">상자</div>
+        <div class="col row-cols" style="border: 1px solid black">
+          <div class="col" style="border: 1px solid black">상자</div>
+          <div class="col" style="border: 1px solid black">상자</div>
+        </div>
+      </div>
+    </div>
+    ```
+
+
+
+
 
 
 ---

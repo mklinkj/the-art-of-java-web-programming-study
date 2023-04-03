@@ -1,7 +1,6 @@
 package org.mklinkj.taojwp.sec03.brd01;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.InstanceOfAssertFactories.array;
 import static org.mklinkj.taojwp.common.util.DBUtils.resetDB;
 
 import java.util.List;
@@ -37,5 +36,17 @@ class BoardDAOTest {
     int newArticleNo = dao.insertNewArticle(article);
 
     assertThat(newArticleNo).isGreaterThan(0);
+  }
+
+  @Test
+  void selectArticle() {
+    ArticleVO article = dao.selectArticle(1);
+    assertThat(article).hasFieldOrPropertyWithValue("articleNo", 1);
+  }
+
+  @Test
+  void selectArticle_NoExist() {
+    ArticleVO article = dao.selectArticle(0);
+    assertThat(article).isNull();
   }
 }

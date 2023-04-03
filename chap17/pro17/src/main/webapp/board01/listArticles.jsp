@@ -91,11 +91,10 @@
 
 <script>
   // show modal
-  const result = '${msg}';
+  const target = document.querySelector(".modal");
+  const modal = new bootstrap.Modal(target);
 
-  const modal = new bootstrap.Modal(document.querySelector(".modal"));
-
-  if (result) {
+  if ('${msg}') {
     modal.show();
   }
 </script>
