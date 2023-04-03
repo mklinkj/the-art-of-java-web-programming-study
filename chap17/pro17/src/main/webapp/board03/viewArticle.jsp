@@ -12,9 +12,9 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet"
         href="${contextPath}/webjars/bootstrap/@bootstrapVersion@/css/bootstrap.min.css">
-  <title>새글 쓰기</title>
+  <title>게시물 보기</title>
   <style>
-    /* 부트스트랩 레이어 위치 해깔릴 때 잠깐씩 켜서 해보자. */
+    /* 부트스트랩 레이어 위치 해깔릴 때 잠깐씩 켜서 확인 해보자! */
     .box {
       border: 1px solid black;
     }
@@ -55,8 +55,8 @@
       <c:if test="${not empty article.imageFileName and article.imageFileName ne 'null'}">
 
         <div class="row mb-3">
-          <div class="col-2">
-            <label for="preview" class="col col-form-label text-center">이미지</label>
+          <div class="col-2 text-center">
+            <label for="preview" class="col col-form-label">이미지</label>
           </div>
           <div class="col row-cols">
             <div class="col">
