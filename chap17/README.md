@@ -217,7 +217,70 @@ VALUES (6, 2, '상품 후기입니다..', '이순신씨의 상품 사용 후기�
 
 
 
+### 17.4.2 게시판 글쓰기 구현
 
+* ...
+
+* 파일 업로드 경로는 15장에서 설정한대로 아래 내용을 추가해서 
+
+  ```groovy
+  apply from: "../../gradle/common-func.gradle"
+  makeUploadDir()
+  ```
+
+  * `C:\upload\art_of_java_web` 경로를 기본 없로드 경로로 잡도록 하자.
+
+  * 15장에서는 Commons FileUpload와 Servlet 3.0부터 추가된 업로드기능을 둘다 사용해보는 연습을 하였는데, 그냥 `@MultipartConfig` 써야겠다... 그리고 무리해서 프로퍼티로 관리하게 만들지도 말아야겠음..(코드가 복잡해짐.
+
+    ```java
+    @MultipartConfig(
+        fileSizeThreshold = MEGA_BYTE,
+        maxFileSize = 10 * MEGA_BYTE,
+        maxRequestSize = 15 * MEGA_BYTE,
+        location = "C:\\upload\\art_of_java_web")
+    ```
+
+  * 711쪽 upload 메서드에서 맵을 만드는 부분이, commons-fileupload를 써서 필드명을 그것기준으로 얻어오게 하려고 그렇게 하신 것 같은데...
+
+  * 나는 request.getParameter()로 얻어도 문제가 없으므로 해당 upload메서드는 반환 없이 업로드만 하게 처리하는 것이 나을 것 같긴한데.. 그래도 모양을 비슷하게 맞춰보자..
+
+
+
+* 부트스트랩
+  * img 가운데 정렬
+    * https://getbootstrap.com/docs/5.2/content/images/
+
+* `sec03.brd03` 패키지의 진행사항은 `sec03.brd02`에 이어서 하는게 낫겠다. 첨부파일만 글번호 폴더 만들어서 분류해서 저장하는 기능이여서, 따로 분리할 필요가 없음. 😅
+
+* 지금 나는 flash Attribute 흉내내서 결과를 모달 팝업으로 나타내고 있는데...  720쪽 보니.. 스크립트 코드를 응답에서 쓰고 끝내는 부분이 보인다.
+
+  * ✨ 이렇게 했을 때.. 장점은 HttpSession 방식을 사용하는 Flash Attribute를 사용하는 것에 비애서 이중화 된 서버에서 사용시에 세션 클러스터링이나 스티키 세션 등을 고려할 필요없이 그냥 쓰면 되는 장점이 있음.
+
+  * 일단은 flash attribute 방식을 쓰는데, 나중에 앞의 방법을 쓰면서도 디자인을 잘 할 수 있게 수정할 수 있는지 확인해봐야겠다.
+
+    
+
+* 파일 업로드를 Mock으로 테스트 하기는 힘들겠다.
+
+  ```java
+   request.addPart(
+                new MockPart(
+                    "imageFileName", "이미지파일.txt", "이미지파일_흉내".getBytes(StandardCharsets.UTF_8)));
+  ```
+
+  MockPart의 write 함수가  `UnsupportedOperationException` 를 던지게 되어있다. 관련 부분은 주석으로 둠..
+
+
+
+* 파일인지 일반 폼필드인지 검사할 때.. null 뿐만아니라 공백검사도 해야했다.
+
+  ```java
+  private boolean isFormField(Part part) {
+    return part.getSubmittedFileName() == null || part.getSubmittedFileName().isBlank();
+  }
+  ```
+
+  
 
 
 ---

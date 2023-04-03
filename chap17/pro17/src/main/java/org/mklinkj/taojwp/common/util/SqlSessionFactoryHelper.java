@@ -8,6 +8,7 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.TransactionFactory;
+import org.apache.ibatis.type.JdbcType;
 import org.mklinkj.taojwp.sec01.ex01.MemberVO;
 import org.mklinkj.taojwp.sec03.brd01.ArticleVO;
 
@@ -33,6 +34,7 @@ public final class SqlSessionFactoryHelper {
       Environment environment = new Environment("dev", transactionFactory, dataSource);
       Configuration configuration = new Configuration(environment);
       configuration.setMapUnderscoreToCamelCase(true);
+      configuration.setJdbcTypeForNull(JdbcType.NULL);
       // 매퍼를 등록하기전에 별칭을 추가해야 잘됌
       configuration.getTypeAliasRegistry().registerAlias("member", MemberVO.class);
       configuration.getTypeAliasRegistry().registerAlias("article", ArticleVO.class);

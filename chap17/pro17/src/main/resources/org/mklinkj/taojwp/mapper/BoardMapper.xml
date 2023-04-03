@@ -15,5 +15,16 @@
      START WITH parent_no = 0
      CONNECT BY PRIOR article_no = parent_no
      ORDER SIBLINGS BY article_no DESC
-</select>
+  </select>
+
+  <select id="selectMaxArticleNo" resultType="int">
+    SELECT MAX(article_no)
+      FROM t17_board
+  </select>
+
+  <insert id="insertArticle" parameterType="article">
+    INSERT INTO t17_board (article_no, parent_no, title, content, image_file_name, id)
+    VALUES (#{articleNo}, #{parentNo}, #{title}, #{content}, #{imageFileName}, #{id})
+  </insert>
+
 </mapper>

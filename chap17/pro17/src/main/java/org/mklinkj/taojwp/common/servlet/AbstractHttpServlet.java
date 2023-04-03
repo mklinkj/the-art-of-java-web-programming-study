@@ -36,6 +36,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
     session.setAttribute(key, value);
   }
 
+  /** 필터로 등록하는 것이 나을지 고민을 해봐야겠다. */
   protected void cleanFlashAttribute(HttpServletRequest request) {
     HttpSession session = request.getSession();
     Enumeration<String> names = request.getSession().getAttributeNames();

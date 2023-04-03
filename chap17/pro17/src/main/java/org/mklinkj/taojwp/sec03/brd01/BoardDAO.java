@@ -10,8 +10,21 @@ public class BoardDAO {
 
   public List<ArticleVO> selectAllArticles() {
     try (SqlSession sqlSession = sqlSessionFactory().openSession()) {
-      BoardMapper memberMapper = sqlSession.getMapper(BoardMapper.class);
-      return memberMapper.selectAllArticles();
+      BoardMapper boardMapper = sqlSession.getMapper(BoardMapper.class);
+      return boardMapper.selectAllArticles();
+    }
+  }
+
+  public int insertNewArticle(ArticleVO article) {
+    try (SqlSession sqlSession = sqlSessionFactory().openSession(true)) {
+
+      BoardMapper boardMapper = sqlSession.getMapper(BoardMapper.class);
+      int newArticleNo = boardMapper.selectMaxArticleNo() + 1;
+      article.setArticleNo(newArticleNo);
+
+      boardMapper.insertArticle(article);
+
+      return newArticleNo;
     }
   }
 }
