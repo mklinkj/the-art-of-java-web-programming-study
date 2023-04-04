@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +22,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.mklinkj.taojwp.common.domain.ModalMessage;
@@ -55,112 +57,178 @@ public class BoardController extends AbstractHttpServlet {
     String action = request.getPathInfo();
     LOGGER.info("action: {}", action);
 
-    List<ArticleVO> articleList;
+    try {
 
-    if (action == null || action.equals("/listArticles.do")) {
-      articleList = boardService.listArticles();
-      request.setAttribute("articleList", articleList);
-      nextPage = "/board03/listArticles.jsp";
+      List<ArticleVO> articleList;
 
-    } else if (action.equals("/articleForm.do")) {
-      nextPage = "/board03/articleForm.jsp";
+      if (action == null || action.equals("/listArticles.do")) {
+        articleList = boardService.listArticles();
+        request.setAttribute("articleList", articleList);
+        nextPage = "/board03/listArticles.jsp";
 
-    } else if (action.equals("/addArticle.do")) {
+      } else if (action.equals("/articleForm.do")) {
+        nextPage = "/board03/articleForm.jsp";
 
-      Map<String, String> articleMap = upload(request);
-      String title = articleMap.get("title");
-      String content = articleMap.get("content");
-      String imageFileName = articleMap.get("imageFileName");
+      } else if (action.equals("/addArticle.do")) {
 
-      ArticleVO articleVO =
-          ArticleVO.builder() //
-              .parentNo(0)
-              .id("hong")
-              .title(title)
-              .content(content)
-              .imageFileName(imageFileName)
-              .build();
+        Map<String, String> articleMap = upload(request);
+        String title = articleMap.get("title");
+        String content = articleMap.get("content");
+        String imageFileName = articleMap.get("imageFileName");
 
-      int articleNo = boardService.addArticle(articleVO);
+        ArticleVO articleVO =
+            ArticleVO.builder() //
+                .parentNo(0)
+                .id("hong")
+                .title(title)
+                .content(content)
+                .imageFileName(imageFileName)
+                .build();
 
-      if (imageFileName != null && !imageFileName.isBlank()) {
-        File srcFile = new File(UPLOAD_TEMP_DIR + File.separator + File.separator + imageFileName);
-        File destDir = new File(UPLOAD_DIR + File.separator + articleNo);
-        destDir.mkdirs();
-        File destFile =
-            new File(UPLOAD_DIR + File.separator + articleNo + File.separator + imageFileName);
-        Files.move(srcFile.toPath(), destFile.toPath(), REPLACE_EXISTING);
-      }
-      setFlashAttribute(
-          request,
-          "msg",
-          ModalMessage.builder().title("🎊 등록 성공 🎊").content("새 게시글 등록에 성공하였습니다.🎉").build());
-      nextPage = String.format("redirect:%s/listArticles.do", request.getServletPath());
+        int articleNo = boardService.addArticle(articleVO);
 
-    } else if (action.equals("/viewArticle.do")) {
-      String articleNo = request.getParameter("articleNo");
-      ArticleVO articleVO = boardService.viewArticle(Integer.parseInt(articleNo));
-      request.setAttribute("article", articleVO);
-      nextPage = "/board03/viewArticle.jsp";
-
-    } else if (action.equals("/modArticle.do")) {
-      Map<String, String> articleMap = upload(request);
-      int articleNo = Integer.parseInt(articleMap.get("articleNo"));
-      String title = articleMap.get("title");
-      String content = articleMap.get("content");
-      String imageFileName = articleMap.get("imageFileName");
-
-      String originalFileName = articleMap.get("originalFileName");
-
-      ArticleVO articleVO =
-          ArticleVO.builder() //
-              .articleNo(articleNo)
-              .title(title)
-              .content(content)
-              .imageFileName(imageFileName)
-              .build();
-
-      boardService.modArticle(articleVO);
-
-      if (imageFileName != null && !imageFileName.isBlank()) {
-        File srcFile = new File(UPLOAD_TEMP_DIR + File.separator + File.separator + imageFileName);
-        File destDir = new File(UPLOAD_DIR + File.separator + articleNo);
-        destDir.mkdirs();
-        if (originalFileName != null && !originalFileName.isBlank()) {
-          File originalFile = new File(destDir, originalFileName);
-          originalFile.delete();
+        if (imageFileName != null && !imageFileName.isBlank()) {
+          File srcFile =
+              new File(UPLOAD_TEMP_DIR + File.separator + File.separator + imageFileName);
+          File destDir = new File(UPLOAD_DIR + File.separator + articleNo);
+          destDir.mkdirs();
+          File destFile =
+              new File(UPLOAD_DIR + File.separator + articleNo + File.separator + imageFileName);
+          Files.move(srcFile.toPath(), destFile.toPath(), REPLACE_EXISTING);
         }
-        File destFile = new File(destDir, imageFileName);
-        Files.move(srcFile.toPath(), destFile.toPath(), REPLACE_EXISTING);
+        setFlashAttribute(
+            request,
+            "msg",
+            ModalMessage.builder().title("🎊 등록 성공 🎊").content("새 게시글 등록에 성공하였습니다.🎉").build());
+        nextPage = String.format("redirect:%s/listArticles.do", request.getServletPath());
+
+      } else if (action.equals("/viewArticle.do")) {
+        String articleNo = request.getParameter("articleNo");
+        ArticleVO article = boardService.viewArticle(Integer.parseInt(articleNo));
+        if (article == null) {
+          throw new NoSuchElementException("해당 게시물이 없습니다. 조회하려는 게시물번호: " + articleNo);
+        }
+        request.setAttribute("article", article);
+        nextPage = "/board03/viewArticle.jsp";
+
+      } else if (action.equals("/modArticle.do")) {
+        Map<String, String> articleMap = upload(request);
+        int articleNo = Integer.parseInt(articleMap.get("articleNo"));
+        String title = articleMap.get("title");
+        String content = articleMap.get("content");
+        String imageFileName = articleMap.get("imageFileName");
+
+        String originalFileName = articleMap.get("originalFileName");
+
+        ArticleVO articleVO =
+            ArticleVO.builder() //
+                .articleNo(articleNo)
+                .title(title)
+                .content(content)
+                .imageFileName(imageFileName)
+                .build();
+
+        boardService.modArticle(articleVO);
+
+        if (imageFileName != null && !imageFileName.isBlank()) {
+          File srcFile =
+              new File(UPLOAD_TEMP_DIR + File.separator + File.separator + imageFileName);
+          File destDir = new File(UPLOAD_DIR + File.separator + articleNo);
+          destDir.mkdirs();
+          if (originalFileName != null && !originalFileName.isBlank()) {
+            File originalFile = new File(destDir, originalFileName);
+            originalFile.delete();
+          }
+          File destFile = new File(destDir, imageFileName);
+          Files.move(srcFile.toPath(), destFile.toPath(), REPLACE_EXISTING);
+        }
+
+        setFlashAttribute(
+            request,
+            "msg",
+            ModalMessage.builder().title("🎊 수정 성공 🎊").content("게시글 수정에 성공하였습니다.🎉").build());
+        nextPage =
+            String.format(
+                "redirect:%s/viewArticle.do?articleNo=%s", request.getServletPath(), articleNo);
+
+      } else if (action.equals("/removeArticle.do")) {
+        Integer articleNo = Integer.parseInt(request.getParameter("articleNo"));
+
+        List<Integer> removedArticleNoList = boardService.removeArticle(articleNo);
+        for (int removedArticleNo : removedArticleNoList) {
+          File imageDir = new File(UPLOAD_DIR + File.separator + removedArticleNo);
+          FileUtils.deleteDirectory(imageDir);
+        }
+
+        setFlashAttribute(
+            request,
+            "msg",
+            ModalMessage.builder().title("🎊 삭제 성공 🎊").content("게시글 삭제에 성공하였습니다.🎉").build());
+        nextPage = String.format("redirect:%s/listArticles.do", request.getServletPath());
+
+      } else if (action.equals("/replyForm.do")) {
+        String pno = request.getParameter("parentNo");
+
+        int parentNo = Integer.parseInt(pno);
+        HttpSession session = request.getSession();
+        session.setAttribute("parentNo", parentNo);
+        nextPage = "/board03/replyForm.jsp";
+
+      } else if (action.equals("/addReply.do")) {
+        HttpSession session = request.getSession();
+        int parentNo = (Integer) session.getAttribute("parentNo");
+        session.removeAttribute("parentNo");
+
+        Map<String, String> articleMap = upload(request);
+        String title = articleMap.get("title");
+        String content = articleMap.get("content");
+        String imageFileName = articleMap.get("imageFileName");
+
+        ArticleVO articleVO =
+            ArticleVO.builder() //
+                .parentNo(parentNo)
+                .id("lee")
+                .title(title)
+                .content(content)
+                .imageFileName(imageFileName)
+                .build();
+
+        int articleNo = boardService.addArticle(articleVO);
+
+        if (imageFileName != null && !imageFileName.isBlank()) {
+          File srcFile =
+              new File(UPLOAD_TEMP_DIR + File.separator + File.separator + imageFileName);
+          File destDir = new File(UPLOAD_DIR + File.separator + articleNo);
+          destDir.mkdirs();
+          File destFile =
+              new File(UPLOAD_DIR + File.separator + articleNo + File.separator + imageFileName);
+          Files.move(srcFile.toPath(), destFile.toPath(), REPLACE_EXISTING);
+        }
+
+        setFlashAttribute(
+            request,
+            "msg",
+            ModalMessage.builder().title("🎊 답글 추가 성공 🎊").content("답글 게시글을 추가하였습니다.🎉").build());
+        nextPage =
+            String.format(
+                "redirect:%s/viewArticle.do?articleNo=%s", request.getServletPath(), articleNo);
+      } else {
+        nextPage = null;
       }
 
+      forwardOrRedirect(request, response, nextPage);
+    } catch (Exception e) {
+      LOGGER.info("서블릿 오류: {}", e.getMessage());
       setFlashAttribute(
           request,
           "msg",
-          ModalMessage.builder().title("🎊 수정 성공 🎊").content("게시글 수정에 성공하였습니다.🎉").build());
-      nextPage =
-          String.format(
-              "redirect:%s/viewArticle.do?articleNo=%s", request.getServletPath(), articleNo);
-
-    } else if (action.equals("/removeArticle.do")) {
-      Integer articleNo = Integer.parseInt(request.getParameter("articleNo"));
-
-      List<Integer> removedArticleNoList = boardService.removeArticle(articleNo);
-      for (int removedArticleNo : removedArticleNoList) {
-        File imageDir = new File(UPLOAD_DIR + File.separator + removedArticleNo);
-        FileUtils.deleteDirectory(imageDir);
-      }
-
-      setFlashAttribute(
-          request,
-          "msg",
-          ModalMessage.builder().title("🎊 삭제 성공 🎊").content("게시글 삭제에 성공하였습니다.🎉").build());
+          ModalMessage.builder()
+              .title("😈 잘못된 요청 또는 내부 오류입니다. 👎👎👎")
+              .content("목록으로 돌아갑니다.., 서버 로그도 확인해주세요 🙏🙏🙏")
+              .build());
       nextPage = String.format("redirect:%s/listArticles.do", request.getServletPath());
-    } else {
-      nextPage = null;
+      forwardOrRedirect(request, response, nextPage);
     }
-
-    forwardOrRedirect(request, response, nextPage);
   }
 
   private Map<String, String> upload(HttpServletRequest request)

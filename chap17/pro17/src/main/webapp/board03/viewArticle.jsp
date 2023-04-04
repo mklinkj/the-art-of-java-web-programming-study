@@ -98,7 +98,7 @@
       </div>
 
       <div id="modify_process_btns" class="d-flex justify-content-center d-none">
-        <button type="button" class="btn btn-warning me-2" onclick="modifyProcess(this)">수정 반영하기</button>
+        <button type="button" class="btn btn-primary me-2" onclick="modifyProcess(this)">수정 반영하기</button>
         <button type="button" class="btn btn-secondary me-2" onclick="modifyView(false)">취소하기
         </button>
       </div>
@@ -110,12 +110,29 @@
           <button type="button" class="btn btn-secondary me-2">리스트로 돌아가기</button>
         </a>
         <button type="button" class="btn btn-danger me-2" onclick="removeProcess(this)">삭제하기</button>
-        <button type="button" class="btn btn-dark">답글 쓰기</button>
+        <button type="button" class="btn btn-dark" onclick="replyForm(this)">답글 쓰기</button>
       </div>
     </form>
   </div>
 </div>
 
+<div class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">${msg.title}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>${msg.content}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -171,6 +188,22 @@
     form.submit();
   }
 
+  function replyForm(obj) {
+    obj.disabled = true;
+    const form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "${contextPath}/board4/replyForm.do");
+
+    const input = document.createElement("input");
+    input.setAttribute("type", "hidden");
+    input.setAttribute("name","parentNo");
+    input.setAttribute("value", obj.form.articleNo.value);
+    form.appendChild(input);
+    document.body.appendChild(form);
+    form.submit();
+  }
+
+
   function readURL(input) {
     if (input.files && input.files[0]) {
       $('#preview').removeClass('d-none');
@@ -184,5 +217,14 @@
   }
 </script>
 
+<script>
+  // show modal
+  const target = document.querySelector(".modal");
+  const modal = new bootstrap.Modal(target);
+
+  if ('${msg}') {
+    modal.show();
+  }
+</script>
 </body>
 </html>

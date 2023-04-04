@@ -30,4 +30,8 @@ public class BoardService {
     boardDAO.deleteArticle(articleNo);
     return removedArticleNo;
   }
+
+  public int addReply(ArticleVO article) {
+    return boardDAO.insertNewArticle(article);
+  }
 }
