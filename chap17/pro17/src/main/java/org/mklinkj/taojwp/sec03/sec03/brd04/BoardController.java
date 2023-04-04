@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.mklinkj.taojwp.common.domain.ModalMessage;
 import org.mklinkj.taojwp.common.servlet.AbstractHttpServlet;
 import org.mklinkj.taojwp.sec03.brd01.ArticleVO;
@@ -141,6 +142,20 @@ public class BoardController extends AbstractHttpServlet {
           String.format(
               "redirect:%s/viewArticle.do?articleNo=%s", request.getServletPath(), articleNo);
 
+    } else if (action.equals("/removeArticle.do")) {
+      Integer articleNo = Integer.parseInt(request.getParameter("articleNo"));
+
+      List<Integer> removedArticleNoList = boardService.removeArticle(articleNo);
+      for (int removedArticleNo : removedArticleNoList) {
+        File imageDir = new File(UPLOAD_DIR + File.separator + removedArticleNo);
+        FileUtils.deleteDirectory(imageDir);
+      }
+
+      setFlashAttribute(
+          request,
+          "msg",
+          ModalMessage.builder().title("🎊 삭제 성공 🎊").content("게시글 삭제에 성공하였습니다.🎉").build());
+      nextPage = String.format("redirect:%s/listArticles.do", request.getServletPath());
     } else {
       nextPage = null;
     }

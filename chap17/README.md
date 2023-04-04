@@ -324,6 +324,20 @@ VALUES (6, 2, '상품 후기입니다..', '이순신씨의 상품 사용 후기�
 
 
 
+### 17.4.5 글 삭제 기능 구현
+
+* `sec03.bro06` 패키지 진행사항도 `sec03.brd04`에 이어서 하자.
+
+* 특이한 점
+
+  ```javascript
+  input.setAttribute("value", obj.form.articleNo.value);
+  
+  // obj가 어떤 폼에 속한 input요소라면 위와 같은 식으로 그 어떤 폼에 바로 접근 할 수 있었음.
+  ```
+
+  
+
 
 
 

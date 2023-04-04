@@ -109,7 +109,7 @@
         <a href="${contextPath}/board4/listArticles.do">
           <button type="button" class="btn btn-secondary me-2">리스트로 돌아가기</button>
         </a>
-        <button type="button" class="btn btn-danger me-2">삭제하기</button>
+        <button type="button" class="btn btn-danger me-2" onclick="removeProcess(this)">삭제하기</button>
         <button type="button" class="btn btn-dark">답글 쓰기</button>
       </div>
     </form>
@@ -154,6 +154,21 @@
     const articleForm = document.querySelector("#articleForm");
     articleForm.action = '${contextPath}/board4/modArticle.do'
     articleForm.submit();
+  }
+
+  function removeProcess(obj) {
+    obj.disabled = true;
+    const form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "${contextPath}/board4/removeArticle.do");
+
+    const input = document.createElement("input");
+    input.setAttribute("type", "hidden");
+    input.setAttribute("name","articleNo");
+    input.setAttribute("value", obj.form.articleNo.value);
+    form.appendChild(input);
+    document.body.appendChild(form);
+    form.submit();
   }
 
   function readURL(input) {

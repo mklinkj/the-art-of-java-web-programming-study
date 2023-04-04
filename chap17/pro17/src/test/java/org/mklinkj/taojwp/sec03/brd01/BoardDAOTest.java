@@ -52,7 +52,6 @@ class BoardDAOTest {
 
   @Test
   void updateArticle() {
-    resetDB();
     ArticleVO article =
         ArticleVO.builder() //
             .articleNo(1)
@@ -66,7 +65,6 @@ class BoardDAOTest {
 
   @Test
   void updateArticle_empty_imageFileName() {
-    resetDB();
     ArticleVO article =
         ArticleVO.builder() //
             .articleNo(1)
@@ -76,5 +74,21 @@ class BoardDAOTest {
             .build();
     int updatedCount = dao.updateArticle(article);
     assertThat(updatedCount).isEqualTo(1);
+  }
+
+  @Test
+  void deleteArticle() {
+
+    int deletedRow = dao.deleteArticle(2);
+    // 초기 데이터 글번호 2 기준으로 달린 답글이 4개이다.
+    assertThat(deletedRow).isEqualTo(4);
+  }
+
+  @Test
+  void selectArticleNumbersToDelete() {
+    List<Integer> articleNumbersToDelete = dao.selectArticleNumbersToDelete(2);
+
+    // 자기 자신의 게시물 번호도 포함된다.
+    assertThat(articleNumbersToDelete).containsExactlyInAnyOrder(2, 3, 5, 6);
   }
 }

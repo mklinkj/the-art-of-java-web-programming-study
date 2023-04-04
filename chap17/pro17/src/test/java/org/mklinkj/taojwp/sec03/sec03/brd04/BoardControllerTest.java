@@ -101,6 +101,29 @@ class BoardControllerTest extends MockHttpServletTestSupport<BoardController> {
         });
   }
 
+  @Test
+  void testDoHandle_removeArticle() throws Exception {
+    resetDB();
+    runGivenWhenThen(
+        () -> {
+          servlet.init();
+          request.setPathInfo("/removeArticle.do");
+
+          request.setParameter("articleNo", "2");
+        },
+        () -> servlet.doHandle(request, response), //
+        () -> {
+          assertThat(response.getStatus()).isEqualTo(HttpStatus.FOUND.value());
+          assertThat(request.getSession().getAttribute("msg"))
+              .isEqualTo(
+                  ModalMessage.builder()
+                      .title("🎊 삭제 성공 🎊")
+                      .content("게시글 삭제에 성공하였습니다.🎉")
+                      .build());
+          assertThat(response.getRedirectedUrl()).isEqualTo(getServletPath() + "/listArticles.do");
+        });
+  }
+
   @Override
   protected Class<BoardController> getServletClass() {
     return BoardController.class;

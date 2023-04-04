@@ -1,9 +1,10 @@
 package org.mklinkj.taojwp.common.util;
 
 import static org.mklinkj.taojwp.common.util.SqlSessionFactoryHelper.sqlSessionFactory;
+
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -51,10 +52,10 @@ public class DBUtils {
   }
 
   public static <M, T> T executeMapper(
-      Function<M, T> function, Class<M> mapperClass, boolean autoCommit) {
+      BiFunction<SqlSession, M, T> function, Class<M> mapperClass, boolean autoCommit) {
     try (SqlSession sqlSession = sqlSessionFactory().openSession(autoCommit)) {
       M mapper = sqlSession.getMapper(mapperClass);
-      return function.apply(mapper);
+      return function.apply(sqlSession, mapper);
     }
   }
 }

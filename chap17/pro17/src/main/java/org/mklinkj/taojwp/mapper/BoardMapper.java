@@ -16,4 +16,8 @@ public interface BoardMapper {
   ArticleVO selectOne(int articleNo);
 
   int updateArticle(ArticleVO articleVO);
+
+  int deleteArticle(int articleNo);
+
+  List<Integer> selectArticleNumbersToDelete(int articleNo);
 }

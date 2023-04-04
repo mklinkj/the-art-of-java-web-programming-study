@@ -44,4 +44,23 @@
   </update>
 
 
+  <delete id="deleteArticle">
+    DELETE
+      FROM t17_board
+     WHERE article_no IN (
+         SELECT article_no
+           FROM t17_board
+          START WITH article_no = #{articleNo}
+          CONNECT BY PRIOR article_no = parent_no
+       )
+  </delete>
+
+
+  <select id="selectArticleNumbersToDelete" parameterType="int">
+    SELECT article_no
+      FROM t17_board
+     START WITH article_no = #{articleNo}
+     CONNECT BY PRIOR article_no = parent_no
+  </select>
+
 </mapper>
