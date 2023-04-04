@@ -102,6 +102,45 @@ public class BoardController extends AbstractHttpServlet {
       request.setAttribute("article", articleVO);
       nextPage = "/board03/viewArticle.jsp";
 
+    } else if (action.equals("/modArticle.do")) {
+      Map<String, String> articleMap = upload(request);
+      int articleNo = Integer.parseInt(articleMap.get("articleNo"));
+      String title = articleMap.get("title");
+      String content = articleMap.get("content");
+      String imageFileName = articleMap.get("imageFileName");
+
+      String originalFileName = articleMap.get("originalFileName");
+
+      ArticleVO articleVO =
+          ArticleVO.builder() //
+              .articleNo(articleNo)
+              .title(title)
+              .content(content)
+              .imageFileName(imageFileName)
+              .build();
+
+      boardService.modArticle(articleVO);
+
+      if (imageFileName != null && !imageFileName.isBlank()) {
+        File srcFile = new File(UPLOAD_TEMP_DIR + File.separator + File.separator + imageFileName);
+        File destDir = new File(UPLOAD_DIR + File.separator + articleNo);
+        destDir.mkdirs();
+        if (originalFileName != null && !originalFileName.isBlank()) {
+          File originalFile = new File(destDir, originalFileName);
+          originalFile.delete();
+        }
+        File destFile = new File(destDir, imageFileName);
+        Files.move(srcFile.toPath(), destFile.toPath(), REPLACE_EXISTING);
+      }
+
+      setFlashAttribute(
+          request,
+          "msg",
+          ModalMessage.builder().title("🎊 수정 성공 🎊").content("게시글 수정에 성공하였습니다.🎉").build());
+      nextPage =
+          String.format(
+              "redirect:%s/viewArticle.do?articleNo=%s", request.getServletPath(), articleNo);
+
     } else {
       nextPage = null;
     }

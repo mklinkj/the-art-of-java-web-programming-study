@@ -2,6 +2,7 @@ package org.mklinkj.taojwp.common.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -13,6 +14,7 @@ import lombok.ToString;
 @Getter
 @Builder
 @ToString
+@EqualsAndHashCode
 @AllArgsConstructor
 public class ModalMessage {
   private final String title;

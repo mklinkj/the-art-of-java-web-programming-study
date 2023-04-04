@@ -49,4 +49,32 @@ class BoardDAOTest {
     ArticleVO article = dao.selectArticle(0);
     assertThat(article).isNull();
   }
+
+  @Test
+  void updateArticle() {
+    resetDB();
+    ArticleVO article =
+        ArticleVO.builder() //
+            .articleNo(1)
+            .title("제목_수정")
+            .content("내용_수정")
+            .imageFileName("1.png")
+            .build();
+    int updatedCount = dao.updateArticle(article);
+    assertThat(updatedCount).isEqualTo(1);
+  }
+
+  @Test
+  void updateArticle_empty_imageFileName() {
+    resetDB();
+    ArticleVO article =
+        ArticleVO.builder() //
+            .articleNo(1)
+            .title("제목_수정")
+            .content("내용_수정")
+            .imageFileName("")
+            .build();
+    int updatedCount = dao.updateArticle(article);
+    assertThat(updatedCount).isEqualTo(1);
+  }
 }

@@ -20,4 +20,8 @@ public class BoardService {
   public ArticleVO viewArticle(int articleNo) {
     return boardDAO.selectArticle(articleNo);
   }
+
+  public int modArticle(ArticleVO article) {
+    return boardDAO.updateArticle(article);
+  }
 }

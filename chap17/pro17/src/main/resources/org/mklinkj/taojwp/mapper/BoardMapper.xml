@@ -33,4 +33,15 @@
      WHERE article_no = #{articleNo}
   </select>
 
+  <update id="updateArticle" parameterType="article">
+    UPDATE t17_board
+       SET title = #{title}
+         , content = #{content}
+       <if test="imageFileName != null and !imageFileName.isBlank()">
+         , image_file_name = #{imageFileName}
+       </if>
+     WHERE article_no = #{articleNo}
+  </update>
+
+
 </mapper>

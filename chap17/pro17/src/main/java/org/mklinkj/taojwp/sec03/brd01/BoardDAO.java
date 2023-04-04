@@ -30,4 +30,8 @@ public class BoardDAO {
   public ArticleVO selectArticle(int articleNo) {
     return execute(boardMapper -> boardMapper.selectOne(articleNo), false);
   }
+
+  public int updateArticle(ArticleVO articleVO) {
+    return execute(boardMapper -> boardMapper.updateArticle(articleVO), true);
+  }
 }
