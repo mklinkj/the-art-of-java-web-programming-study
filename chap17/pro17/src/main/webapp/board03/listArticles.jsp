@@ -4,8 +4,11 @@
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath}" />
 <c:set var="articlesList" value="${articlesMap.articlesList}" />
 <c:set var="totArticles" value="${articlesMap.totArticles}" />
+<c:set var="ceilTotArticles" value="${articlesMap.ceilTotArticles}" />
 <c:set var="section" value="${articlesMap.section}" />
 <c:set var="pageNum" value="${articlesMap.pageNum}" />
+<c:set var="pageSize" value="${articlesMap.pageSize}" />
+<c:set var="pageNaviSize" value="${articlesMap.pageNaviSize}" />
 
 <!doctype html>
 <html lang="ko">
@@ -67,36 +70,24 @@
 </table>
 
 <c:if test="${totArticles != null}">
-<nav aria-label="Page navigation example">
+<nav aria-label="Page navigation">
   <ul class="pagination justify-content-center">
-      <c:set var="pageSize" value="${10}" /> <%-- 페이지 사이즈 --%>
-      <c:set var="naviSize" value="${10}" /> <%-- 네비게이션 사이즈 --%>
-
-      <%-- 전체 게시글 수를 페이지 사이즈로 나눈 나머지 값 --%>
-      <c:set var="reminderTotal" value="${totArticles % pageSize}" />
-
-      <%-- 전체 페이지 수에 대해 10단위로 가까운 큰값: 997이라면 1000이 설정  --%>
-      <c:set var="cealTotArticles" value="${reminderTotal > 0 ? (totArticles / pageSize) * pageSize + pageSize : totArticles }" />
-
       <%-- 페이지 네비게이션 번호 --%>
-      <c:forEach var="pageNaviNo" begin="1" end="10" step="1">
+      <c:forEach var="pageNaviNo" begin="1" end="${pageNaviSize}" step="1">
         <%-- 이전 --%>
         <c:if test="${section > 1 && pageNaviNo == 1}">
           <li class="page-item">
-            <a class="page-link" href="${contextPath}/board4/listArticles.do?section=${section - 1}&pageNum=${(section - 2) * pageSize + 1}">pre</a>
+            <a class="page-link" href="${contextPath}/board4/listArticles.do?section=${section - 1}&pageNum=${1}">pre</a>
           </li>
         </c:if>
 
-        <c:if test="${cealTotArticles >= ((section - 1) * pageSize + pageNaviNo) * pageSize}">
+        <c:if test="${ceilTotArticles >= ((section - 1) * pageSize + pageNaviNo) * pageSize}">
+          <li class="page-item <c:if test="${pageNum eq pageNaviNo}">active</c:if>"><a class="page-link" href="${contextPath}/board4/listArticles.do?section=${section}&pageNum=${pageNaviNo}">${(section - 1) * pageSize + pageNaviNo}</a></li>
 
-          <li class="page-item <c:if test="${pageNum eq (section - 1) * pageSize + pageNaviNo}">active</c:if>"><a class="page-link" href="${contextPath}/board4/listArticles.do?section=${section}&pageNum=${(section - 1) * pageSize + pageNaviNo}">${(section - 1) * pageSize + pageNaviNo}</a></li>
-
-          <c:if test="${cealTotArticles >= ((section - 1) * pageSize + pageNaviNo + 1) * pageSize}">
-            <c:if test="${pageNaviNo eq naviSize}">
-              <li class="page-item">
-                <a class="page-link" href="${contextPath}/board4/listArticles.do?section=${section + 1}&pageNum=${section * pageSize + 1}">next</a>
-              </li>
-            </c:if>
+          <c:if test="${pageNaviNo eq pageNaviSize and ceilTotArticles >= ((section - 1) * pageSize + pageNaviNo + 1) * pageSize}">
+            <li class="page-item">
+              <a class="page-link" href="${contextPath}/board4/listArticles.do?section=${section + 1}&pageNum=${1}">next</a>
+            </li>
           </c:if>
         </c:if>
       </c:forEach>

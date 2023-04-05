@@ -20,7 +20,7 @@ class BoardControllerTest extends MockHttpServletTestSupport<BoardController> {
         () -> {
           servlet.init();
           request.setParameter("section", "2");
-          request.setParameter("pageNum", "11");
+          request.setParameter("pageNum", "1");
         }, //
         () -> servlet.doHandle(request, response), //
         () -> {

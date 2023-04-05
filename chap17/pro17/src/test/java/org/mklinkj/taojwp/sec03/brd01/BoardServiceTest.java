@@ -30,7 +30,7 @@ class BoardServiceTest {
   void listArticles() {
     Map<String, Integer> articlesMap = new HashMap<>();
     articlesMap.put("section", 2);
-    articlesMap.put("pageNum", 11);
+    articlesMap.put("pageNum", 1);
 
     Map<String, Object> result = service.listArticles(articlesMap);
     assertThat((List) result.get("articlesList")).isNotEmpty();

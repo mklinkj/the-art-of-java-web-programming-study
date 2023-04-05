@@ -3,6 +3,8 @@ package org.mklinkj.taojwp.sec03.sec03.brd04;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static org.mklinkj.taojwp.common.constant.Constants.HTML_CONTENT_TYPE;
 import static org.mklinkj.taojwp.common.constant.Constants.MEGA_BYTE;
+import static org.mklinkj.taojwp.common.constant.Constants.PAGE_NAVI_SIZE;
+import static org.mklinkj.taojwp.common.constant.Constants.PAGE_SIZE;
 import static org.mklinkj.taojwp.common.constant.Constants.UPLOAD_DIR;
 import static org.mklinkj.taojwp.common.constant.Constants.UPLOAD_TEMP_DIR;
 import static org.mklinkj.taojwp.common.constant.Constants.UTF_8_ENCODING;
@@ -72,7 +74,14 @@ public class BoardController extends AbstractHttpServlet {
         Map<String, Object> articlesMap = boardService.listArticles(pagingMap);
         articlesMap.put("section", section);
         articlesMap.put("pageNum", pageNum);
+        articlesMap.put("pageSize", PAGE_SIZE);
+        articlesMap.put("pageNaviSize", PAGE_NAVI_SIZE);
+        articlesMap.put(
+            "ceilTotArticles",
+            (int)
+                (Math.ceil((int) articlesMap.get("totArticles") / (double) PAGE_SIZE) * PAGE_SIZE));
         request.setAttribute("articlesMap", articlesMap);
+        LOGGER.info("list page articlesMap: {}", articlesMap);
         nextPage = "/board03/listArticles.jsp";
 
       } else if (action.equals("/articleForm.do")) {

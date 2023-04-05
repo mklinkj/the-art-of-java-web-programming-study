@@ -40,16 +40,12 @@ public class BoardService {
   }
 
   public Map<String, Object> listArticles(Map<String, Integer> pagingMap) {
-    int pageNum = pagingMap.get("pageNum");
-    pagingMap.put("pageNum", ((pageNum % 10) == 0 ? 10 : pageNum % 10));
-
-    LOGGER.info("pagingMap: {}", pagingMap);
-
     List<ArticleVO> articlesList = boardDAO.selectPagedArticles(pagingMap);
     int articleTotalCount = boardDAO.selectCountTotalArticles();
 
     Map<String, Object> articlesMap = new HashMap<>();
 
+    // articlesMap 처음부터 도메인이 되었어야할 것 같은데...
     articlesMap.put("articlesList", articlesList);
     articlesMap.put("totArticles", articleTotalCount);
 

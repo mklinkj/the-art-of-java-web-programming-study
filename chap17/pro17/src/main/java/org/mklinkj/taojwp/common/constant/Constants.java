@@ -18,4 +18,8 @@ public class Constants {
   public static final String UPLOAD_DIR = "C:\\upload\\art_of_java_web";
 
   public static final String UPLOAD_TEMP_DIR = UPLOAD_DIR + "\\temp";
+
+  public static final int PAGE_SIZE = 10;
+
+  public static final int PAGE_NAVI_SIZE = 10;
 }
