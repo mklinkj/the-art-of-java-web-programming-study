@@ -4,9 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mklinkj.taojwp.common.util.DBUtils.resetDB;
 
 import java.util.List;
+import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+@Slf4j
 class BoardDAOTest {
 
   private BoardDAO dao;
@@ -90,5 +93,18 @@ class BoardDAOTest {
 
     // 자기 자신의 게시물 번호도 포함된다.
     assertThat(articleNumbersToDelete).containsExactlyInAnyOrder(2, 3, 5, 6);
+  }
+
+  @Test
+  void selectPagedArticles() {
+    List<ArticleVO> pagedArticles = dao.selectPagedArticles(Map.of("section", 1, "pageNum", 1));
+    assertThat(pagedArticles).isNotEmpty();
+  }
+
+  @Test
+  void selectCountTotalArticles() {
+    int count = dao.selectCountTotalArticles();
+    LOGGER.info("total count: {}", count);
+    assertThat(count).isGreaterThan(0);
   }
 }

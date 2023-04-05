@@ -17,6 +17,46 @@
      ORDER SIBLINGS BY article_no DESC
   </select>
 
+
+  <select id="selectPagedArticles" resultType="article">
+    SELECT recNum
+         , "level"
+         , article_no
+         , parent_no
+         , title
+         , content
+         , write_date
+         , id
+    FROM (
+           SELECT ROWNUM AS recNum
+                , "level"
+                , article_no
+                , parent_no
+                , title
+                , content
+                , write_date
+                , id
+           FROM (SELECT LEVEL AS "level"
+                      , article_no
+                      , parent_no
+                      , LPAD(' ', 4 * (LEVEL - 1)) || title AS title
+                      , content
+                      , write_date
+                      , id
+                 FROM t17_board
+                 START WITH parent_no = 0
+                 CONNECT BY PRIOR article_no = parent_no
+                 ORDER SIBLINGS BY article_no DESC)
+         )
+    WHERE recNum BETWEEN (#{section} - 1) * 100 + (#{pageNum} - 1) * 10 + 1
+      AND (#{section} - 1) * 100 + #{pageNum} * 10
+  </select>
+
+  <select id="selectCountTotalArticles" resultType="int">
+    SELECT COUNT(*)
+      FROM t17_board
+  </select>
+
   <select id="selectMaxArticleNo" resultType="int">
     SELECT MAX(article_no)
       FROM t17_board

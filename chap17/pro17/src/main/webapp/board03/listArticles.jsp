@@ -1,7 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="javatime" uri="http://sargue.net/jsptags/time" %>
-<c:set var="contextPath" value="${pageContext.servletContext.contextPath}"></c:set>
+<c:set var="contextPath" value="${pageContext.servletContext.contextPath}" />
+<c:set var="articlesList" value="${articlesMap.articlesList}" />
+<c:set var="totArticles" value="${articlesMap.totArticles}" />
+<c:set var="section" value="${articlesMap.section}" />
+<c:set var="pageNum" value="${articlesMap.pageNum}" />
+
 <!doctype html>
 <html lang="ko">
 <head>
@@ -26,7 +31,7 @@
   </thead>
   <tbody>
   <c:choose>
-    <c:when test="${empty articleList}">
+    <c:when test="${empty articlesList}">
       <tr class="text-center">
         <td colspan="4">
           <b>등록된 글이 없습니다.</b>
@@ -34,9 +39,9 @@
       </tr>
     </c:when>
     <c:otherwise>
-      <c:forEach var="article" items="${articleList}" varStatus="articleNum">
+      <c:forEach var="article" items="${articlesList}" varStatus="articleNum">
         <tr class="text-center">
-          <td>${articleNum.count}</td>
+          <td>${article.articleNo}</td>
           <td>${article.id}</td>
 
           <td class="text-start">
@@ -60,6 +65,46 @@
   </c:choose>
   </tbody>
 </table>
+
+<c:if test="${totArticles != null}">
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+      <c:set var="pageSize" value="${10}" /> <%-- 페이지 사이즈 --%>
+      <c:set var="naviSize" value="${10}" /> <%-- 네비게이션 사이즈 --%>
+
+      <%-- 전체 게시글 수를 페이지 사이즈로 나눈 나머지 값 --%>
+      <c:set var="reminderTotal" value="${totArticles % pageSize}" />
+
+      <%-- 전체 페이지 수에 대해 10단위로 가까운 큰값: 997이라면 1000이 설정  --%>
+      <c:set var="cealTotArticles" value="${reminderTotal > 0 ? (totArticles / pageSize) * pageSize + pageSize : totArticles }" />
+
+      <%-- 페이지 네비게이션 번호 --%>
+      <c:forEach var="pageNaviNo" begin="1" end="10" step="1">
+        <%-- 이전 --%>
+        <c:if test="${section > 1 && pageNaviNo == 1}">
+          <li class="page-item">
+            <a class="page-link" href="${contextPath}/board4/listArticles.do?section=${section - 1}&pageNum=${(section - 2) * pageSize + 1}">pre</a>
+          </li>
+        </c:if>
+
+        <c:if test="${cealTotArticles >= ((section - 1) * pageSize + pageNaviNo) * pageSize}">
+
+          <li class="page-item <c:if test="${pageNum eq (section - 1) * pageSize + pageNaviNo}">active</c:if>"><a class="page-link" href="${contextPath}/board4/listArticles.do?section=${section}&pageNum=${(section - 1) * pageSize + pageNaviNo}">${(section - 1) * pageSize + pageNaviNo}</a></li>
+
+          <c:if test="${cealTotArticles >= ((section - 1) * pageSize + pageNaviNo + 1) * pageSize}">
+            <c:if test="${pageNaviNo eq naviSize}">
+              <li class="page-item">
+                <a class="page-link" href="${contextPath}/board4/listArticles.do?section=${section + 1}&pageNum=${section * pageSize + 1}">next</a>
+              </li>
+            </c:if>
+          </c:if>
+        </c:if>
+      </c:forEach>
+  </ul>
+</nav>
+</c:if>
+
+
 
 <div class="text-center">
   <a class="text-decoration-none" href="${contextPath}/board4/articleForm.do">글쓰기</a>

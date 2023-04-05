@@ -3,6 +3,7 @@ package org.mklinkj.taojwp.sec03.brd01;
 import static org.mklinkj.taojwp.common.util.DBUtils.executeMapper;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.BiFunction;
 import org.apache.ibatis.session.SqlSession;
 import org.mklinkj.taojwp.mapper.BoardMapper;
@@ -43,5 +44,15 @@ public class BoardDAO {
   public List<Integer> selectArticleNumbersToDelete(int articleNo) {
     return execute(
         (sqlSession, boardMapper) -> boardMapper.selectArticleNumbersToDelete(articleNo));
+  }
+
+  public List<ArticleVO> selectPagedArticles(Map<String, Integer> pagingMap) {
+    return execute(
+        (sqlSession, boardMapper) ->
+            boardMapper.selectPagedArticles(pagingMap.get("section"), pagingMap.get("pageNum")));
+  }
+
+  public int selectCountTotalArticles() {
+    return execute((sqlSession, boardMapper) -> boardMapper.selectCountTotalArticles());
   }
 }

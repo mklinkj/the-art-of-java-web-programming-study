@@ -58,12 +58,21 @@ public class BoardController extends AbstractHttpServlet {
     LOGGER.info("action: {}", action);
 
     try {
-
-      List<ArticleVO> articleList;
-
       if (action == null || action.equals("/listArticles.do")) {
-        articleList = boardService.listArticles();
-        request.setAttribute("articleList", articleList);
+        String _section = request.getParameter("section");
+        String _pageNum = request.getParameter("pageNum");
+
+        int section = Integer.parseInt((_section == null) ? "1" : _section);
+        int pageNum = Integer.parseInt((_pageNum == null) ? "1" : _pageNum);
+
+        Map<String, Integer> pagingMap = new HashMap<>();
+        pagingMap.put("section", section);
+        pagingMap.put("pageNum", pageNum);
+
+        Map<String, Object> articlesMap = boardService.listArticles(pagingMap);
+        articlesMap.put("section", section);
+        articlesMap.put("pageNum", pageNum);
+        request.setAttribute("articlesMap", articlesMap);
         nextPage = "/board03/listArticles.jsp";
 
       } else if (action.equals("/articleForm.do")) {
@@ -193,7 +202,7 @@ public class BoardController extends AbstractHttpServlet {
                 .imageFileName(imageFileName)
                 .build();
 
-        int articleNo = boardService.addArticle(articleVO);
+        int articleNo = boardService.addReply(articleVO);
 
         if (imageFileName != null && !imageFileName.isBlank()) {
           File srcFile =

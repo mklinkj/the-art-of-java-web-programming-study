@@ -78,7 +78,7 @@
 
 * Visual Paradigm으로 그리긴 했는데, 여기는 사용가능한 타입이 몇개 없다. SQL 정식 타입만 사용할 수 있는 듯, 대략적으로 맞춰서 그렸다.
 
-  ![20230403043310620](doc-resources\image-20230403043310620.png)
+  ![20230403043310620](doc-resources/image-20230403043310620.png)
 
   * exERD를 사용하면 좋은데, 요즘은 개인 사용자 Free라이선스를 안준다. (2019년 1월 1일 부터)
 
@@ -347,26 +347,217 @@ VALUES (6, 2, '상품 후기입니다..', '이순신씨의 상품 사용 후기�
 
 
 
+
+### 17.4.7 게시판 페이징 기능 구현
+
+* `sec03.bro08` 패키지 진행사항도 `sec03.brd04`에 이어서 하자.
+
+* 페이지 사이즈10에 페이징 네비게이션 사이즈가 10이서 100개를 넘는 게시물이 들어갈 필요가 있음.
+
+  ```sql
+  DECLARE
+      i NUMBER := 7;
+  BEGIN
+      WHILE(i <= 102)
+          LOOP
+              INSERT INTO t17_board (article_no, parent_no, title, content, image_file_name, write_date, id)
+              VALUES (i, 0, i||'테스트글입니다.', i||'테스트글입니다.', null, TO_DATE('2023-04-03 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'mklinkj');
+              i := i + 1;
+  END LOOP;
+  END;
+  COMMIT;
+  ```
+
+  * JDBC 연결로는 init-sql.sql에 포함할 수는 없어서, 쿼리 콘솔에서 위의 PL/SQL 실행시킨 다음, INSERT 문으로 뽑아서 init-sql.sql에 넣어둠.
+
+  * 저자님 쿼리에서 `BETWEEN`이 보이는데, 이게 듣기로는 풀스켄 일어나서 그냥 ROWNUM으로 범위 잡는게 낫다고 들었는데...
+
+  * 저자님 쿼리
+
+    ```sql
+    SELECT recNum
+         ,LVL
+         , article_no
+         , parent_no
+         , title
+         , content
+         , write_date
+         , id
+    FROM (
+             SELECT ROWNUM AS recNum
+                  , LVL
+                  , article_no
+                  , parent_no
+                  , title
+                  , content
+                  , write_date
+                  , id
+             FROM (SELECT LEVEL AS LVL
+                        , article_no
+                        , parent_no
+                        , LPAD(' ', 4 * (LEVEL - 1)) || title AS title
+                        , content
+                        , write_date
+                        , id
+                   FROM t17_board
+                   START WITH parent_no = 0
+                   CONNECT BY PRIOR article_no = parent_no
+                   ORDER SIBLINGS BY article_no DESC)
+         )
+    -- WHERE recNum BETWEEN 1 AND 10
+    WHERE recNum BETWEEN (section - 1) * 100 + (pageNum - 1) * 10 + 1 
+                     AND (section - 1) * 100 + pageNum * 10
+    
+    ```
+
+    * section은 네비게이션 영역의 순번을 말함 1~10페이지의 네비게이션 섹션은 1 
+
+      * 11~20 페이지의 네비게이션 섹션은 2
+
+      * section이 현재 네비게이션 영역 시작번호를 정해주기 때문에, pageNum은 항상 1~10 만 될 수 있음.
+
+      * 영역에 BETWEEN을 사용했기 때문에 테이블 스캔이 발생할 수 있음
+
+        ![image-20230405073251379](doc-resources/image-20230405073251379.png)
+
+        
+
+  
+
+  * BETWEEN 사용하지 않고 rownum들로만 범위 잡은 쿼리 (그동안 내가 해왔던 방법)
+
+    ```sql
+    SELECT recNum
+         , LVL
+         , article_no
+         , parent_no
+         , title
+         , content
+         , write_date
+         , id
+     FROM (
+        SELECT ROWNUM AS recNum
+             , LVL
+             , article_no
+             , parent_no
+             , title
+             , content
+             , write_date
+             , id
+        FROM (SELECT LEVEL AS LVL
+                   , article_no
+                   , parent_no
+                   , LPAD(' ', 4 * (LEVEL - 1)) || title AS title
+                   , content
+                   , write_date
+                   , id
+              FROM t17_board
+              START WITH parent_no = 0
+              CONNECT BY PRIOR article_no = parent_no
+              ORDER SIBLINGS BY article_no DESC)
+        WHERE rownum <= pageNum * navSize)
+    WHERE recNum > (pageNum - 1) * navSize
+    ```
+
+    * pageNum: 페이지 번호 (1 부터 시작)
+
+      * 네비게이션에 나타나는 페이지번호의 값을 그대로 전달한다.
+
+    * navSize: 페이지 네비게이션 사이즈는 항상 고정값 10
+
+    * 그런데.. 이건 풀스캔이 안날 줄 알았지만...
+
+      ![image-20230405074504794](doc-resources/image-20230405074504794.png)
+
+      * STOPKEY가 잡히긴 했는데, 계층 쿼리 돌면서 풀스캔 하게된 것 같음.
+
+
+
+실행 계획을 봤을 때.. 별차이가 없어서 데이터를 천만건 더 넣어봤음.
+
+#### 천 만건 데이터 넣은 후...
+
+* between
+
+  ![image-20230405080533639](doc-resources/image-20230405080533639.png)
+
+* rownum
+
+  ![image-20230405080410347](doc-resources/image-20230405080410347.png)
+
+> STOPKEY가 걸리더라도 어차피 계층 검색하느라고 다 찾느라고 COST를 다 합산 해봤을 때는 동일하게 되는 것 같다.
+>
+> START-WITH에 추가 필터링 조건을 넣을 수 있나? ...
+
+#### 계층없이 내림 차순 정렬해서 1 페이지 조회
+
+> 계층을 쓰지 않고 그냥 조회시에는 차이가 있을가 싶어서 계층 없이 조회해서 비교.
+
+* between
+
+  ![image-20230405081102123](doc-resources/image-20230405081102123.png)
+
+* rownum
+
+  ![image-20230405081013805](doc-resources/image-20230405081013805.png)
+
+> ✨ 이 때는 COST가 rownum 쪽이 확실히 좋음.
+
+확실히 일반적인 경우 ROWNUM으로 페이징하는것이 좋겠다..
+
+
+
+* 코드 17-46에서 null과 /listArticles.do 조건이 별도로 되어있는데.. 그냥 if 조건을 합치는 게 나을 것 같다. (조건 블록 내용이 같음.)
+  * ` if (action == null || action.equals("/listArticles.do")) `
+
+
+
+* 🎈 네비게이션 영역을 section 값으로 따로 설정해주는 방식은 처음 보는 방식인데... 일단은 저자님 하시는대로 따라해보자.
+
+> 🎃🎃🎃 책의 페이징 코드 구현내용을 계속 보다보니..  🎃🎃🎃
+>
+> 758쪽 JSP 코드가 확실히 잘못된 것으로보인다.
+>
+> * https://github.com/gilbutITbook/006895/blob/df5694f599cea256617db0db09f7f7d52e261f49/pro17/WebContent/board07/listArticles.jsp
+>
+> 페이징 쿼리 스팩은 올바른데.. 페이지 계산이 잘못되는 것 같다.
+>
+
+
+나는 쿼리 스팩대로 맞춰봤다. 
+
+* `src/main/webapp/board03/listArticles.jsp` 참고
+
+* 쿼리 스팩 생각하면서 짜 맞춰서 해보긴 했는데... 데이터 100개이상 넣어서 테스트하고 페이지 경계도 확인했다.
+
+* [ ] ✨ 지금 당장은 하지 않더라도 페이징 도메인 모델을 만들어서 JSP 코드를 단순화해야될 것 같다.
+
+  
+
+
+
+
 ---
 
 ## 의견
 
-* ...
-  
+* ✨**JSP쪽 페이징 구현 관련해서 다시 한번 확인해주시면 좋을 것 같다.**✨
 
 
 
 ## 정오표
 
 * 695쪽 표에는 NOT NULL인데, 697에는 NOT NULL이 지정되지 않은 컬럼 들이 있다.
-
   * parentNO
-
+  
   * content
-
+  
   * id 
+  
+* 755 코드 17-48
+  * selectAllArticles의 메서드 선언부의 반환형이 잘못됨.
+    * `List<String, Integer>` `->` `List<ArticleVO>`
 
-    
 
 
 ## 기타

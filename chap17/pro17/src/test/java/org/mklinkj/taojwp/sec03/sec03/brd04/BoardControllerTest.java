@@ -2,8 +2,11 @@ package org.mklinkj.taojwp.sec03.sec03.brd04;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.mklinkj.taojwp.common.domain.ModalMessage;
+import org.mklinkj.taojwp.sec03.brd01.ArticleVO;
 import org.mklinkj.taojwp.test.support.MockHttpServletTestSupport;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockPart;
@@ -12,12 +15,20 @@ class BoardControllerTest extends MockHttpServletTestSupport<BoardController> {
 
   @Test
   void testDoHandle_list() throws Exception {
+    resetDB();
     runGivenWhenThen(
-        () -> servlet.init(), //
+        () -> {
+          servlet.init();
+          request.setParameter("section", "2");
+          request.setParameter("pageNum", "11");
+        }, //
         () -> servlet.doHandle(request, response), //
         () -> {
           assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-          assertThat(request.getAttribute("articleList")).isNotNull();
+          Map<String, Object> articlesMap =
+              (Map<String, Object>) request.getAttribute("articlesMap");
+          List<ArticleVO> articlesList = (List<ArticleVO>) articlesMap.get("articlesList");
+          assertThat(articlesList).isNotEmpty();
           assertThat(response.getForwardedUrl()).isEqualTo("/board03/listArticles.jsp");
         });
   }
