@@ -16,7 +16,17 @@
     그래서 metadata-complete="true" 설정을 제거했다.
   -->
 
-  <display-name>Chap17_Servlet</display-name>
+  <display-name>Chap18_Servlet</display-name>
+
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:application-context.xml</param-value>
+  </context-param>
+
+  <listener>
+    <display-name>Spring Context Loader</display-name>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
 
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
