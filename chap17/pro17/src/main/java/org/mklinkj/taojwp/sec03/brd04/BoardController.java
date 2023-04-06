@@ -1,4 +1,4 @@
-package org.mklinkj.taojwp.sec03.sec03.brd04;
+package org.mklinkj.taojwp.sec03.brd04;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static org.mklinkj.taojwp.common.constant.Constants.HTML_CONTENT_TYPE;

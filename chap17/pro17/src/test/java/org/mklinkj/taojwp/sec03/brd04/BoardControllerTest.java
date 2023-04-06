@@ -1,4 +1,4 @@
-package org.mklinkj.taojwp.sec03.sec03.brd04;
+package org.mklinkj.taojwp.sec03.brd04;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
