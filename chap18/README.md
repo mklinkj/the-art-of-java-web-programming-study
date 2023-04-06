@@ -96,7 +96,7 @@
 
     
 
-### 테스트시 Service, DAO 클래스는 `@SpringJunitConfig` 만 설정해서 진행하면 되는데, 서블릿 테스트의 경우  추가 설정이 필요했다.
+### 테스트시 Service, DAO 클래스는 `@SpringJUnitConfig ` 만 설정해서 진행하면 되는데, 서블릿 테스트의 경우  추가 설정이 필요했다.
 
 * ContextListener가 하는일 ServletContext에 어플리케이션 컨텍스트를 바인드 하는 일을  해줄 필요가 있었는데... 이부분은 Mcok 초기화 바로 이후에 MockServletContext에 컨텍스트를 그냥 넣어줫다.
 
