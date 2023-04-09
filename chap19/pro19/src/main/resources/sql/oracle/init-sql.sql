@@ -23,7 +23,7 @@ INSERT INTO t19_member (id, pwd, name, email, join_date)
 VALUES ('lee', '1212', '이순신', 'lee@test.com', TO_DATE('2023-02-03 12:00:00', 'YYYY-MM-DD HH24:MI:SS'));
 
 INSERT INTO t19_member (id, pwd, name, email, join_date)
-VALUES ('kim', '1212', '김유신', 'hong@gamil.com', TO_DATE('2023-02-04 13:00:00', 'YYYY-MM-DD HH24:MI:SS'));
+VALUES ('kim', '1234', '김유신', 'hong@gamil.com', TO_DATE('2023-02-04 13:00:00', 'YYYY-MM-DD HH24:MI:SS'));
 
 -- 게시물을 한번도 작성하지 않은 회원
 INSERT INTO t19_member (id, pwd, name, email, join_date)

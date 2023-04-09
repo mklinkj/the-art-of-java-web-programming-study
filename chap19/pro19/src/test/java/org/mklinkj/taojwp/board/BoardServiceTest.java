@@ -38,7 +38,7 @@ class BoardServiceTest {
     articlesMap.put("pageNum", 1);
 
     Map<String, Object> result = service.listArticles(articlesMap);
-    assertThat((List) result.get("articlesList")).isNotEmpty();
+    assertThat((List<ArticleVO>) result.get("articlesList")).isNotEmpty();
     assertThat((Integer) result.get("totArticles")).isGreaterThan(0);
   }
 }

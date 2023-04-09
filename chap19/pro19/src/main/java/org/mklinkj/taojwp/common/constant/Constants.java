@@ -24,4 +24,6 @@ public class Constants {
   public static final int PAGE_NAVI_SIZE = 10;
 
   public static final String VIEW_ROOT_PATH_FORMAT = "/WEB-INF/views%s";
+
+  public static final String LOGIN_INFO_KEY_NAME = "loginInfo";
 }
