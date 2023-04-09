@@ -98,19 +98,33 @@
       </div>
 
       <div id="modify_process_btns" class="d-flex justify-content-center d-none">
-        <button type="button" class="btn btn-primary me-2" onclick="modifyProcess(this)">수정 반영하기</button>
+        <c:choose>
+          <c:when test="${loginInfo != null and (loginInfo.id eq article.id)}">
+            <button type="button" class="btn btn-primary me-2" onclick="modifyProcess(this)">수정 반영하기</button>
+          </c:when>
+          <c:otherwise>
+            <button type="button" class="btn btn-primary me-2 disabled">수정 반영하기</button>
+          </c:otherwise>
+        </c:choose>
         <button type="button" class="btn btn-secondary me-2" onclick="modifyView(false)">취소하기
         </button>
       </div>
 
       <div id="modify_view_btns" class="d-flex justify-content-center">
-        <button type="button" class="btn btn-outline-primary me-2" onclick="modifyView(true)">수정하기
-        </button>
+        <c:choose>
+          <c:when test="${loginInfo != null and (loginInfo.id eq article.id)}">
+            <button type="button" class="btn btn-outline-primary me-2" onclick="modifyView(true)">수정하기</button>
+            <button type="button" class="btn btn-danger me-2" onclick="removeProcess(this)">삭제하기</button>
+          </c:when>
+          <c:otherwise>
+            <button type="button" class="btn btn-primary me-2 disabled">수정하기</button>
+            <button type="button" class="btn btn-danger me-2 disabled">삭제하기</button>
+          </c:otherwise>
+        </c:choose>
+        <button type="button" class="btn btn-dark me-2" onclick="replyForm(this)">답글 쓰기</button>
         <a href="${contextPath}/board/listArticles.do">
-          <button type="button" class="btn btn-secondary me-2">리스트로 돌아가기</button>
+          <button type="button" class="btn btn-secondary">리스트로 돌아가기</button>
         </a>
-        <button type="button" class="btn btn-danger me-2" onclick="removeProcess(this)">삭제하기</button>
-        <button type="button" class="btn btn-dark" onclick="replyForm(this)">답글 쓰기</button>
       </div>
     </form>
   </div>

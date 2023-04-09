@@ -12,8 +12,9 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
+import org.mklinkj.taojwp.board.exception.InvalidRequestException;
+import org.mklinkj.taojwp.common.domain.ModalMessage;
 import org.mklinkj.taojwp.common.servlet.AbstractHttpServlet;
-import org.mklinkj.taojwp.member.exception.InvalidPasswordException;
 
 @Slf4j
 @WebServlet("/login/*")
@@ -44,30 +45,51 @@ public class LoginController extends AbstractHttpServlet {
 
     String nextPage = null;
 
-    if (action == null || action.equals("/loginForm.do")) {
-      nextPage = CURRENT_VIEW_PATH_FORMAT.formatted("/loginForm.jsp");
+    try {
+      if (action == null || action.equals("/loginForm.do")) {
+        nextPage = CURRENT_VIEW_PATH_FORMAT.formatted("/loginForm.jsp");
 
-    } else if (action.equals("/login.do")) {
+      } else if (action.equals("/login.do")) {
 
-      String id = request.getParameter("id");
-      String pwd = request.getParameter("pwd");
+        String id = request.getParameter("id");
+        String pwd = request.getParameter("pwd");
 
-      Optional<MemberVO> result = memberDAO.findMember(id);
-      MemberVO member = result.orElseThrow();
+        Optional<MemberVO> result = memberDAO.findMemberWithPassword(id, pwd);
+        MemberVO member =
+            result.orElseThrow(
+                () -> {
+                  throw new InvalidRequestException(
+                      ModalMessage.builder()
+                          .title("🎃 로그인 실패 🎃")
+                          .content("사용자 이름 또는 암호가 잘못되었습니다. 😂😂😂")
+                          .build());
+                });
 
-      if (!member.getPwd().equals(pwd)) {
-        throw new InvalidPasswordException("id(%s)의 암호가 잘못되었습니다.".formatted(id));
+        HttpSession session = request.getSession();
+        session.setAttribute(LOGIN_INFO_KEY_NAME, member);
+
+        nextPage = String.format("redirect:/board/listArticles.do");
+
+      } else if (action.equals("/logout.do")) {
+        HttpSession session = request.getSession();
+        session.invalidate();
+        nextPage = String.format("redirect:/board/listArticles.do");
       }
 
-      HttpSession session = request.getSession();
-      session.setAttribute(LOGIN_INFO_KEY_NAME, member);
+    } catch (InvalidRequestException ire) {
+      setFlashAttribute(request, "msg", ire.getModalMessage());
+      nextPage = String.format("redirect:%s/loginForm.do", request.getServletPath());
 
-      nextPage = String.format("redirect:/board/listArticles.do");
-
-    } else if (action.equals("/logout.do")) {
-      HttpSession session = request.getSession();
-      session.invalidate();
-      nextPage = String.format("redirect:/board/listArticles.do");
+    } catch (Exception e) {
+      LOGGER.info("서블릿 오류: {}", e.getMessage());
+      setFlashAttribute(
+          request,
+          "msg",
+          ModalMessage.builder()
+              .title("😈 잘못된 요청 또는 내부 오류입니다. 👎👎👎")
+              .content("목록으로 돌아갑니다.., 서버 로그도 확인해주세요 🙏🙏🙏")
+              .build());
+      nextPage = String.format("redirect:%s/loginForm.do", request.getServletPath());
     }
 
     forwardOrRedirect(request, response, nextPage);

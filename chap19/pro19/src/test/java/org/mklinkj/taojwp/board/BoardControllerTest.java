@@ -2,16 +2,21 @@ package org.mklinkj.taojwp.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mklinkj.taojwp.board.BoardController.CURRENT_VIEW_PATH_FORMAT;
+import static org.mklinkj.taojwp.common.constant.Constants.LOGIN_INFO_KEY_NAME;
 
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.mklinkj.taojwp.common.domain.ModalMessage;
+import org.mklinkj.taojwp.member.MemberDAO;
 import org.mklinkj.taojwp.test.support.MockHttpServletTestSupport;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockPart;
 
 class BoardControllerTest extends MockHttpServletTestSupport<BoardController> {
+
+  @Autowired MemberDAO memberDAO;
 
   @Test
   void testDoHandle_list() throws Exception {
@@ -82,6 +87,9 @@ class BoardControllerTest extends MockHttpServletTestSupport<BoardController> {
     dbDataInitializer.resetDB();
     runGivenWhenThen(
         () -> {
+          request
+              .getSession()
+              .setAttribute(LOGIN_INFO_KEY_NAME, memberDAO.findMember("hong").orElseThrow());
           servlet.init();
           request.setPathInfo("/modArticle.do");
 
@@ -119,10 +127,12 @@ class BoardControllerTest extends MockHttpServletTestSupport<BoardController> {
     dbDataInitializer.resetDB();
     runGivenWhenThen(
         () -> {
-          servlet.init();
+          request
+              .getSession()
+              .setAttribute(LOGIN_INFO_KEY_NAME, memberDAO.findMember("hong").orElseThrow());
           request.setPathInfo("/removeArticle.do");
-
           request.setParameter("articleNo", "2");
+          servlet.init();
         },
         () -> servlet.doHandle(request, response), //
         () -> {
@@ -141,9 +151,9 @@ class BoardControllerTest extends MockHttpServletTestSupport<BoardController> {
   void testDoHandle_replyForm() throws Exception {
     runGivenWhenThen(
         () -> {
-          servlet.init();
           request.setPathInfo("/replyForm.do");
           request.setParameter("parentNo", "1");
+          servlet.init();
         },
         () -> servlet.doHandle(request, response), //
         () -> {
@@ -159,6 +169,9 @@ class BoardControllerTest extends MockHttpServletTestSupport<BoardController> {
     dbDataInitializer.resetDB();
     runGivenWhenThen(
         () -> {
+          request
+              .getSession()
+              .setAttribute(LOGIN_INFO_KEY_NAME, memberDAO.findMember("mklinkj").orElseThrow());
           servlet.init();
           request.setPathInfo("/addReply.do");
 

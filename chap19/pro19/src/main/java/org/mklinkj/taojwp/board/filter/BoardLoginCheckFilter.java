@@ -46,7 +46,7 @@ public class BoardLoginCheckFilter extends OncePerRequestFilter {
                 .content("로그인 후, 사용가능합니다. 😛")
                 .build());
         response.setStatus(HttpServletResponse.SC_FOUND);
-        response.sendRedirect(request.getContextPath() + "/board/listArticles.do");
+        response.sendRedirect(request.getContextPath() + "/login/loginForm.do");
         return;
       }
     }

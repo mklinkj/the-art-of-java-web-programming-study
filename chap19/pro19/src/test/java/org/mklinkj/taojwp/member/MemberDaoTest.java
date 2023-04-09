@@ -51,6 +51,14 @@ class MemberDaoTest {
   }
 
   @Test
+  void findMemberWithPassword() {
+    Optional<MemberVO> result = dao.findMemberWithPassword("mklinkj", "1234");
+    MemberVO member = result.orElseThrow();
+
+    assertThat(member).hasFieldOrPropertyWithValue("id", "mklinkj");
+  }
+
+  @Test
   void findMember_Not_exist() {
     Optional<MemberVO> result = dao.findMember("mklinkj999");
 

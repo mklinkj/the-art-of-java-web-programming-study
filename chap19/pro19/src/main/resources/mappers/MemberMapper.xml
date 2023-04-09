@@ -17,7 +17,14 @@
   <select id="findMember" parameterType="string" resultType="member">
     SELECT id, pwd, name, email, join_date
       FROM t19_member
-     WHERE id=#{id}
+     WHERE id = #{id}
+  </select>
+
+  <select id="findMemberWithPassword" parameterType="string" resultType="member">
+    SELECT id, pwd, name, email, join_date
+    FROM t19_member
+    WHERE id = #{id}
+      AND pwd = #{pwd}
   </select>
 
   <update id="modMember" parameterType="member">

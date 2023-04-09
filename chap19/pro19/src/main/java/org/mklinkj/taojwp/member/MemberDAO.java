@@ -25,6 +25,10 @@ public class MemberDAO {
     return Optional.ofNullable(memberMapper.findMember(id));
   }
 
+  public Optional<MemberVO> findMemberWithPassword(String id, String password) {
+    return Optional.ofNullable(memberMapper.findMemberWithPassword(id, password));
+  }
+
   public int modMember(MemberVO memberVO) {
 
     return memberMapper.modMember(memberVO);
