@@ -73,7 +73,7 @@ class MemberDaoTest {
 
   @Test
   void delMember() {
-    int deletedCount = dao.delMember("mklinkj");
+    int deletedCount = dao.delMember("choi");
     assertThat(deletedCount).isEqualTo(1);
   }
 }

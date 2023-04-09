@@ -6,6 +6,7 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServlet;
 import org.mklinkj.taojwp.common.util.DBDataInitializer;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -15,7 +16,8 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
 /** Mock HTTP Servlet 테스트를 위한 공통 테스트 지원 클래스 */
 @SpringJUnitWebConfig(locations = "classpath:application-context.xml")
-public abstract class MockHttpServletTestSupport<T extends HttpServlet> {
+public abstract class MockHttpServletTestSupport<T extends HttpServlet>
+    implements InitializingBean {
   @Autowired protected DBDataInitializer dbDataInitializer;
 
   @Autowired protected MockServletContext servletContext;
@@ -26,7 +28,7 @@ public abstract class MockHttpServletTestSupport<T extends HttpServlet> {
 
   protected MockServletConfig servletConfig;
 
-  public MockHttpServletTestSupport() {
+  public void afterPropertiesSet() {
     resetMock();
   }
 

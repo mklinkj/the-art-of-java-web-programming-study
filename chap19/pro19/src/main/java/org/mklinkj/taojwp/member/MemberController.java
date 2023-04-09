@@ -30,7 +30,6 @@ public class MemberController extends AbstractHttpServlet {
   @Override
   protected void doHandle(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
-    request.setCharacterEncoding(UTF_8_ENCODING);
     response.setContentType(HTML_CONTENT_TYPE);
     // Flash Attribute 검사 및 정리
     cleanFlashAttribute(request);

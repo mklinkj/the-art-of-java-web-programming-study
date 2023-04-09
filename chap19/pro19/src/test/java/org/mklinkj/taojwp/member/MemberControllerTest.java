@@ -79,7 +79,7 @@ class MemberControllerTest extends MockHttpServletTestSupport<MemberController> 
         () -> {
           servlet.init();
           request.setPathInfo("/delMember.do");
-          request.setParameter("id", "mklinkj");
+          request.setParameter("id", "choi");
         }, //
         () -> servlet.doHandle(request, response), //
         () -> {

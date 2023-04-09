@@ -54,8 +54,6 @@ public class BoardController extends AbstractHttpServlet {
     cleanFlashAttribute(request);
 
     String nextPage;
-
-    request.setCharacterEncoding(UTF_8_ENCODING);
     response.setContentType(HTML_CONTENT_TYPE);
 
     String action = request.getPathInfo();
