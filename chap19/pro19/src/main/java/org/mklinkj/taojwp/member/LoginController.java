@@ -27,7 +27,7 @@ public class LoginController extends AbstractHttpServlet {
   @Override
   public void init() {
     super.init();
-    memberDAO = applicationContext.getBean("memberDAO", MemberDAO.class);
+    memberDAO = applicationContext.getBean(MemberDAO.class);
   }
 
   @Override

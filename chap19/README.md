@@ -7,13 +7,9 @@
 
 * ...
 
+## 19.2 의존성 주입 실습하기
 
-
-
-
-
-
-
+* ...
 
 
 
@@ -36,9 +32,9 @@
 
   - 회원 목록 페이지 접근은 일단 제한 없이 둠 (관리자 권한 사용자를 나눠야 제한의 의미가 있는데, 이부분은 일단 두자.)
 
-- [ ] Oracle 외의 다른 DB 대응
+- [x] Oracle 외의 다른 DB 대응
 
-  * MySQL 대응, HSQLDB 대응이 되도 좋다.
+  * MySQL 대응, HSQLDB 대응이 되도 좋다. `--> MySQL로 적용해보았다.`
   * DAO를 인터페이스로 전환하고 빈 설정만으로  DB를 전환해서 사용가능하게 코드를 변경한다.
 
 
@@ -75,6 +71,105 @@ OncePerRequestFilter의 장점은 요청당 한 번만 실행된다는 것입니
 ```
 
 
+
+## MySQL  적용
+
+####  데이터베이스와 사용자 생성
+
+```sql
+CREATE DATABASE the_art_of_java_web CHARACTER SET UTF8MB4;
+
+CREATE USER 'scott'@'localhost' IDENTIFIED BY 'tiger';
+CREATE USER 'scott'@'%' IDENTIFIED BY 'tiger';
+
+GRANT ALL PRIVILEGES ON the_art_of_java_web.* TO 'scott'@'localhost';
+GRANT ALL PRIVILEGES ON the_art_of_java_web.* TO 'scott'@'%';
+```
+
+
+
+####  MySQL  DB  프로퍼티
+
+```properties
+driverClassName=com.mysql.cj.jdbc.Driver
+jdbcUrl=jdbc:mysql://localvmdb.mysql_8:3306/the_art_of_java_web?characterEncoding=utf8
+username=scott
+password=tiger
+```
+
+#### 계층 목록 조회 쿼리
+
+```  sql
+WITH RECURSIVE cte (level, str_level ,article_no, parent_no, title, content, write_date, id) AS (
+  SELECT 1, CAST(article_no AS CHAR(100)) AS str_level, article_no, parent_no, CONCAT(REPEAT(' ', 4 * (1-1)), title) AS title, content, write_date, id
+  FROM t19_board
+  WHERE parent_no = 0  
+  UNION ALL
+  SELECT cte.level + 1, CONCAT(cte.str_level , ',' , t19_board.article_no) , t19_board.article_no, t19_board.parent_no,
+         CONCAT(REPEAT(' ', 4 * (cte.level)), t19_board.title) AS title,
+         t19_board.content,
+         t19_board.write_date,
+         t19_board.id
+  FROM t19_board JOIN cte ON cte.article_no = t19_board.parent_no
+)
+SELECT * FROM cte
+ORDER BY str_level DESC;
+
+```
+
+계층까진 괜찮은데... 정렬이 문제다 🎃
+
+* CTE의 초기 쿼리에 미리 정의 
+
+  ```sql
+  WITH RECURSIVE cte (level, lvl, article_no, parent_no, title, content, write_date, id) AS (
+      SELECT 1, JSON_ARRAY(CAST(article_no AS UNSIGNED), ~0, ~0, ~0, ~0) AS lvl, article_no, parent_no, CONCAT(REPEAT(' ', 4 * (1-1)), title) AS title, content, write_date, id
+      FROM t19_board
+      WHERE parent_no = 0
+      UNION ALL
+      SELECT cte.level + 1, JSON_SET(lvl, CONCAT('$[', cte.level ,']'), t19_board.article_no) , t19_board.article_no, t19_board.parent_no,
+             CONCAT(REPEAT(' ', 4 * (cte.level)), t19_board.title) AS title,
+             t19_board.content,
+             t19_board.write_date,
+             t19_board.id
+      FROM t19_board JOIN cte ON cte.article_no = t19_board.parent_no
+  )
+  SELECT * FROM cte
+  ORDER BY lvl->"$[0]" DESC, lvl->"$[1]" DESC, lvl->"$[2]" DESC, lvl->"$[3]" DESC, lvl->"$[4]" DESC;
+  ```
+
+  
+
+위의 쿼리로 했을 때.. Oracle 과 정렬결과가 같기는함.
+
+JSON ARRAY 정렬을 알아서 해주면 좋은데, 그게 안되서 계층을 제한 할 수 밖에 없음. 위의 쿼리에서는 5계층까지의 답글만 제한을 걸 필요가 있다.
+
+---
+
+* 자신 포함 자신의 상위 부모글들의 article_no 목록 구하는 쿼리는 비교적 복잡하지 않았다.
+
+```sql
+WITH RECURSIVE cte (article_no) AS (
+    SELECT article_no
+    FROM t19_board
+    WHERE article_no = #{articleNo}
+    UNION ALL
+    SELECT t19_board.article_no
+    FROM t19_board JOIN cte ON cte.article_no = t19_board.parent_no
+)
+SELECT article_no FROM cte;
+```
+
+
+
+## 의견
+
+* 이번 장은 대부분 익숙한 내용이라, 필요한 부분만 진행했다.
+* 19장 프로젝트는 MySQL을 적용한 상태로 두자.
+* 답글형 게시판은 너무 복잡해져서, 꼭 필요하지 않다면 하지 않는 것이 나을 것 같다.
+  * 해야한다면, DB의 고유기능을 쓰기보단 레벨이나 그룹내 정렬 순서등에 대한 메타 정보를 담은 추가 컬럼을 두어서, DB를 바꾸더라도 쉽게 전환가능하게 구현가능하는게 나을 것 같기도하다...
+  * 게시물에 대한 답글은 아니더라도 덧글에 대한 대댓글을 적용하는 것 정도는 괜찮을 것 같다.
+* MySQL 계층 쿼리가 5계층 이상 부터는 정렬이 이상하게 될 수도 있는데.. 그것에 대한 제한 코드는 넣어두진 않았음.. 😅
 
 
 

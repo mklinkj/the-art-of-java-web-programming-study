@@ -1,7 +1,6 @@
 package org.mklinkj.taojwp.member;
 
 import static org.mklinkj.taojwp.common.constant.Constants.HTML_CONTENT_TYPE;
-import static org.mklinkj.taojwp.common.constant.Constants.UTF_8_ENCODING;
 import static org.mklinkj.taojwp.common.constant.Constants.VIEW_ROOT_PATH_FORMAT;
 
 import jakarta.servlet.ServletException;
@@ -24,7 +23,7 @@ public class MemberController extends AbstractHttpServlet {
   @Override
   public void init() {
     super.init();
-    memberDAO = applicationContext.getBean("memberDAO", MemberDAO.class);
+    memberDAO = applicationContext.getBean(MemberDAO.class);
   }
 
   @Override

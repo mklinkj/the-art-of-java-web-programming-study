@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.EncodedResource;
@@ -13,6 +14,8 @@ import org.springframework.jdbc.datasource.init.ScriptUtils;
 @RequiredArgsConstructor
 public class DBDataInitializer {
   private final DataSource dataSource;
+
+  private final String initSqlScript;
 
   public void runInitSqlScript(String sqlFile, DataSource dataSource) {
     try (Connection connection = dataSource.getConnection()) {
@@ -31,6 +34,6 @@ public class DBDataInitializer {
   }
 
   public void resetDB() {
-    runInitSqlScript("sql/oracle/init-sql.sql", dataSource);
+    runInitSqlScript(initSqlScript, dataSource);
   }
 }

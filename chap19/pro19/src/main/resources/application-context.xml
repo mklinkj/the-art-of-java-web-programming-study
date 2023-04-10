@@ -4,12 +4,13 @@
   xmlns:context="http://www.springframework.org/schema/context"
   xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
   xmlns:tx="http://www.springframework.org/schema/tx"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
   <context:component-scan base-package="org.mklinkj.taojwp"/>
 
   <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-    <constructor-arg value="/db-oracle.properties"/>
+    <!-- <constructor-arg value="/db-oracle.properties"/> -->
+    <constructor-arg value="/db-mysql.properties"/>
     <property name="dataSourceProperties">
       <props>
         <prop key="cachePrepStmts">true</prop>
@@ -37,9 +38,18 @@
   </bean>
 
   <bean id="dbDataInitializer" class="org.mklinkj.taojwp.common.util.DBDataInitializer"
-    init-method="resetDB" primary="true"/>
+    init-method="resetDB" primary="true">
+    <constructor-arg name="initSqlScript" value="sql/mysql/init-sql.sql"/>
+    <!-- <constructor-arg name="initSqlScript" value="sql/oracle/init-sql.sql"/> -->
+  </bean>
 
-  <bean class="org.mklinkj.taojwp.common.listener.JDBCDriverCleaner" depends-on="dataSource" />
+  <bean name="mySqlBoardDAO" class="org.mklinkj.taojwp.board.MySqlBoardDAO" />
+  <bean name="mySqlMemberDAO" class="org.mklinkj.taojwp.member.MySqlMemberDAO" />
+
+<!--  <bean class="org.mklinkj.taojwp.member.OracleMemberDAO" />-->
+<!--  <bean class="org.mklinkj.taojwp.board.OracleBoardDAO" />-->
+
+  <bean class="org.mklinkj.taojwp.common.listener.JDBCDriverCleaner" depends-on="dataSource"/>
 
   <tx:annotation-driven/>
 </beans>

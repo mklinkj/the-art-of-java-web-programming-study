@@ -2,40 +2,17 @@ package org.mklinkj.taojwp.member;
 
 import java.util.List;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
-import org.mklinkj.taojwp.mapper.MemberMapper;
-import org.springframework.stereotype.Repository;
 
-/** MyBatis 추가해보자! */
-@Repository
-@RequiredArgsConstructor
-public class MemberDAO {
+public interface MemberDAO {
+  List<MemberVO> listMembers();
 
-  private final MemberMapper memberMapper;
+  int addMember(MemberVO memberVO);
 
-  public List<MemberVO> listMembers() {
-    return memberMapper.listMembers();
-  }
+  Optional<MemberVO> findMember(String id);
 
-  public int addMember(MemberVO memberVO) {
-    return memberMapper.addMember(memberVO);
-  }
+  Optional<MemberVO> findMemberWithPassword(String id, String password);
 
-  public Optional<MemberVO> findMember(String id) {
-    return Optional.ofNullable(memberMapper.findMember(id));
-  }
+  int modMember(MemberVO memberVO);
 
-  public Optional<MemberVO> findMemberWithPassword(String id, String password) {
-    return Optional.ofNullable(memberMapper.findMemberWithPassword(id, password));
-  }
-
-  public int modMember(MemberVO memberVO) {
-
-    return memberMapper.modMember(memberVO);
-  }
-
-  public int delMember(String id) {
-
-    return memberMapper.delMember(id);
-  }
+  int delMember(String id);
 }

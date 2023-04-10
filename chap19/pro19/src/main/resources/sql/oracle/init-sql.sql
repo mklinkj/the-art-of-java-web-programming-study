@@ -1,8 +1,8 @@
 DROP TABLE t19_board;
 DROP TABLE t19_member;
 
--- ### 17장 게시판 ###
-
+-- ### 회원제 게시판 ###
+-- ### Oracle 데이터 ###
 
 CREATE TABLE t19_member
 (

@@ -8,8 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mklinkj.taojwp.common.util.DBDataInitializer;
-import org.mklinkj.taojwp.board.ArticleVO;
-import org.mklinkj.taojwp.board.BoardDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
