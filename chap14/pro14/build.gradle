@@ -40,7 +40,6 @@ dependencies {
   testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
   testImplementation "org.assertj:assertj-core:${assertJVersion}"
   testImplementation "org.mockito:mockito-core:${mockitoVersion}"
-  testImplementation "org.mockito:mockito-inline:${mockitoVersion}"
 
   testRuntimeOnly "jakarta.servlet:jakarta.servlet-api:${jakartaServletApiVersion}"
 

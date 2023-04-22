@@ -52,7 +52,6 @@ dependencies {
   testImplementation "org.assertj:assertj-core:${assertJVersion}"
   testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitAssertJVersion}"
   testImplementation "org.mockito:mockito-core:${mockitoVersion}"
-  testImplementation "org.mockito:mockito-inline:${mockitoVersion}"
 
   testRuntimeOnly "jakarta.servlet:jakarta.servlet-api:${jakartaServletApiVersion}"
 
