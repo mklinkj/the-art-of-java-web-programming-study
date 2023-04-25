@@ -1,17 +1,15 @@
-package org.mklinkj.taojwp.common.util;
+package org.mklinkj.taojwp.common.util
 
-import java.nio.file.Paths;
-import java.util.Optional;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import java.nio.file.Paths
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class CommonUtils {
-  public static String ifNullToNullString(String string) {
-    return String.valueOf(string);
-  }
+object CommonUtils {
+    @JvmStatic
+    fun ifNullToNullString(string: String?): String {
+        return string ?: "null"
+    }
 
-  public static String fileNameOnly(String fileName) {
-    return Paths.get(fileName).getFileName().toString();
-  }
+    @JvmStatic
+    fun fileNameOnly(fileName: String?): String {
+        return Paths.get(fileName).fileName.toString()
+    }
 }

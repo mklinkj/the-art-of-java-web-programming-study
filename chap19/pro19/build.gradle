@@ -3,6 +3,7 @@ plugins {
   id "io.freefair.lombok" version "${lombokPluginVersion}"
   id "org.gretty" version "${grettyVersion}"
   id 'war'
+  id 'org.jetbrains.kotlin.jvm' version "${kotlinJvmPluginVersion}"
 }
 
 java {
@@ -60,6 +61,7 @@ dependencies {
 
   implementation "org.webjars:jquery:${jqueryVersion}"
   implementation "org.webjars:bootstrap:${bootstrapVersion}"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens
@@ -102,4 +104,7 @@ test {
     outputs.upToDateWhen { false }
     showStandardStreams = true
   }
+}
+kotlin {
+  jvmToolchain(Integer.valueOf("${javaVersion}"))
 }
