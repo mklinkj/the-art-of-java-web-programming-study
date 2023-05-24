@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mklinkj.taojwp.mapper.MySqlBoardMapper">
+  <select id="selectAllArticles" resultType="article">
+    WITH RECURSIVE cte (level, lvl, article_no, parent_no, title, content, write_date, id) AS (
+      SELECT 1, JSON_ARRAY(CAST(article_no AS UNSIGNED), ~0, ~0, ~0, ~0) AS lvl, article_no, parent_no, CONCAT(REPEAT(' ', 4 * (1-1)), title) AS title, content, write_date, id
+      FROM t19_board
+      WHERE parent_no = 0
+      UNION ALL
+      SELECT cte.level + 1, JSON_SET(lvl, CONCAT('$[', cte.level ,']'), t19_board.article_no) , t19_board.article_no, t19_board.parent_no,
+             CONCAT(REPEAT(' ', 4 * (cte.level)), t19_board.title) AS title,
+             t19_board.content,
+             t19_board.write_date,
+             t19_board.id
+      FROM t19_board JOIN cte ON cte.article_no = t19_board.parent_no
+    )
+    SELECT * FROM cte
+    ORDER BY lvl->"$[0]" DESC, lvl->"$[1]" DESC, lvl->"$[2]" DESC, lvl->"$[3]" DESC, lvl->"$[4]" DESC;
+  </select>
+
+
+  <select id="selectPagedArticles" resultType="article">
+    SELECT * FROM (
+    WITH RECURSIVE cte (level, lvl, article_no, parent_no, title, content, write_date, id) AS (
+      SELECT 1, JSON_ARRAY(CAST(article_no AS UNSIGNED), ~0, ~0, ~0, ~0) AS lvl, article_no, parent_no, CONCAT(REPEAT(' ', 4 * (1-1)), title) AS title, content, write_date, id
+      FROM t19_board
+      WHERE parent_no = 0
+      UNION ALL
+      SELECT cte.level + 1, JSON_SET(lvl, CONCAT('$[', cte.level ,']'), t19_board.article_no) , t19_board.article_no, t19_board.parent_no,
+             CONCAT(REPEAT(' ', 4 * (cte.level)), t19_board.title) AS title,
+             t19_board.content,
+             t19_board.write_date,
+             t19_board.id
+      FROM t19_board JOIN cte ON cte.article_no = t19_board.parent_no
+    )
+    SELECT * FROM cte
+    ORDER BY lvl->"$[0]" DESC, lvl->"$[1]" DESC, lvl->"$[2]" DESC, lvl->"$[3]" DESC, lvl->"$[4]" DESC
+    ) r
+    LIMIT #{offset}, #{rowCount}
+  </select>
+
+  <select id="selectCountTotalArticles" resultType="int">
+    SELECT COUNT(*)
+      FROM t19_board
+  </select>
+
+  <select id="selectMaxArticleNo" resultType="int">
+    SELECT MAX(article_no)
+      FROM t19_board
+  </select>
+
+  <insert id="insertArticle" parameterType="article">
+    INSERT INTO t19_board (article_no, parent_no, title, content, image_file_name, id)
+    VALUES (#{articleNo}, #{parentNo}, #{title}, #{content}, #{imageFileName}, #{id})
+  </insert>
+
+  <select id="selectOne" parameterType="article" resultType="article">
+    SELECT article_no, parent_no, title, content, image_file_name, write_date, id
+      FROM t19_board
+     WHERE article_no = #{articleNo}
+  </select>
+
+  <update id="updateArticle" parameterType="article">
+    UPDATE t19_board
+       SET title = #{title}
+         , content = #{content}
+       <if test="imageFileName != null and !imageFileName.isBlank()">
+         , image_file_name = #{imageFileName}
+       </if>
+     WHERE article_no = #{articleNo}
+  </update>
+
+
+  <delete id="deleteArticle">
+    DELETE
+      FROM t19_board
+     WHERE article_no IN (
+       WITH RECURSIVE cte (article_no) AS (
+         SELECT article_no
+         FROM t19_board
+         WHERE article_no = #{articleNo}
+         UNION ALL
+         SELECT t19_board.article_no
+         FROM t19_board JOIN cte ON cte.article_no = t19_board.parent_no
+       )
+       SELECT article_no FROM cte
+    )
+  </delete>
+
+
+  <select id="selectArticleNumbersToDelete" parameterType="int">
+    WITH RECURSIVE cte (article_no) AS (
+      SELECT article_no
+      FROM t19_board
+      WHERE article_no = #{articleNo}
+      UNION ALL
+      SELECT t19_board.article_no
+      FROM t19_board JOIN cte ON cte.article_no = t19_board.parent_no
+    )
+    SELECT article_no FROM cte
+  </select>
+
+</mapper>

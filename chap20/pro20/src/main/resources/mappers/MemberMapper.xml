@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mklinkj.taojwp.mapper.MemberMapper">
+  <insert id="addMember" parameterType="member">
+    INSERT INTO t19_member (id, pwd, name, email)
+    VALUES (#{id}, #{pwd}, #{name}, #{email})
+  </insert>
+
+  <select id="listMembers" resultType="member">
+    SELECT id, pwd, name, email, join_date
+      FROM t19_member
+     ORDER BY join_date DESC
+  </select>
+
+  <select id="findMember" parameterType="string" resultType="member">
+    SELECT id, pwd, name, email, join_date
+      FROM t19_member
+     WHERE id = #{id}
+  </select>
+
+  <select id="findMemberWithPassword" parameterType="string" resultType="member">
+    SELECT id, pwd, name, email, join_date
+    FROM t19_member
+    WHERE id = #{id}
+      AND pwd = #{pwd}
+  </select>
+
+  <update id="modMember" parameterType="member">
+    UPDATE t19_member
+       SET pwd = #{pwd}
+         , name = #{name}
+         , email = #{email}
+     WHERE id = #{id}
+  </update>
+
+  <delete id="delMember" parameterType="string">
+    DELETE
+      FROM t19_member
+     WHERE id = #{id}
+  </delete>
+</mapper>
