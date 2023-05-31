@@ -6,7 +6,7 @@ for /F "delims=" %%a in (project-folder-list.txt) do (
   copy .gitattributes %%a
   copy %%a\local-settings.gradle %%a\settings.gradle
 
-  xcopy /S /Y gradle %%a\gradle\
+  xcopy /S /Y gradle\wrapper\ %%a\gradle\wrapper\
   copy gradlew.bat %%a
   copy gradlew %%a
 )

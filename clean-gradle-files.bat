@@ -9,7 +9,6 @@ for /F "delims=" %%a in (project-folder-list.txt) do (
   del %%a\gradlew.bat
   del %%a\gradlew
 
-  del %%a\.gitattributes
 )
 
 @ECHO remove is complete.

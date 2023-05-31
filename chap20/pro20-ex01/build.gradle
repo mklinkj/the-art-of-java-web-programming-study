@@ -1,0 +1,46 @@
+plugins {
+  id 'application'
+  id "io.freefair.lombok" version "${lombokPluginVersion}"
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of("${javaVersion}")
+  }
+}
+
+[compileJava, compileTestJava]*.options*.encoding = "${projectEncoding}"
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation "org.springframework:spring-context:${springVersion}"
+
+  implementation "org.apache.logging.log4j:log4j-core:${log4jVersion}"
+  implementation "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
+
+  implementation "org.aspectj:aspectjweaver:${aspectjVersion}"
+  // Spring AOP로 사용하면 AspectJ의 어노테이션만 사용하기 때문에 rt가 aspectjrt가 디펜던시에 없어도 잘 동작함.
+  // implementation "org.aspectj:aspectjrt:${aspectjVersion}"
+
+  testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+  testImplementation "org.springframework:spring-test:${springVersion}"
+  testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
+  testImplementation "org.assertj:assertj-core:${assertJVersion}"
+
+  testImplementation "org.springframework:spring-test:${springVersion}"
+}
+
+test {
+  useJUnitPlatform()
+  testLogging {
+    outputs.upToDateWhen { false }
+    showStandardStreams = true
+  }
+}
+
+run {
+  mainClass = 'org.mklinkj.taojwp.aop.Main'
+}

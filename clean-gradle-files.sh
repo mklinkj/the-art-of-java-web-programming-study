@@ -11,8 +11,7 @@ do
   rm -r $folder/gradle
   rm $folder/gradlew
   rm $folder/gradlew.bat
-  
-  rm $folder/.gitattributes
+
 done
 
 echo "remove is complete."
