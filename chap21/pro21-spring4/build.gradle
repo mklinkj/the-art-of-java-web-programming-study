@@ -1,0 +1,92 @@
+plugins {
+  id 'java'
+  id "io.freefair.lombok" version "${lombokPluginVersion}"
+  id "org.gretty" version "${gretty3Version}"
+  id 'war'
+  id 'org.jetbrains.kotlin.jvm' version "${kotlinJvmPluginVersion}"
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of("${javaVersion}")
+  }
+}
+
+[compileJava, compileTestJava]*.options*.encoding = "${projectEncoding}"
+
+repositories {
+  mavenCentral()
+}
+
+
+dependencies {
+  // log4j를 사용하므로 commons-logging은 전역적으로 제거.
+  // Spring 5, 6 에서는 디펜던시가 걸리지 않았던 것 같은데, 4를 사용하다보니 commons-logging이 디펜던시 되어 제거했다.
+  configurations.all {
+    exclude group: "commons-logging", module: "commons-logging"
+  }
+
+  // MultiActionController는 Spring 4 까지만 지원한다.
+  implementation "org.springframework:spring-context:${spring4Version}"
+  implementation "org.springframework:spring-webmvc:${spring4Version}"
+  implementation "org.slf4j:jcl-over-slf4j:${slf4jVersion}"
+  implementation "org.apache.logging.log4j:log4j-core:${log4jVersion}"
+  implementation "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
+  implementation "net.sargue:java-time-jsptags:${javaTimeJspTagsJavaxVersion}"
+    
+  runtimeOnly "javax.servlet:javax.servlet-api:${javaxServletApiVersion}"    
+  runtimeOnly "javax.servlet:jstl:${javaxServletJspJstlVersion}"
+
+  testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+  testImplementation "org.springframework:spring-test:${spring4Version}"
+
+  implementation "org.webjars:jquery:${jqueryVersion}"
+  implementation "org.webjars:bootstrap:${bootstrapVersion}"
+}
+
+import org.apache.tools.ant.filters.ReplaceTokens
+tasks.register('expandPropsWebapp', Copy) {
+  from 'src/main/webapp'
+  into "$buildDir/inplaceWebapp"
+  filesMatching(["**/*.html", "**/*.jsp"], {
+    filter(ReplaceTokens, tokens: [jqueryVersion: jqueryVersion, bootstrapVersion: bootstrapVersion, contextPath: "/" + project.name])
+  })
+  filteringCharset = 'UTF-8'
+}
+
+war {
+  webAppDirectory = file("$buildDir/inplaceWebapp")
+}
+
+processResources {
+  dependsOn('expandPropsWebapp')
+}
+
+tasks.named('test') {
+  useJUnitPlatform()
+  /*
+    터미널에서 테스트 클래스 실행 예시
+    > gradlew test --tests *TestClassName.testMethodName
+  */
+  testLogging {
+    outputs.upToDateWhen { false }
+    showStandardStreams = true
+  }
+}
+
+// gradle appRun 으로 실행
+gretty {
+  httpPort = 8080
+  contextPath = project.name
+  servletContainer = "tomcat9"
+  jvmArgs = [
+    "-Djava.security.egd=file:/dev/./urandom",
+    "--add-opens=java.base/java.io=ALL-UNNAMED",
+    "--add-opens=java.base/java.lang=ALL-UNNAMED",
+    "--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED"
+  ]
+}
+
+kotlin {
+  jvmToolchain(Integer.valueOf("${javaVersion}"))
+}
