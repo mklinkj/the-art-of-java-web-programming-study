@@ -47,4 +47,15 @@ public class ViewNameTest {
     String viewName = ReflectionTestUtils.invokeMethod(userController, "getViewName", request);
     assertThat(viewName).isEqualTo("memberInfo");
   }
+
+  /*
+   * /로 끝나는 경우 어떤 뷰를 선택해야할지? 지금 코드로는 뷰네임이 ""가 되기는 한다.
+   * 이 경우는 어떻게 판단해야할지 모르겠다. 예외를 던져야하나?
+   */
+  @Test
+  public void testGetViewName_05() {
+    request.setRequestURI("/pro21-spring4-ex02/test/memberInfo/");
+    String viewName = ReflectionTestUtils.invokeMethod(userController, "getViewName", request);
+    assertThat(viewName).isEqualTo("");
+  }
 }
