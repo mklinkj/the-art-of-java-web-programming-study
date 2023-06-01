@@ -21,6 +21,12 @@
 
   
 
+## 21.3 MultiActionController 이용해 스프링 MVC 실습하기
+
+* ...
+
+
+
 
 
 
@@ -74,3 +80,45 @@ Spring 5, 6 사용할 때는 별로 신경쓰이지 않았던 부분인데...  S
   위처럼 전역에서 commons-logging의 디펜던시를 제거하고.  jcl-over-slf4j 를 추가해서 스프링의 commons-logging 코드가 호환되게 했음.
 
 * https://spring.io/blog/2009/12/04/logging-dependencies-in-spring
+
+
+
+
+
+### Spring 4가 JUnit 5를 정식 지원하지 않음.
+
+* 외부 라이브러리를 사용하면 할 수는 있을 것 같긴한데... 임시방편적인 방법이라 JUnit 4를 사용하기로 했다.
+
+  * https://antkorwin.com/junit5/junit5_in_spring4.html
+
+* Gradle 최신버전(`8.x`)과 함께 잘 사용하기 위해서는... 
+
+  ```groovy
+    // Spring 4 환경에서는 JUnit 5를 정식 지원하지는 않는다.
+    testImplementation "org.junit.vintage:junit-vintage-engine:${junitVersion}"
+  ```
+
+  `junit-vintage-engine`을 사용해주면 된다. (내부에서 JUnit 4 최신 버전을 디펜던시함.)
+
+> Spring 5나 6이라면 그냥 `@SpringJUnitWebConfig`만 붙여주고 MockMvc도 자동으로 넣어줬던 것 같은데...
+>
+> Spring 4 환경에서는 다음과 같이해줘야했음.
+>
+> ```java
+> @RunWith(SpringRunner.class)
+> @ContextConfiguration("file:src/main/webapp/WEB-INF/action-servlet.xml")
+> @WebAppConfiguration
+> public class SimpleUrlControllerTest {
+>   @Autowired private WebApplicationContext context;
+> 
+>   private MockMvc mockMvc;
+> 
+>   @Before
+>   public void before() {
+>     mockMvc = webAppContextSetup(context).build();
+>   }
+>   ...
+> ```
+
+
+

@@ -26,18 +26,25 @@ dependencies {
     exclude group: "commons-logging", module: "commons-logging"
   }
 
-  // MultiActionController는 Spring 4 까지만 지원한다.
-  implementation "org.springframework:spring-context:${spring4Version}"
-  implementation "org.springframework:spring-webmvc:${spring4Version}"
   implementation "org.slf4j:jcl-over-slf4j:${slf4jVersion}"
   implementation "org.apache.logging.log4j:log4j-core:${log4jVersion}"
   implementation "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
+
+  // MultiActionController는 Spring 4.3.x 까지만 지원한다.
+  implementation "org.springframework:spring-context:${spring4Version}"
+  implementation "org.springframework:spring-webmvc:${spring4Version}"
+
   implementation "net.sargue:java-time-jsptags:${javaTimeJspTagsJavaxVersion}"
-    
-  runtimeOnly "javax.servlet:javax.servlet-api:${javaxServletApiVersion}"    
+
+  runtimeOnly "javax.servlet:javax.servlet-api:${javaxServletApiVersion}"
   runtimeOnly "javax.servlet:jstl:${javaxServletJspJstlVersion}"
 
-  testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+
+  // Spring 4 환경에서는 JUnit 5를 정식 지원하지는 않는다.
+  testImplementation "org.junit.vintage:junit-vintage-engine:${junitVersion}"
+
+  testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+  testImplementation "org.assertj:assertj-core:${assertJVersion}"
   testImplementation "org.springframework:spring-test:${spring4Version}"
 
   implementation "org.webjars:jquery:${jqueryVersion}"
@@ -45,6 +52,7 @@ dependencies {
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens
+
 tasks.register('expandPropsWebapp', Copy) {
   from 'src/main/webapp'
   into "$buildDir/inplaceWebapp"
@@ -80,10 +88,10 @@ gretty {
   contextPath = project.name
   servletContainer = "tomcat9"
   jvmArgs = [
-    "-Djava.security.egd=file:/dev/./urandom",
-    "--add-opens=java.base/java.io=ALL-UNNAMED",
-    "--add-opens=java.base/java.lang=ALL-UNNAMED",
-    "--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED"
+      "-Djava.security.egd=file:/dev/./urandom",
+      "--add-opens=java.base/java.io=ALL-UNNAMED",
+      "--add-opens=java.base/java.lang=ALL-UNNAMED",
+      "--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED"
   ]
 }
 
