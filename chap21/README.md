@@ -69,10 +69,12 @@ Spring 5, 6 사용할 때는 별로 신경쓰이지 않았던 부분인데...  S
     // Spring 5, 6 에서는 디펜던시가 걸리지 않았던 것 같은데, 4를 사용하다보니 commons-logging이 디펜던시 되어 제거했다.
     configurations.all {
       exclude group: "commons-logging", module: "commons-logging"
+      exclude group: "org.slf4j", module: "slf4j-jcl"
     }
-    ...
-    implementation "org.slf4j:jcl-over-slf4j:${slf4jVersion}"
-    implementation "org.apache.logging.log4j:log4j-core:${log4jVersion}"
+  
+    // Spring에서 내부적으로는 commons-logging의 인터페이스로 로깅을 사용하므로, 다른 방식으로 마이그레이션해서 사용할 수 있도록 라이브러리 추가가 필요하다.
+    // * https://www.slf4j.org/legacy.html#GradualMigrationTo%20%20%20SLF4JFromJakartaCommonsLogging%20(JCL)
+    runtimeOnly "org.slf4j:jcl-over-slf4j:${slf4jVersion}"
     implementation "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
     ...
   ```

@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
 @RunWith(SpringRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/action-servlet.xml")
 @WebAppConfiguration
+@Slf4j
 public class SimpleUrlControllerTest {
 
   @Autowired private WebApplicationContext context;
@@ -33,6 +35,7 @@ public class SimpleUrlControllerTest {
 
   @Test
   public void testWebApplicationContext() {
+    LOGGER.info("### 웹 컨텍스트 로드 ###");
     assertThat(context).isNotNull();
   }
 
