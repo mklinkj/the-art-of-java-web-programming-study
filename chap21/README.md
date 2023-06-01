@@ -34,6 +34,15 @@
 
 ​	
 
+## 21.4 MultiActionController 이용해 회원 정보 표시하기
+
+* ...
+* 예제: [pro21-spring4-ex02](pro21-spring4-ex02) 에다 추가
+
+
+
+
+
 
 
 

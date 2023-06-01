@@ -53,4 +53,22 @@ public class UserControllerTest {
         .andExpect(model().attribute("passwd", "사용자 암호"))
         .andExpect(forwardedUrl("/test/result.jsp"));
   }
+
+  @Test
+  public void testMemberInfo() throws Exception {
+    mockMvc
+        .perform(
+            post("/test/memberInfo.do") //
+                .param("id", "사용자 ID")
+                .param("pwd", "사용자 암호")
+                .param("name", "사용자 이름")
+                .param("email", "1@1.org"))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(model().attribute("id", "사용자 ID"))
+        .andExpect(model().attribute("pwd", "사용자 암호"))
+        .andExpect(model().attribute("name", "사용자 이름"))
+        .andExpect(model().attribute("email", "1@1.org"))
+        .andExpect(forwardedUrl("/test/memberInfo.jsp"));
+  }
 }
