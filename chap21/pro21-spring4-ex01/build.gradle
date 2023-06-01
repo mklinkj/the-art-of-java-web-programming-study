@@ -53,6 +53,9 @@ dependencies {
   implementation "org.webjars:bootstrap:${bootstrapVersion}"
 }
 
+// test task가 섞이면 치환이 안된다.
+// 테스트 같은 것은 별도로 먼저 돌려보고,
+// `gradle clean appRun` 또는 `gradle clean appRunWar` 를 따로 실행해서 확인하자
 import org.apache.tools.ant.filters.ReplaceTokens
 
 tasks.register('expandPropsWebapp', Copy) {
@@ -86,7 +89,7 @@ tasks.named('test') {
 
 // gradle appRun 으로 실행
 gretty {
-  httpPort = 8080
+  httpPort = 8090
   contextPath = project.name
   servletContainer = "tomcat9"
   jvmArgs = [

@@ -5,7 +5,7 @@
 >   * 버전을 5 보다 이전으로 낮춰서 테스트 하는 것은 별로 의미가 있는 것인지는 잘 모르겠지만... 일단 진행해보자.
 > * 예제 프로젝트: 
 >   * Spring 4 프로젝트
->     * [pro21-spring4](pro21-spring4)
+>     * [pro21-spring4-ex01](pro21-spring4-ex01)
 
 
 
@@ -19,13 +19,20 @@
 
 * ...
 
+* 예제: [pro21-spring4-ex01](pro21-spring4-ex01)
+
   
 
 ## 21.3 MultiActionController 이용해 스프링 MVC 실습하기
 
 * ...
+* 예제: [pro21-spring4-ex02](pro21-spring4-ex02)
+  * MultiActionController, PropertiesMethodNameResolver 는 Spring 4.3.x에서 Deprecated 상태
+    * https://docs.spring.io/spring-framework/docs/4.3.30.RELEASE/javadoc-api/index.html?org/springframework/web/servlet/mvc/multiaction/MultiActionController.html
+    * https://docs.spring.io/spring-framework/docs/4.3.30.RELEASE/javadoc-api/index.html?org/springframework/web/servlet/mvc/multiaction/PropertiesMethodNameResolver.html
+    * Spring 5에서는 클래스가 제거됨.. 이제는 어노테이션 컨트롤러 사용할 것을 권고함.
 
-
+​	
 
 
 
