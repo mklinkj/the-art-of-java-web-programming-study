@@ -1,7 +1,8 @@
-package ex02;
+package org.mklinkj.taojwp.ex02;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
  * 이제 부터는 어노테이션 기반 컨트롤러 쓰라고 한다.
  */
 @SuppressWarnings("deprecation")
+@Slf4j
 public class UserController extends MultiActionController {
 
   public ModelAndView login(HttpServletRequest request, HttpServletResponse response)
@@ -21,13 +23,51 @@ public class UserController extends MultiActionController {
 
     mav.addObject("userID", userID);
     mav.addObject("passwd", passwd);
-    mav.setViewName("result");
+
+    String viewName = getViewName(request);
+    LOGGER.info("### viewName: {}", viewName);
+    mav.setViewName(viewName);
 
     return mav;
   }
 
+  private String getViewName(HttpServletRequest request) {
+
+    String contextPath = request.getContextPath();
+    String uri = (String) request.getAttribute("javax.servlet.include.request_uri");
+
+    if (uri == null || uri.isBlank()) {
+      uri = request.getRequestURI();
+    }
+
+    int begin = 0;
+    if (contextPath != null && !contextPath.isBlank()) {
+      begin = contextPath.length();
+    }
+
+    int end;
+
+    if (uri.indexOf(";") != -1) {
+      end = uri.indexOf(";");
+    } else if (uri.indexOf("?") != -1) {
+      end = uri.indexOf("?");
+    } else {
+      end = uri.length();
+    }
+
+    String fileName = uri.substring(begin, end);
+    if (fileName.indexOf(".") != -1) {
+      fileName = fileName.substring(0, fileName.lastIndexOf("."));
+    }
+    if (fileName.lastIndexOf("/") + 1 <= fileName.length()) {
+      fileName = fileName.substring(fileName.lastIndexOf("/") + 1, fileName.length());
+    }
+
+    return fileName;
+  }
+
   public ModelAndView memberInfo(HttpServletRequest request, HttpServletResponse response) {
-    ModelAndView mav = new ModelAndView("memberInfo");
+    ModelAndView mav = new ModelAndView(getViewName(request));
 
     String id = request.getParameter("id");
     String pwd = request.getParameter("pwd");

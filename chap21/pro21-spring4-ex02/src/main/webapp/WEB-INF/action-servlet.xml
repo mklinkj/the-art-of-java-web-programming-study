@@ -17,10 +17,10 @@
     </property>
   </bean>
 
-  <bean id="userController" class="ex02.UserController">
+  <bean id="userController" class="org.mklinkj.taojwp.ex02.UserController">
     <property name="methodNameResolver" ref="userMethodNameResolver"/>
   </bean>
-  
+
   <bean id="userMethodNameResolver"
     class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
     <property name="mappings">

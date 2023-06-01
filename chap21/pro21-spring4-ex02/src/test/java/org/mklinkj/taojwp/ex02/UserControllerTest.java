@@ -1,4 +1,4 @@
-package ex02;
+package org.mklinkj.taojwp.ex02;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +52,8 @@ public class UserControllerTest {
         .andExpect(status().isOk())
         .andExpect(model().attribute("userID", "사용자 ID"))
         .andExpect(model().attribute("passwd", "사용자 암호"))
-        .andExpect(forwardedUrl("/test/result.jsp"));
+        .andExpect(view().name("login"))
+        .andExpect(forwardedUrl("/test/login.jsp"));
   }
 
   @Test

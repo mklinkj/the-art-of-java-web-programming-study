@@ -1,4 +1,4 @@
-package ex01;
+package org.mklinkj.taojwp.ex01;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
