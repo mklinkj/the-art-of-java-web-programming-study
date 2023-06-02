@@ -29,8 +29,9 @@ dependencies {
 
   // Spring에서 내부적으로는 commons-logging의 인터페이스로 로깅을 사용하므로, 다른 방식으로 마이그레이션해서 사용할 수 있도록 라이브러리 추가가 필요하다.
   // * https://www.slf4j.org/legacy.html#GradualMigrationTo%20%20%20SLF4JFromJakartaCommonsLogging%20(JCL)
+  implementation "org.slf4j:slf4j-api:${slf4jVersion}"
   runtimeOnly "org.slf4j:jcl-over-slf4j:${slf4jVersion}"
-  implementation "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
+  runtimeOnly "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
 
   // MultiActionController는 Spring 4.3.x 까지만 지원한다.
   implementation "org.springframework:spring-context:${spring4Version}"

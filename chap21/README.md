@@ -110,12 +110,15 @@ Spring 5, 6 사용할 때는 별로 신경쓰이지 않았던 부분인데...  S
   
     // Spring에서 내부적으로는 commons-logging의 인터페이스로 로깅을 사용하므로, 다른 방식으로 마이그레이션해서 사용할 수 있도록 라이브러리 추가가 필요하다.
     // * https://www.slf4j.org/legacy.html#GradualMigrationTo%20%20%20SLF4JFromJakartaCommonsLogging%20(JCL)
+    implementation "org.slf4j:slf4j-api:${slf4jVersion}"
     runtimeOnly "org.slf4j:jcl-over-slf4j:${slf4jVersion}"
-    implementation "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
+    runtimeOnly "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
     ...
   ```
 
   위처럼 전역에서 commons-logging의 디펜던시를 제거하고.  jcl-over-slf4j 를 추가해서 스프링의 commons-logging 코드가 호환되게 했음.
+
+  * 조금 내용을 바꿨는데... `slf4j-api` 만 `implementation`으로 두고, `jcl-over-slf4j`, `log4j-slf4j2-impl` 는 runtimeOnly로 변경해봄..
 
 * https://spring.io/blog/2009/12/04/logging-dependencies-in-spring
 
@@ -123,7 +126,7 @@ Spring 5, 6 사용할 때는 별로 신경쓰이지 않았던 부분인데...  S
 
 
 
-### Spring 4가 JUnit 5를 정식 지원하지 않음.
+### Spring 4는 JUnit 5를 정식 지원하지 않음.
 
 * 외부 라이브러리를 사용하면 할 수는 있을 것 같긴한데... 임시방편적인 방법이라 JUnit 4를 사용하기로 했다.
 
