@@ -56,39 +56,11 @@
   <a href="${contextPath}/index.html">예제 메인으로...</a>
 </div>
 
-<div class="modal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">${msg}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>${msg}</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="${contextPath}/webjars/jquery/@jqueryVersion@/jquery.slim.min.js"></script>
 <script
     src="${contextPath}/webjars/bootstrap/@bootstrapVersion@/js/bootstrap.bundle.min.js"></script>
 
-<script>
-  // show modal
-  const result = '${msg}';
-
-  const modal = new bootstrap.Modal(document.querySelector(".modal"));
-
-  if (result) {
-    modal.show();
-  }
-</script>
 </body>
 </html>
