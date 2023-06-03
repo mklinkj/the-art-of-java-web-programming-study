@@ -1,0 +1,105 @@
+plugins {
+  id 'java'
+  id "io.freefair.lombok" version "${lombokPluginVersion}"
+  id "org.gretty" version "${gretty3Version}"
+  id 'war'
+  id 'org.jetbrains.kotlin.jvm' version "${kotlinJvmPluginVersion}"
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of("${javaVersion}")
+  }
+}
+
+[compileJava, compileTestJava]*.options*.encoding = "${projectEncoding}"
+
+repositories {
+  mavenCentral()
+}
+
+
+dependencies {
+  // log4j를 사용하므로 commons-logging은 전역적으로 제거.
+  // Spring 5, 6 에서는 디펜던시가 걸리지 않았던 것 같은데, 4를 사용하다보니 commons-logging이 디펜던시 되어 제거했다.
+  configurations.all {
+    exclude group: "commons-logging", module: "commons-logging"
+    exclude group: "org.slf4j", module: "slf4j-jcl"
+  }
+
+  // Spring에서 내부적으로는 commons-logging의 인터페이스로 로깅을 사용하므로, 다른 방식으로 마이그레이션해서 사용할 수 있도록 라이브러리 추가가 필요하다.
+  // * https://www.slf4j.org/legacy.html#GradualMigrationTo%20%20%20SLF4JFromJakartaCommonsLogging%20(JCL)
+  implementation "org.slf4j:slf4j-api:${slf4jVersion}"
+  runtimeOnly "org.slf4j:jcl-over-slf4j:${slf4jVersion}"
+  runtimeOnly "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
+
+  // MultiActionController는 Spring 4.3.x 까지만 지원한다.
+  implementation "org.springframework:spring-context:${spring4Version}"
+  implementation "org.springframework:spring-webmvc:${spring4Version}"
+  implementation "org.springframework:spring-jdbc:${spring4Version}"
+
+  implementation "net.sargue:java-time-jsptags:${javaTimeJspTagsJavaxVersion}"
+
+  runtimeOnly "javax.servlet:javax.servlet-api:${javaxServletApiVersion}"
+  runtimeOnly "javax.servlet:jstl:${javaxServletJspJstlVersion}"
+
+  implementation "org.hsqldb:hsqldb:${hsqldbVersion}"
+
+
+  // Spring 4 환경에서는 JUnit 5를 정식 지원하지는 않는다.
+  testImplementation "org.junit.vintage:junit-vintage-engine:${junitVersion}"
+
+  testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+  testImplementation "org.assertj:assertj-core:${assertJVersion}"
+  testImplementation "org.springframework:spring-test:${spring4Version}"
+
+  implementation "org.webjars:jquery:${jqueryVersion}"
+  implementation "org.webjars:bootstrap:${bootstrapVersion}"
+}
+
+// test task가 섞이면 치환이 안된다.
+// 테스트 같은 것은 별도로 먼저 돌려보고,
+// `gradle clean appRun` 또는 `gradle clean appRunWar` 를 따로 실행해서 확인하자!
+import org.apache.tools.ant.filters.ReplaceTokens
+
+tasks.register('expandPropsWebapp', Copy) {
+  from 'src/main/webapp'
+  into "$buildDir/inplaceWebapp"
+  filesMatching(["**/*.html", "**/*.jsp"], {
+    filter(ReplaceTokens, tokens: [jqueryVersion: jqueryVersion, bootstrapVersion: bootstrapVersion, contextPath: "/" + project.name])
+  })
+  filteringCharset = 'UTF-8'
+}
+
+war {
+  webAppDirectory = file("$buildDir/inplaceWebapp")
+}
+
+processResources {
+  dependsOn('expandPropsWebapp')
+}
+
+// gradle appRun 으로 실행
+gretty {
+  httpPort = 8090
+  contextPath = project.name
+  servletContainer = "tomcat9"
+  jvmArgs = [
+      "-Djava.security.egd=file:/dev/./urandom",
+      "--add-opens=java.base/java.io=ALL-UNNAMED",
+      "--add-opens=java.base/java.lang=ALL-UNNAMED",
+      "--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED"
+  ]
+}
+
+test {
+  useJUnitPlatform()
+  testLogging {
+    outputs.upToDateWhen { false }
+    showStandardStreams = true
+  }
+}
+
+kotlin {
+  jvmToolchain(Integer.valueOf("${javaVersion}"))
+}
