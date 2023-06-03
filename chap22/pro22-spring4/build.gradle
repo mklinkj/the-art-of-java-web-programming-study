@@ -40,7 +40,7 @@ dependencies {
 
   implementation "net.sargue:java-time-jsptags:${javaTimeJspTagsJavaxVersion}"
 
-  runtimeOnly "javax.servlet:javax.servlet-api:${javaxServletApiVersion}"
+  compileOnly "javax.servlet:javax.servlet-api:${javaxServletApiVersion}"
   runtimeOnly "javax.servlet:jstl:${javaxServletJspJstlVersion}"
 
   implementation "org.hsqldb:hsqldb:${hsqldbVersion}"
