@@ -12,8 +12,8 @@
 
 ### 판매처
 
-* yes24: http://www.yes24.com/Product/Goods/68371015
-  * yes24는 좀.. https 전환해줬으면 좋겠음... 😓
+* yes24: https://www.yes24.com/Product/Goods/68371015
+  * yes24는 좀.. https 전환해줬으면 좋겠음... 😓 => 2023년 6월 정식 전환된듯 👍👍👍
 * 교보문고: https://product.kyobobook.co.kr/detail/S000001792781
 
 
@@ -98,9 +98,9 @@
 
 ### 21장. [스프링 MVC 기능](chap21)
 
-### 22장. 스프링 JDBC 기능
+### 22장. [스프링 JDBC 기능](chap22)
 
-### 23장. 마이바티스 프레임워크 사용하기
+### 23장. [마이바티스 프레임워크 사용하기](chap23)
 
 ### 24장. 스프링과 마이바티스 연동하기
 
