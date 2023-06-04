@@ -17,15 +17,28 @@
 <body>
 <h1 class="text-center mt-4 mb-4">회원정보</h1>
 
+<div>
+  <form method="get" action="listMembers.do">
+    <input name="keyword" value="${searchDTO.keyword}">
+    <select name="type">
+      <c:forEach var="type" items="${searchTypes}">
+        <option value="${type.name}" <c:if
+            test="${type.name eq searchDTO.type.name}">selected</c:if>>${type.description}</option>
+      </c:forEach>
+    </select>
+    <button type="submit">검색</button>
+  </form>
+</div>
+
 <table class="table table-bordered">
   <thead class="table-primary">
-    <tr class="text-center">
-      <th>아이디</th>
-      <th>비밀번호</th>
-      <th>이름</th>
-      <th>이메일</th>
-      <th>가입일</th>
-    </tr>
+  <tr class="text-center">
+    <th>아이디</th>
+    <th>비밀번호</th>
+    <th>이름</th>
+    <th>이메일</th>
+    <th>가입일</th>
+  </tr>
   </thead>
   <tbody>
   <c:choose>
@@ -43,7 +56,7 @@
           <td>${mem.pwd}</td>
           <td>${mem.name}</td>
           <td>${mem.email}</td>
-          <td><javatime:format value="${mem.joinDate}" pattern="yyyy-MM-dd" /></td>
+          <td><javatime:format value="${mem.joinDate}" pattern="yyyy-MM-dd"/></td>
         </tr>
       </c:forEach>
     </c:otherwise>

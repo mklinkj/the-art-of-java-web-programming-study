@@ -2,9 +2,9 @@ package org.mklinkj.taojwp.member.service;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.mklinkj.taojwp.member.dao.MemberDAO;
 import org.mklinkj.taojwp.member.domain.MemberVO;
+import org.mklinkj.taojwp.member.dto.SearchDTO;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,8 +13,8 @@ public class MemberServiceImpl implements MemberService {
   private final MemberDAO memberDAO;
 
   @Override
-  public List<MemberVO> listMembers() {
-    return memberDAO.selectAllMembers();
+  public List<MemberVO> listMembers(SearchDTO searchDTO) {
+    return memberDAO.selectAllMembers(searchDTO);
   }
 
   @Override

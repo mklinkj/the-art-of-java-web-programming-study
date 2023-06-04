@@ -3,6 +3,8 @@ package org.mklinkj.taojwp.member.controller;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.mklinkj.taojwp.member.domain.MemberVO;
+import org.mklinkj.taojwp.member.dto.SearchDTO;
+import org.mklinkj.taojwp.member.dto.SearchType;
 import org.mklinkj.taojwp.member.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +21,10 @@ public class MemberController {
   private final MemberService memberService;
 
   @GetMapping("/listMembers.do")
-  public void listMembers(Model model) {
-    List<MemberVO> memberList = memberService.listMembers();
+  public void listMembers(SearchDTO searchDTO, Model model) {
+    List<MemberVO> memberList = memberService.listMembers(searchDTO);
     model.addAttribute("memberList", memberList);
+    model.addAttribute("searchTypes", SearchType.values());
   }
 
   @GetMapping("/memberForm.do")

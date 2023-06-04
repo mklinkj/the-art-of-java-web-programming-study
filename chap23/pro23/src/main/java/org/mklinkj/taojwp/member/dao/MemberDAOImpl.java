@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.mklinkj.taojwp.member.domain.MemberVO;
+import org.mklinkj.taojwp.member.dto.SearchDTO;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.EncodedResource;
 import org.springframework.stereotype.Repository;
@@ -26,9 +27,9 @@ public class MemberDAOImpl implements MemberDAO {
   }
 
   @Override
-  public List<MemberVO> selectAllMembers() {
+  public List<MemberVO> selectAllMembers(SearchDTO searchDTO) {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      return sqlSession.getMapper(MemberDAO.class).selectAllMembers();
+      return sqlSession.getMapper(MemberDAO.class).selectAllMembers(searchDTO);
     }
   }
 

@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mklinkj.taojwp.member.domain.MemberVO;
+import org.mklinkj.taojwp.member.dto.SearchDTO;
+import org.mklinkj.taojwp.member.dto.SearchType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
@@ -15,8 +17,19 @@ class MemberDAOImplTests {
 
   @Test
   void testSelectAllMembers() {
-    List<MemberVO> list = memberDAO.selectAllMembers();
+    SearchDTO searchDTO =
+        SearchDTO //
+            .builder()
+            .keyword("정션링크")
+            .type(SearchType.NAME)
+            .build();
+
+    List<MemberVO> list = memberDAO.selectAllMembers(searchDTO);
     assertThat(list).isNotEmpty();
+
+    assertThat(list.get(0)) //
+        .hasFieldOrPropertyWithValue("name", "정션링크")
+        .hasFieldOrPropertyWithValue("id", "mklinkj");
   }
 
   @Test

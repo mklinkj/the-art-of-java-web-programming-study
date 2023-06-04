@@ -16,9 +16,24 @@
     VALUES (#{id}, #{pwd}, #{name}, #{email})
   </insert>
 
-  <select id="selectAllMembers" resultMap="memberResult">
+  <select id="selectAllMembers" parameterType="searchDTO" resultMap="memberResult">
     SELECT id, pwd, name, email, join_date
     FROM t_member
+    <if test="type != null">
+      <where>
+        <choose>
+          <when test="type.name() == 'ID'">
+            id = #{keyword}
+          </when>
+          <when test="type.name() == 'NAME'">
+            name = #{keyword}
+          </when>
+          <when test="type.name() == 'PWD'">
+            pwd = #{keyword}
+          </when>
+        </choose>
+      </where>
+    </if>
     ORDER BY join_date DESC
   </select>
 

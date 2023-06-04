@@ -9,6 +9,7 @@
 
     <Loggers>
         <Logger name="org.mklinkj" level="DEBUG"/>
+        <Logger name="org.mklinkj.taojwp.member.dao.MemberDAO" level="TRACE"/>
 
         <Root level="DEBUG">
             <AppenderRef ref="console"/>

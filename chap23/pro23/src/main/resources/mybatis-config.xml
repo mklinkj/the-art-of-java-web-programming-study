@@ -7,6 +7,8 @@
 
   <typeAliases>
     <typeAlias type="org.mklinkj.taojwp.member.domain.MemberVO" alias="memberVO" />
+    <typeAlias type="org.mklinkj.taojwp.member.dto.SearchDTO" alias="searchDTO" />
+    <typeAlias type="org.mklinkj.taojwp.member.dto.SearchType" alias="searchType" />
   </typeAliases>
 
   <environments default="development">
