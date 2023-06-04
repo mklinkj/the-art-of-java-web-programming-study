@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.mklinkj.taojwp.member.domain.MemberVO;
 import org.mklinkj.taojwp.member.dto.SearchDTO;
 import org.mklinkj.taojwp.member.dto.SearchType;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriComponentsBuilder;
 
+@Slf4j
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
@@ -40,9 +43,32 @@ public class MemberController {
 
   /** 상세보기 폼과, 수정 폼은 동일한 로직 */
   @GetMapping({"/memberDetail.do", "/modMemberForm.do"})
-  public void memberDetail(@RequestParam("id") String id, Model model) {
+  public String memberDetailOrModMemberForm(
+      @RequestParam("id") String id,
+      Model model,
+      RedirectAttributes redirectAttributes,
+      HttpServletRequest request) {
     MemberVO member = memberService.getMember(id);
+
+    if (member == null) {
+      redirectAttributes.addFlashAttribute("result", "error.notfound.member");
+      return "redirect:/member/listMembers.do";
+    }
+
     model.addAttribute("member", member);
+
+    List<String> list =
+        UriComponentsBuilder.fromUriString(request.getRequestURI()).build().getPathSegments();
+
+    switch (list.get(list.size() - 1)) {
+      case "memberDetail.do" -> {
+        return "member/memberDetail";
+      }
+      case "modMemberForm.do" -> {
+        return "member/modMemberForm";
+      }
+    }
+    return "redirect:/member/listMembers.do";
   }
 
   @RequestMapping(
@@ -91,7 +117,7 @@ public class MemberController {
 
     memberService.updateMember(memberVO);
     redirectAttributes.addAttribute("id", memberVO.getId());
-    redirectAttributes.addFlashAttribute("result", "success");
+    redirectAttributes.addFlashAttribute("result", "modify.success");
     return "redirect:/member/modMemberForm.do";
   }
 

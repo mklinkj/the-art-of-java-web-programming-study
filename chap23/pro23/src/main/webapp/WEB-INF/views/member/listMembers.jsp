@@ -84,7 +84,7 @@
     src="${contextPath}/webjars/bootstrap/@bootstrapVersion@/js/bootstrap.bundle.min.js"></script>
 <script>
   if ('${result}') {
-    alert('<fmt:message key="modify.${result}"/>');
+    alert('<fmt:message key="list.${result}"/>');
   }
 </script>
 

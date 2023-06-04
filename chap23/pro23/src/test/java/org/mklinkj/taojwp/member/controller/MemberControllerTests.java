@@ -135,7 +135,7 @@ class MemberControllerTests {
         .andDo(print())
         .andExpect(status().isFound())
         .andExpect(redirectedUrl("/member/modMemberForm.do?id=mklinkj"))
-        .andExpect(flash().attribute("result", "success"));
+        .andExpect(flash().attribute("result", "modify.success"));
   }
 
   @Test

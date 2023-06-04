@@ -49,10 +49,10 @@
     </div>
     <div class="d-flex justify-content-center">
       <a href="modMemberForm.do?id=${member.id}">
-        <button type="button" class="btn btn-secondary">수정하기</button>
+        <button type="button" class="btn btn-primary me-2">수정하기</button>
       </a>
       <a href="listMembers.do">
-        <button type="button" class="btn btn-secondary">목록으로</button>
+        <button type="button" class="btn btn-outline-success">목록으로</button>
       </a>
     </div>
   </div>
