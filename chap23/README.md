@@ -193,7 +193,34 @@
 
 
 
+### 23.5.3 `<foreach>` 태그로 회원 정보 조회하기
 
+* ...
+
+  ```
+  - ==>  Preparing: SELECT id, pwd, name, email, join_date FROM t_member WHERE name IN ( ? , ? , ? ) ORDER BY join_date DESC
+  - ==> Parameters: 정션링크(String), 최치원(String), 이순신(String)
+  - <==    Columns: ID, PWD, NAME, EMAIL, JOIN_DATE
+  - <==        Row: choi, 1212, 최치원, choi@gamil.com, 2023-02-04
+  - <==        Row: lee, 1212, 이순신, lee@test.com, 2023-02-03
+  - <==        Row: mklinkj, 1234, 정션링크, mklinkj@github.com, 2023-02-01
+  - <==      Total: 3
+  ```
+
+* parameterType을 그냥 list로 전달해도 잘되었다. 이게 아마도 기본으로 정의가 되어있음.
+
+  ```sql
+  <select id="foreachSelect" resultMap="memberResult" parameterType="list">
+  ..
+  ```
+
+  * https://mybatis.org/mybatis-3/ko/configuration.html#typealiases
+
+    | 별칭    | 매핑된 타입 |
+    | ------- | ----------- |
+    | map     | Map         |
+    | hashmap | HashMap     |
+    | list    | List        |
 
 
 

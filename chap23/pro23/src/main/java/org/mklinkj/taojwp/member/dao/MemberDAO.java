@@ -18,4 +18,7 @@ public interface MemberDAO {
 
   // 23.5.1 `<if>` 태그로 동적 SQL문 만들기 쿼리 확인만...
   List<MemberVO> searchMember(MemberVO memberVO);
+
+  // 23.5.3 `<foreach>` 태그로 회원 정보 조회하기
+  List<MemberVO> foreachSelect(List<String> nameList);
 }

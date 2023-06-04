@@ -74,4 +74,13 @@
     </where>
   </select>
 
+  <select id="foreachSelect" resultMap="memberResult" parameterType="list">
+    <include refid="member_select"/>
+    WHERE name IN
+    <foreach item="item" collection="list" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    ORDER BY join_date DESC
+  </select>
+
 </mapper>

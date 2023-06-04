@@ -73,4 +73,11 @@ public class MemberDAOImpl implements MemberDAO {
       return sqlSession.getMapper(MemberDAO.class).searchMember(memberVO);
     }
   }
+
+  @Override
+  public List<MemberVO> foreachSelect(List<String> nameList) {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.getMapper(MemberDAO.class).foreachSelect(nameList);
+    }
+  }
 }

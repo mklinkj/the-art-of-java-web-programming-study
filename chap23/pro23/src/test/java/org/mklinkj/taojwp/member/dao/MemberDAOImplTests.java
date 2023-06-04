@@ -92,5 +92,19 @@ class MemberDAOImplTests {
     List<MemberVO> result = memberDAO.searchMember(member);
 
     assertThat(result).isNotEmpty();
+
+    assertThat(result.get(0)) //
+        .hasFieldOrPropertyWithValue("name", "정션링크")
+        .hasFieldOrPropertyWithValue("email", "mklinkj@github.com");
+  }
+
+  @Test
+  void testForeachSelect() {
+
+    List<String> nameList = List.of("정션링크", "최치원", "이순신");
+
+    List<MemberVO> result = memberDAO.foreachSelect(nameList);
+
+    assertThat(result).isNotEmpty().hasSize(3);
   }
 }
