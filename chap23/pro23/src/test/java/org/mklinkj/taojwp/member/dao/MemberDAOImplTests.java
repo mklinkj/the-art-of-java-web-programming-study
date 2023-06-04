@@ -74,4 +74,11 @@ class MemberDAOImplTests {
 
     assertThat(result).isEqualTo(1);
   }
+
+  @Test
+  void testDeleteMember() {
+    String id = "mklinkj";
+    int result = memberDAO.deleteMember(id);
+    assertThat(result).isEqualTo(1);
+  }
 }

@@ -62,7 +62,10 @@
       </div>
       <div class="d-flex justify-content-center">
         <form:button type="submit" class="btn btn-primary me-2">수정하기</form:button>
-        <form:button type="reset" class="btn btn-secondary">다시입력</form:button>
+        <form:button type="reset" class="btn btn-secondary me-2">다시입력</form:button>
+        <a href="listMembers.do">
+          <button type="button" class="btn btn-outline-success">목록으로</button>
+        </a>
       </div>
     </form:form>
   </div>

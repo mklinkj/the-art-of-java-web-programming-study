@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -92,5 +93,11 @@ public class MemberController {
     redirectAttributes.addAttribute("id", memberVO.getId());
     redirectAttributes.addFlashAttribute("result", "success");
     return "redirect:/member/modMemberForm.do";
+  }
+
+  @PostMapping("/delMember.do")
+  public String delMember(String id) {
+    memberService.delMember(id);
+    return "redirect:/member/listMembers.do";
   }
 }

@@ -39,13 +39,14 @@
     <th>이름</th>
     <th>이메일</th>
     <th>가입일</th>
+    <th>삭제</th>
   </tr>
   </thead>
   <tbody>
   <c:choose>
     <c:when test="${empty memberList}">
       <tr class="text-center">
-        <td colspan="5">
+        <td colspan="6">
           <b>등록된 회원이 없습니다.</b>
         </td>
       </tr>
@@ -58,6 +59,12 @@
           <td>${mem.name}</td>
           <td>${mem.email}</td>
           <td><javatime:format value="${mem.joinDate}" pattern="yyyy-MM-dd"/></td>
+          <td>
+            <form action="${contextPath}/member/delMember.do" method="post">
+              <input type="hidden" name="id" value="${mem.id}">
+              <button type="submit" class="btn btn-sm btn-outline-danger">삭제</button>
+            </form>
+          </td>
         </tr>
       </c:forEach>
     </c:otherwise>

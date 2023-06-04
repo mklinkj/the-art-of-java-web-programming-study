@@ -160,4 +160,15 @@ class MemberControllerTests {
         .andExpect(status().isFound())
         .andExpect(redirectedUrl("/member/modMemberForm.do"));
   }
+
+  @Test
+  void testDelMember() throws Exception {
+    mockMvc
+        .perform(
+            post("/member/delMember.do") //
+                .param("id", "mklinkj"))
+        .andDo(print())
+        .andExpect(status().isFound())
+        .andExpect(redirectedUrl("/member/listMembers.do"));
+  }
 }

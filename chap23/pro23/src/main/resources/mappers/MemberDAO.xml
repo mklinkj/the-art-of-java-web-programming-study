@@ -51,4 +51,11 @@
          , email = #{email}
      WHERE id = #{id}
   </update>
+
+  <delete id="deleteMember" parameterType="string">
+    DELETE
+      FROM t_member
+     WHERE id = #{id}
+  </delete>
+
 </mapper>

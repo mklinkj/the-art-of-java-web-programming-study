@@ -57,4 +57,13 @@ public class MemberDAOImpl implements MemberDAO {
       return updateRowCount;
     }
   }
+
+  @Override
+  public int deleteMember(String id) {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      int updateRowCount = sqlSession.getMapper(MemberDAO.class).deleteMember(id);
+      sqlSession.commit();
+      return updateRowCount;
+    }
+  }
 }

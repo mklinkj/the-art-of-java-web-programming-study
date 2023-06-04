@@ -13,4 +13,6 @@ public interface MemberDAO {
   MemberVO findById(String id);
 
   int updateMember(MemberVO memberVO);
+
+  int deleteMember(String id);
 }
