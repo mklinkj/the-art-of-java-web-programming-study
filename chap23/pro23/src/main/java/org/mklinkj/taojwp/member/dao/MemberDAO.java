@@ -21,4 +21,6 @@ public interface MemberDAO {
 
   // 23.5.3 `<foreach>` 태그로 회원 정보 조회하기
   List<MemberVO> foreachSelect(List<String> nameList);
+
+  int foreachInsert(List<MemberVO> memberList);
 }

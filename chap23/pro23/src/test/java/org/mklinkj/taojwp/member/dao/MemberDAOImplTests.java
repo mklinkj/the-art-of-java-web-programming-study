@@ -100,11 +100,35 @@ class MemberDAOImplTests {
 
   @Test
   void testForeachSelect() {
-
     List<String> nameList = List.of("정션링크", "최치원", "이순신");
-
     List<MemberVO> result = memberDAO.foreachSelect(nameList);
-
     assertThat(result).isNotEmpty().hasSize(3);
+  }
+
+  @Test
+  void testForeachInsert() {
+    List<MemberVO> memberList =
+        List.of(
+            MemberVO.builder()
+                .id("mklinkj01")
+                .pwd("1234")
+                .name("정션링크01")
+                .email("mklinkj01@github.com")
+                .build(),
+            MemberVO.builder()
+                .id("mklinkj02")
+                .pwd("1234")
+                .name("정션링크02")
+                .email("mklinkj02@github.com")
+                .build(),
+            MemberVO.builder()
+                .id("mklinkj03")
+                .pwd("1234")
+                .name("정션링크03")
+                .email("mklinkj03@github.com")
+                .build());
+
+    int updateCount = memberDAO.foreachInsert(memberList);
+    assertThat(updateCount).isEqualTo(memberList.size());
   }
 }

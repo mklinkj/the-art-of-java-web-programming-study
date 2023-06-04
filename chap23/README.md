@@ -197,7 +197,7 @@
 
 * ...
 
-  ```
+  ```sql
   - ==>  Preparing: SELECT id, pwd, name, email, join_date FROM t_member WHERE name IN ( ? , ? , ? ) ORDER BY join_date DESC
   - ==> Parameters: 정션링크(String), 최치원(String), 이순신(String)
   - <==    Columns: ID, PWD, NAME, EMAIL, JOIN_DATE
@@ -224,9 +224,48 @@
 
 
 
+### 23.5.4 `<foreach>` 태그로 회원 정보 추가하기
 
+* ...
 
+* ✨ HSQLDB에서 INSERT ALL이 안될 수도 있으니..`;sql.syntax_ora=true"` 를 JDBC URL에 추가해보자..
 
+  * 그런데 안되는 듯...  😅
+
+  * 아래 표준 쿼리는 잘 된다.
+
+    ```sql
+    <insert id="foreachInsert" parameterType="list">
+        INSERT INTO t_member (id, pwd, name, email)
+        VALUES
+        <foreach item="item" collection="list" separator=",">
+          (#{item.id},
+          #{item.pwd},
+          #{item.name},
+          #{item.email})
+        </foreach>
+      </insert>
+    ```
+
+    ```sql
+    - ==>  Preparing: INSERT INTO t_member (id, pwd, name, email) VALUES (?, ?, ?, ?) , (?, ?, ?, ?) , (?, ?, ?, ?)
+    - ==> Parameters: mklinkj01(String), 1234(String), 정션링크01(String), mklinkj01@github.com(String), mklinkj02(String), 1234(String), 정션링크02(String), mklinkj02@github.com(String), mklinkj03(String), 1234(String), 정션링크03(String), mklinkj03@github.com(String)
+    - <==    Updates: 3
+    ```
+
+    
+
+### 23.5.5 `<sql>` 태그와 `<include>` 태그로 SQL문 중복 제거하기
+
+* ...
+
+> * Oracle Like문 동적 쿼리 작성시...
+>
+>   ```sql
+>   name like '%' || #{name} || '%'
+>   ```
+>
+>   문자열을 `||`로 연결하는 것이 핵심.
 
 
 
@@ -243,7 +282,8 @@
 
 ## 의견
 
-* ...
+* 금방 끝날 줄 알았는데... 꽤 시간이 걸렸다. 😂
+* 그래도 MyBatis 리마인드하는데 도움이 꽤 었다. 👍
 
 
 

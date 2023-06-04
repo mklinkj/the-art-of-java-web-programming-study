@@ -23,7 +23,7 @@
   </insert>
 
   <select id="selectAllMembers" parameterType="searchDTO" resultMap="memberResult">
-    <include refid="member_select" />
+    <include refid="member_select"/>
     <if test="type != null">
       <where>
         <choose>
@@ -43,27 +43,27 @@
   </select>
 
   <select id="findById" parameterType="string" resultMap="memberResult">
-    <include refid="member_select" />
+    <include refid="member_select"/>
     WHERE id = #{id}
   </select>
 
 
   <update id="updateMember" parameterType="memberVO">
     UPDATE t_member
-       SET pwd = #{pwd}
-         , name = #{name}
-         , email = #{email}
-     WHERE id = #{id}
+    SET pwd   = #{pwd}
+      , name  = #{name}
+      , email = #{email}
+    WHERE id = #{id}
   </update>
 
   <delete id="deleteMember" parameterType="string">
     DELETE
-      FROM t_member
-     WHERE id = #{id}
+    FROM t_member
+    WHERE id = #{id}
   </delete>
 
   <select id="searchMember" parameterType="memberVO" resultMap="memberResult">
-    <include refid="member_select" />
+    <include refid="member_select"/>
     <where>
       <if test="name != null and !name.isEmpty()">
         name = #{name}
@@ -83,4 +83,29 @@
     ORDER BY join_date DESC
   </select>
 
+  <!--
+    <insert id="foreachInsert" parameterType="list">
+      <foreach item="item" collection="list" open="INSERT ALL" separator=","
+        close="SELECT * FROM DUAL">
+        INTO t_member(id, pwd, name, email)
+        VALUES (
+        #{item.id},
+        #{item.pwd},
+        #{item.name},
+        #{item.email}
+        )
+      </foreach>
+    </insert>
+  -->
+  
+  <insert id="foreachInsert" parameterType="list">
+    INSERT INTO t_member (id, pwd, name, email)
+    VALUES
+    <foreach item="item" collection="list" separator=",">
+      (#{item.id},
+      #{item.pwd},
+      #{item.name},
+      #{item.email})
+    </foreach>
+  </insert>
 </mapper>

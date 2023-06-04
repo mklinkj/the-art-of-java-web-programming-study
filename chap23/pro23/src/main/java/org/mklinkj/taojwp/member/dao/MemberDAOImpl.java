@@ -80,4 +80,13 @@ public class MemberDAOImpl implements MemberDAO {
       return sqlSession.getMapper(MemberDAO.class).foreachSelect(nameList);
     }
   }
+
+  @Override
+  public int foreachInsert(List<MemberVO> memberList) {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      int updateRowCount = sqlSession.getMapper(MemberDAO.class).foreachInsert(memberList);
+      sqlSession.commit();
+      return updateRowCount;
+    }
+  }
 }
