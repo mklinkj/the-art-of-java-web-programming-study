@@ -60,15 +60,7 @@ public class MemberController {
     List<String> list =
         UriComponentsBuilder.fromUriString(request.getRequestURI()).build().getPathSegments();
 
-    switch (list.get(list.size() - 1)) {
-      case "memberDetail.do" -> {
-        return "member/memberDetail";
-      }
-      case "modMemberForm.do" -> {
-        return "member/modMemberForm";
-      }
-    }
-    return "redirect:/member/listMembers.do";
+    return "member/%s".formatted(list.get(list.size() - 1).replace(".do", ""));
   }
 
   @RequestMapping(
