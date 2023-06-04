@@ -3,7 +3,9 @@ package org.mklinkj.taojwp.member.dao;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.mklinkj.taojwp.common.util.DBDataInitializer;
 import org.mklinkj.taojwp.member.domain.MemberVO;
 import org.mklinkj.taojwp.member.dto.SearchDTO;
 import org.mklinkj.taojwp.member.dto.SearchType;
@@ -14,6 +16,13 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 class MemberDAOImplTests {
 
   @Autowired private MemberDAO memberDAO;
+
+  @Autowired private DBDataInitializer dbDataInitializer;
+
+  @AfterEach
+  void afterEach() {
+    dbDataInitializer.resetDB();
+  }
 
   @Test
   void testSelectAllMembers() {
@@ -51,5 +60,18 @@ class MemberDAOImplTests {
     assertThat(member) //
         .isNotNull()
         .hasFieldOrPropertyWithValue("id", "mklinkj");
+  }
+
+  @Test
+  void testUpdateMember() {
+    MemberVO member = new MemberVO();
+    member.setId("mklinkj");
+    member.setName("정션링크2");
+    member.setPwd("4321");
+    member.setEmail("mklinkj2@github.com");
+
+    int result = memberDAO.updateMember(member);
+
+    assertThat(result).isEqualTo(1);
   }
 }

@@ -48,4 +48,13 @@ public class MemberDAOImpl implements MemberDAO {
       return sqlSession.getMapper(MemberDAO.class).findById(id);
     }
   }
+
+  @Override
+  public int updateMember(MemberVO memberVO) {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      int updateRowCount = sqlSession.getMapper(MemberDAO.class).updateMember(memberVO);
+      sqlSession.commit();
+      return updateRowCount;
+    }
+  }
 }

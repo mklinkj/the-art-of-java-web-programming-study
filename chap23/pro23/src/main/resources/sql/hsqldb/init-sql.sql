@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS t_member;
+DROP TABLE IF EXISTS t_member CASCADE;
 
 CREATE TABLE t_member
 (

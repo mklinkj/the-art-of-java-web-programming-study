@@ -15,7 +15,7 @@
   <title>회원정보</title>
 </head>
 <body>
-<h1 class="text-center mt-4 mb-4">회원 가입창</h1>
+<h1 class="text-center mt-4 mb-4">회원 정보</h1>
 
 <div class="card d-flex justify-content-center mx-auto col-6">
   <div class="card-body ">
@@ -48,11 +48,13 @@
       </div>
     </div>
     <div class="d-flex justify-content-center">
+      <a href="modMemberForm.do?id=${member.id}">
+        <button type="button" class="btn btn-secondary">수정하기</button>
+      </a>
       <a href="listMembers.do">
         <button type="button" class="btn btn-secondary">목록으로</button>
       </a>
     </div>
-    </form>
   </div>
 </div>
 

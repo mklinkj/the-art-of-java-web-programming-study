@@ -42,4 +42,13 @@
     FROM t_member
     WHERE id = #{id}
   </select>
+
+
+  <update id="updateMember" parameterType="memberVO">
+    UPDATE t_member
+       SET pwd = #{pwd}
+         , name = #{name}
+         , email = #{email}
+     WHERE id = #{id}
+  </update>
 </mapper>

@@ -10,4 +10,6 @@ public interface MemberService {
   void addMember(MemberVO member);
 
   MemberVO getMember(String id);
+
+  void updateMember(MemberVO member);
 }

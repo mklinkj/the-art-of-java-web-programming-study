@@ -11,4 +11,6 @@ public interface MemberDAO {
   int addMember(MemberVO memberVO);
 
   MemberVO findById(String id);
+
+  int updateMember(MemberVO memberVO);
 }

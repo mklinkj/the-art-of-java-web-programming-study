@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="javatime" uri="http://sargue.net/jsptags/time" %>
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath}"></c:set>
 <!doctype html>
@@ -74,6 +75,11 @@
 <script src="${contextPath}/webjars/jquery/@jqueryVersion@/jquery.slim.min.js"></script>
 <script
     src="${contextPath}/webjars/bootstrap/@bootstrapVersion@/js/bootstrap.bundle.min.js"></script>
+<script>
+  if ('${result}') {
+    alert('<fmt:message key="modify.${result}"/>');
+  }
+</script>
 
 </body>
 </html>
