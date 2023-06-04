@@ -81,4 +81,16 @@ class MemberDAOImplTests {
     int result = memberDAO.deleteMember(id);
     assertThat(result).isEqualTo(1);
   }
+
+  @Test
+  void testSearchMember() {
+
+    MemberVO member = new MemberVO();
+    member.setName("정션링크");
+    member.setEmail("mklinkj@github.com");
+
+    List<MemberVO> result = memberDAO.searchMember(member);
+
+    assertThat(result).isNotEmpty();
+  }
 }

@@ -66,4 +66,11 @@ public class MemberDAOImpl implements MemberDAO {
       return updateRowCount;
     }
   }
+
+  @Override
+  public List<MemberVO> searchMember(MemberVO memberVO) {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.getMapper(MemberDAO.class).searchMember(memberVO);
+    }
+  }
 }

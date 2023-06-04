@@ -15,4 +15,7 @@ public interface MemberDAO {
   int updateMember(MemberVO memberVO);
 
   int deleteMember(String id);
+
+  // 23.5.1 `<if>` 태그로 동적 SQL문 만들기 쿼리 확인만...
+  List<MemberVO> searchMember(MemberVO memberVO);
 }

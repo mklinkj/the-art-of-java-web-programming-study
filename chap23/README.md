@@ -148,6 +148,57 @@
 
 
 
+## 23.5 마이바티스의 동적 SQL문 사용하기
+
+* ...
+
+### 23.5.1 `<if>` 태그로 동적 SQL문 만들기
+
+* ...
+
+* 뷰 - 컨트롤러까지 이어서 만들 필요는 없고 DAO에 메서드만 추가해서 쿼리가 정상적으로 만들어지는지만 확인해보자.
+
+  ```sql
+  - ==>  Preparing: SELECT id, pwd, name, email, join_date FROM t_member WHERE name = ? AND email = ?
+  - ==> Parameters: 정션링크(String), mklinkj@github.com(String)
+  - <==    Columns: ID, PWD, NAME, EMAIL, JOIN_DATE
+  - <==        Row: mklinkj, 1234, 정션링크, mklinkj@github.com, 2023-02-01
+  - <==      Total: 1
+  ```
+
+  * 한가지 알아둘 것 은....
+
+    ```sql
+      <select id="searchMember" parameterType="memberVO" resultMap="memberResult">
+        <include refid="member_select" />
+        <where>
+          <if test="name != null and !name.isEmpty()">
+            name = #{name}
+          </if>
+          <if test="email != null and !email.isEmpty()">
+            AND email = #{email}
+          </if>
+        </where>
+      </select>
+    ```
+
+    * 위에서 email 만 전달되었을 때... email 앞에 AND는 알아서 제거해서 쿼리를 만들어서 쿼리 문법 오류가 없게된다.
+
+
+
+### 23.5.2 `<choose>` 태그로 동적 SQL문 만들기
+
+* ...
+* 이건 넘어가자.. 안해도 될 것 같다.. 😅 
+
+
+
+
+
+
+
+
+
 
 
 

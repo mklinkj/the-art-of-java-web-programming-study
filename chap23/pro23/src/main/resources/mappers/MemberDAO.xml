@@ -3,6 +3,12 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.mklinkj.taojwp.member.dao.MemberDAO">
+  <sql id="member_select">
+    SELECT id, pwd, name, email, join_date
+    FROM t_member
+  </sql>
+
+
   <resultMap id="memberResult" type="memberVO">
     <id column="id" property="id"/>
     <result column="pwd" property="pwd"/>
@@ -17,8 +23,7 @@
   </insert>
 
   <select id="selectAllMembers" parameterType="searchDTO" resultMap="memberResult">
-    SELECT id, pwd, name, email, join_date
-    FROM t_member
+    <include refid="member_select" />
     <if test="type != null">
       <where>
         <choose>
@@ -38,8 +43,7 @@
   </select>
 
   <select id="findById" parameterType="string" resultMap="memberResult">
-    SELECT id, pwd, name, email, join_date
-    FROM t_member
+    <include refid="member_select" />
     WHERE id = #{id}
   </select>
 
@@ -57,5 +61,17 @@
       FROM t_member
      WHERE id = #{id}
   </delete>
+
+  <select id="searchMember" parameterType="memberVO" resultMap="memberResult">
+    <include refid="member_select" />
+    <where>
+      <if test="name != null and !name.isEmpty()">
+        name = #{name}
+      </if>
+      <if test="email != null and !email.isEmpty()">
+        AND email = #{email}
+      </if>
+    </where>
+  </select>
 
 </mapper>
