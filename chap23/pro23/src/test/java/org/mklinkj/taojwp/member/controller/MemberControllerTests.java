@@ -76,7 +76,7 @@ class MemberControllerTests {
   }
 
   @Test
-  void testAddMemberDo() throws Exception {
+  void testAddMemberDo_01() throws Exception {
     mockMvc
         .perform(
             post("/member/addMember.do")
@@ -87,5 +87,28 @@ class MemberControllerTests {
         .andDo(print())
         .andExpect(status().isFound())
         .andExpect(redirectedUrl("/member/listMembers.do"));
+  }
+
+  @Test
+  void testAddMemberDo_02() throws Exception {
+    mockMvc
+        .perform(
+            post("/member/addMember.do")
+                .param("id", "1")
+                .param("pwd", "1")
+                .param("name", "정션링크2")
+                .param("email", "mklinkj2@github.com"))
+        .andDo(print())
+        .andExpect(status().isBadRequest())
+        .andExpect(forwardedUrl("/WEB-INF/views/member/memberForm.jsp"));
+  }
+
+  @Test
+  void testAddMemberDo_03() throws Exception {
+    mockMvc
+        .perform(get("/member/addMember.do"))
+        .andDo(print())
+        .andExpect(status().isFound())
+        .andExpect(redirectedUrl("/member/memberForm.do"));
   }
 }

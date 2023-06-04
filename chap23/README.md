@@ -100,6 +100,36 @@
 
 
 
+### 23.4.4 회원정보추가
+
+* ... 
+
+* 이미 회원 추가 기능은 넣어놨는데... 추가로 MemberVO 도메인에 대한 Validataion만 해보자!
+
+  ```groovy
+  implementation "org.hibernate.validator:hibernate-validator:${hibernateValidatorVersion}"
+  
+  // implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
+  // jakarta.validation-api 의 경우는 hibernate-validator가 가져와서 선언 안해줘도 되는 듯..
+  ```
+
+* 서블릿 컨텍스트 설정에.. 아래 내용 추가
+
+  ```xml
+  <mvc:annotation-driven/>
+  ```
+
+
+
+### 23..4.5 HashMap을 이용한 회원 정보 추가
+
+* ...
+* 이 파트는 딱히 진행하지 않아도 될 것 같다.
+
+
+
+
+
 
 
 
@@ -148,3 +178,27 @@
 ```
 
 * xml 에 직접 고정 값을 적을 필요가 없었음.
+
+
+
+### 한번 Submit 이 일어나고, 에러상태로 포워딩 상태에서는 reset버튼이 정상 동작하지 않는 것 처럼 보임?
+
+```html
+<form:button type="reset" class="btn btn-secondary">다시입력</form:button>
+```
+
+* 이거는 생각을 좀 해봐야겠음.. javascript로 제어를 해야되나?
+* 이게 안되는게 아니고 일단 폼전송이 된거는 이전 정상 값이라고 인식해서 reset하면 그 값으로 돌아가기 때문에 그런 것이였음.. 
+  * [ ] 이부분은 어떻게 해야할지.. 천천히 생각해보자...
+
+
+
+### Hibernate Validator 를 테스트 환경에서 확인하기 위해서는  jakarta.el 이 필요하다.
+
+```groovy
+testRuntimeOnly "org.glassfish:jakarta.el:${jakartaElVersion}"
+```
+
+운영환경에서는 Tomcat 같은 WAS에 미리 준비되기 때문에 디펜던시를 따로 설정할 필요가 없지만, 테스트 환경은 그렇지 않으므로, 필요함..
+
+* 그런데 tomcat에 대응되는 라이브러리가 정확히 뭔지 모르겠음... 찾으면 그거 넣을려고 했는데..

@@ -27,6 +27,8 @@ dependencies {
   implementation "org.springframework:spring-webmvc:${springVersion}"
   implementation "org.springframework:spring-jdbc:${springVersion}"
 
+  implementation "org.hibernate.validator:hibernate-validator:${hibernateValidatorVersion}"
+
   implementation "net.sargue:java-time-jsptags:${javaTimeJspTagsVersion}"
 
   implementation "org.mybatis:mybatis:${mybatisVersion}"
@@ -36,6 +38,8 @@ dependencies {
   compileOnly "jakarta.servlet.jsp:jakarta.servlet.jsp-api:${jakartaServletJspApiVersion}"
   runtimeOnly "jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:${jakartaServletJspJstlApiVersion}"
   runtimeOnly "org.glassfish.web:jakarta.servlet.jsp.jstl:${jakartaServletJspJstlVersion}"
+
+  testRuntimeOnly "org.glassfish:jakarta.el:${jakartaElVersion}"
 
   testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
   testImplementation "org.hamcrest:hamcrest:${hamcrestVersion}"
