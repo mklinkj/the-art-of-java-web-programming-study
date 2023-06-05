@@ -24,3 +24,4 @@ chap21\pro21-spring4-ex02
 chap22\pro22-spring4
 chap23\pro23
 chap24\pro24
+chap25\pro25
