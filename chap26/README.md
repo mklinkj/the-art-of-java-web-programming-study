@@ -142,8 +142,50 @@ testImplementation "org.springframework.security:spring-security-test:${springSe
      
      AI한테 물어보니.. 원래 폼이 여러개면 알아서 안넣어주나보네... 😅😅😅
      
-     
+   * 스프링 시큐리티 태그라이브러리를 사용한다면...
    
+     ```jsp
+     <sec:csrfInput/>
+     ```
+   
+     위의 태그를 써줘도 동일한 csrf hidden 폼을 만들어낸다.
+   
+
+
+
+### JSP에서 로그인 여부 판단
+
+```jsp
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<sec:authorize access="isAuthenticated()">
+  <!-- 로그인한 사용자가 볼 수 있는 내용 -->
+</sec:authorize>
+<sec:authorize access="!isAuthenticated()">
+  <!-- 로그인하지 않은 사용자가 볼 수 있는 내용 -->
+</sec:authorize>
+```
+
+그리고 이 태크를 사용하려면. 아래 빈설정이 필요했다.
+
+```xml
+<b:bean id="webexpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
+```
+
+
+
+### Refused to apply style from `'http://localhost:8090/pro26/login.do'` because its MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.
+
+위와 같은 브라우저 콘솔 오류가 나타나면서 스타일이 적용되지 않는 문제가 있었음.
+
+```xml
+<intercept-url pattern="/webjars/**" access="permitAll()"/>
+```
+
+* Bootstrap CSS를 정상 로드해지 못해서 생긴 문제임.
+* webjar 경로 이하는 허용되게 해주었음.
+
+
 
 ### 참고
 
@@ -152,4 +194,8 @@ testImplementation "org.springframework.security:spring-security-test:${springSe
 
 * [A Guide to CSRF Protection in Spring Security | Baeldung](https://www.baeldung.com/spring-security-csrf)
 
+* [Spring Security - No visible WebSecurityExpressionHandler instance could be found in the application context](https://stackoverflow.com/questions/11594104/spring-security-no-visible-websecurityexpressionhandler-instance-could-be-foun)
+
+  
+  
   

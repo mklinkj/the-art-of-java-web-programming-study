@@ -7,7 +7,11 @@
   <b:bean id="mvcHandlerMappingIntrospector"
     class="org.springframework.web.servlet.handler.HandlerMappingIntrospector"/>
 
+  <b:bean id="webexpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
+
   <http>
+    <intercept-url pattern="/webjars/**" access="permitAll()"/>
+    <intercept-url pattern="/login.do" access="permitAll()"/>
     <intercept-url pattern="/index.html" access="permitAll()"/>
     <intercept-url pattern="/member/memberForm.do" access="permitAll()"/>
     <intercept-url pattern="/member/addMember.do" access="permitAll()"/>
@@ -15,16 +19,24 @@
 
     <intercept-url pattern="/**" access="isAuthenticated()"/>
 
-    <form-login/>
+    <form-login login-page="/login.do" default-target-url="/index.html"/>
     <logout
+      logout-url="/logout"
       invalidate-session="true"
       delete-cookies="JSESSIONID"
       logout-success-url="/index.html"
     />
   </http>
 
-  <user-service>
-    <user name="mklinkj" password="{noop}1234" authorities="ROLE_ADMIN"/>
-  </user-service>
+
+  <authentication-manager>
+    <authentication-provider user-service-ref="customUserDetailsService">
+      <password-encoder ref="passwordEncoder"/>
+    </authentication-provider>
+  </authentication-manager>
+
+  <!-- 지금 예제에서는 일단 암호를 암호화하지는 말자.. 나중에 게시판, 쇼핑몰 프로젝트 진행시에는 암호화를 사용하자. -->
+  <b:bean id="passwordEncoder"
+    class="org.springframework.security.crypto.password.NoOpPasswordEncoder"/>
 
 </b:beans>

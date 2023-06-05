@@ -16,6 +16,12 @@
   -->
   <display-name>Chap26_Servlet</display-name>
 
+  <!-- Spring 컨택스트 정리보다 나중에 실행 되도록 ContextLoaderListener 보다 앞에 위치해야한다. -->
+  <listener>
+    <display-name>JDBC Driver Cleaner</display-name>
+    <listener-class>org.mklinkj.taojwp.common.listener.JDBCDriverCleaner</listener-class>
+  </listener>
+
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>

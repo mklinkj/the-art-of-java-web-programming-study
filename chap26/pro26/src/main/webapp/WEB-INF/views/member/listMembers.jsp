@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="javatime" uri="http://sargue.net/jsptags/time" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath}"></c:set>
 <!doctype html>
 <html lang="ko">
@@ -18,6 +19,21 @@
 <body>
 <h1 class="text-center mt-4 mb-4">회원정보</h1>
 
+<%-- // 공통 로그인 헤더 : 나중에 공통 JSP 로 분리하자 --%>
+<div>
+  <sec:authorize access="isAuthenticated()">
+    <form method="post" action="${contextPath}/logout">
+      <span><sec:authentication property="principal.username"/>님 환영합니다.😀</span>
+      <button type="submit" class="btn btn-sm btn-outline-dark">로그아웃</button>
+      <sec:csrfInput/>
+    </form>
+  </sec:authorize>
+  <sec:authorize access="isAnonymous()">
+    <a href="${contextPath}/member/memberForm.do">회원가입</a>
+    <a href="${contextPath}/login.do">로그인</a>
+  </sec:authorize>
+</div>
+<%-- 공통 로그인 헤더 // --%>
 <div>
   <form method="get" action="listMembers.do">
     <input name="keyword" value="${searchDTO.keyword}">
@@ -60,9 +76,10 @@
           <td>${mem.email}</td>
           <td><javatime:format value="${mem.joinDate}" pattern="yyyy-MM-dd"/></td>
           <td>
-            <form id="deleteForm_${mem.id}" action="${contextPath}/member/delMember.do" method="post">
+            <form id="deleteForm_${mem.id}" action="${contextPath}/member/delMember.do"
+                  method="post">
               <input type="hidden" name="id" value="${mem.id}">
-              <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+              <sec:csrfInput/>
               <button type="submit" class="btn btn-sm btn-outline-danger">삭제</button>
             </form>
           </td>
