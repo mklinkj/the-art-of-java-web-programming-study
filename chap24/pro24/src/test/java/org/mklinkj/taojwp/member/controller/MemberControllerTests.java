@@ -26,7 +26,7 @@ import org.springframework.web.context.WebApplicationContext;
     locations = {
       "classpath:action-servlet.xml",
       "classpath:config/action-service.xml",
-      "classpath:config/action-dataSource.xml"
+      "classpath:config/action-mybatis.xml"
     })
 @Slf4j
 class MemberControllerTests {
