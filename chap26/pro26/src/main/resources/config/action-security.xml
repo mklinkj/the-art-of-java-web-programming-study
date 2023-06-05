@@ -1,0 +1,26 @@
+<b:beans xmlns="http://www.springframework.org/schema/security"
+  xmlns:b="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd">
+
+  <b:bean id="mvcHandlerMappingIntrospector"
+    class="org.springframework.web.servlet.handler.HandlerMappingIntrospector"/>
+
+  <http>
+    <intercept-url pattern="/index.html" access="permitAll()"/>
+    <intercept-url pattern="/**" access="isAuthenticated()"/>
+
+    <form-login/>
+    <logout
+      invalidate-session="true"
+      delete-cookies="JSESSIONID"
+      logout-success-url="/index.html"
+    />
+  </http>
+
+  <user-service>
+    <user name="mklinkj" password="{noop}1234" authorities="ROLE_ADMIN"/>
+  </user-service>
+
+</b:beans>

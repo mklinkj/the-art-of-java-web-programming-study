@@ -60,8 +60,9 @@
           <td>${mem.email}</td>
           <td><javatime:format value="${mem.joinDate}" pattern="yyyy-MM-dd"/></td>
           <td>
-            <form action="${contextPath}/member/delMember.do" method="post">
+            <form id="deleteForm_${mem.id}" action="${contextPath}/member/delMember.do" method="post">
               <input type="hidden" name="id" value="${mem.id}">
+              <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
               <button type="submit" class="btn btn-sm btn-outline-danger">삭제</button>
             </form>
           </td>

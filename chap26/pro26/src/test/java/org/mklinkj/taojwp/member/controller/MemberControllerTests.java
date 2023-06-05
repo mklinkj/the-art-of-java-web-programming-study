@@ -1,6 +1,8 @@
 package org.mklinkj.taojwp.member.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -16,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
@@ -25,10 +28,12 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringJUnitWebConfig(
     locations = {
       "classpath:action-servlet.xml",
+      "classpath:config/action-repository.xml",
       "classpath:config/action-service.xml",
-        "classpath:config/action-repository.xml"
+      "classpath:config/action-security.xml"
     })
 @Slf4j
+@WithUserDetails("mklinkj")
 class MemberControllerTests {
 
   @Autowired private WebApplicationContext context;
@@ -37,7 +42,7 @@ class MemberControllerTests {
 
   @BeforeEach
   public void beforeEach() {
-    mockMvc = webAppContextSetup(context).build();
+    mockMvc = webAppContextSetup(context).apply(springSecurity()).build();
   }
 
   @Test
@@ -88,7 +93,8 @@ class MemberControllerTests {
                 .param("id", "mklinkj2")
                 .param("pwd", "4321")
                 .param("name", "정션링크2")
-                .param("email", "mklinkj2@github.com"))
+                .param("email", "mklinkj2@github.com")
+                .with(csrf()))
         .andDo(print())
         .andExpect(status().isFound())
         .andExpect(redirectedUrl("/member/listMembers.do"))
@@ -103,7 +109,8 @@ class MemberControllerTests {
                 .param("id", "1")
                 .param("pwd", "1")
                 .param("name", "정션링크2")
-                .param("email", "mklinkj2@github.com"))
+                .param("email", "mklinkj2@github.com")
+                .with(csrf()))
         .andDo(print())
         .andExpect(status().isBadRequest())
         .andExpect(forwardedUrl("/WEB-INF/views/member/memberForm.jsp"));
@@ -128,7 +135,8 @@ class MemberControllerTests {
                 .param("id", "mklinkj")
                 .param("pwd", "4321")
                 .param("name", "정션링크_수정")
-                .param("email", "mklinkj_mod@github.com"))
+                .param("email", "mklinkj_mod@github.com")
+                .with(csrf()))
         .andDo(print())
         .andExpect(status().isFound())
         .andExpect(redirectedUrl("/member/modMemberForm.do?id=mklinkj"))
@@ -143,7 +151,8 @@ class MemberControllerTests {
                 .param("id", "mklinkj")
                 .param("pwd", "1")
                 .param("name", "정션링크2")
-                .param("email", "mklinkj2@github.com"))
+                .param("email", "mklinkj2@github.com")
+                .with(csrf()))
         .andDo(print())
         .andExpect(status().isBadRequest())
         .andExpect(forwardedUrl("/WEB-INF/views/member/modMemberForm.jsp"));
@@ -165,7 +174,8 @@ class MemberControllerTests {
     mockMvc
         .perform(
             post("/member/delMember.do") //
-                .param("id", "mklinkj"))
+                .param("id", "mklinkj")
+                .with(csrf()))
         .andDo(print())
         .andExpect(status().isFound())
         .andExpect(redirectedUrl("/member/listMembers.do"));

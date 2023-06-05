@@ -14,20 +14,20 @@
 
     그래서 metadata-complete="true" 설정을 제거했다.
   -->
-  <display-name>Chap22_Servlet</display-name>
-
-  <listener>
-    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  </listener>
+  <display-name>Chap26_Servlet</display-name>
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
+      classpath:config/action-security.xml
       classpath:config/action-repository.xml
       classpath:config/action-service.xml
     </param-value>
   </context-param>
 
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
 
   <filter>
     <filter-name>CharacterEncodingFilter</filter-name>
@@ -44,6 +44,15 @@
 
   <filter-mapping>
     <filter-name>CharacterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>springSecurityFilterChain</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
