@@ -9,6 +9,10 @@
 
   <http>
     <intercept-url pattern="/index.html" access="permitAll()"/>
+    <intercept-url pattern="/member/memberForm.do" access="permitAll()"/>
+    <intercept-url pattern="/member/addMember.do" access="permitAll()"/>
+    <intercept-url pattern="/member/listMembers.do" access="permitAll()"/>
+
     <intercept-url pattern="/**" access="isAuthenticated()"/>
 
     <form-login/>
