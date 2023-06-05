@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.mklinkj.taojwp.account.AccountDAO">
+  <select id="selectAll" resultType="accountVO">
+    SELECT account_no, cust_name, balance
+      FROM cust_account
+  </select>
+
+  <update id="uploadBalance1">
+    UPDATE cust_account
+    SET balance = balance - 5000000
+    WHERE account_no = '70-490-930'
+  </update>
+
+  <update id="uploadBalance2">
+    UPDATE cust_account
+    SET balance = balance + 5000000
+    WHERE account_no = '70-490-911'
+  </update>
+
+  <update id="resetAllBalance">
+    UPDATE cust_account
+    SET balance = 10000000
+    WHERE account_no IN ('70-490-930', '70-490-911')
+  </update>
+</mapper>

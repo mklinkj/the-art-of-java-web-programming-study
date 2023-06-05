@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS t_member CASCADE;
+DROP TABLE IF EXISTS cust_account CASCADE;
 
 CREATE TABLE t_member
 (
@@ -23,3 +24,15 @@ VALUES ('kim', '1234', '김유신', 'hong@gamil.com', '2023-02-04');
 
 INSERT INTO t_member (id, pwd, name, email, join_date)
 VALUES ('choi', '1212', '최치원', 'choi@gamil.com', '2023-02-04');
+
+
+CREATE TABLE cust_account (
+  account_no    VARCHAR(20) PRIMARY KEY,
+  cust_name     VARCHAR(50),
+  balance       INTEGER
+);
+
+INSERT INTO cust_account (account_no, cust_name, balance)
+VALUES ('70-490-930', '홍길동', 10000000);
+INSERT INTO cust_account (account_no, cust_name, balance)
+VALUES ('70-490-911', '김유신', 10000000);
