@@ -13,7 +13,11 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringJUnitConfig(
-    locations = {"classpath:config/action-service.xml", "classpath:config/action-repository.xml"})
+    locations = {
+      "classpath:config/action-service.xml",
+      "classpath:config/action-security.xml",
+      "classpath:config/action-repository.xml"
+    })
 class MemberMapperImplTests {
 
   @Autowired private MemberMapper memberMapper;

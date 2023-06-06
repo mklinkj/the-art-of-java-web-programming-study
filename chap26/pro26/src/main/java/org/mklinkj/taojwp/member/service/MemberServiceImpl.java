@@ -33,6 +33,7 @@ public class MemberServiceImpl implements MemberService {
 
   @Override
   public void updateMember(MemberVO member) {
+    member.setPwd(passwordEncoder.encode(member.getPwd()));
     memberRepository.updateMember(member);
   }
 

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <%@ taglib prefix="javatime" uri="http://sargue.net/jsptags/time" %>
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath}"></c:set>
 <!doctype html>
@@ -19,6 +20,13 @@
 
 <div class="card d-flex justify-content-center mx-auto col-6">
   <div class="card-body ">
+
+    <c:if test="${param.error}" >
+      <div class="alert alert-danger" role="alert">
+        <fmt:message key="login.failure"/>
+      </div>
+    </c:if>
+
     <form method="post" action="${contextPath}/login">
       <div class="row mb-3">
         <label for="inputId3" class="col-sm-3 col-form-label">아이디</label>

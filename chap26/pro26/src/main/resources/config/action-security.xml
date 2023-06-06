@@ -9,6 +9,9 @@
 
   <b:bean id="webexpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
 
+  <b:bean id="customLoginFailureHandler" class="org.mklinkj.taojwp.security.handler.CustomLoginFailureHandler" />
+
+
   <http>
     <intercept-url pattern="/webjars/**" access="permitAll()"/>
     <intercept-url pattern="/login.do" access="permitAll()"/>
@@ -19,7 +22,12 @@
 
     <intercept-url pattern="/**" access="isAuthenticated()"/>
 
-    <form-login login-page="/login.do" default-target-url="/index.html"/>
+    <form-login
+      login-page="/login.do"
+      default-target-url="/index.html"
+      authentication-failure-handler-ref="customLoginFailureHandler"
+    />
+
     <logout
       logout-url="/logout"
       invalidate-session="true"

@@ -187,6 +187,16 @@ testImplementation "org.springframework.security:spring-security-test:${springSe
 
 
 
+### 로그인 실패시 메시지 추가
+
+* CustomLoginFailureHandler 단순하게 구현했음.
+* 얼럿 영역은 부트스트랩으로 모양좋게 표현하는 방법이 있었다.
+  * https://getbootstrap.com/docs/5.3/components/alerts/
+
+
+
+
+
 ### 참고
 
 * Hello Spring Security Xml Config
