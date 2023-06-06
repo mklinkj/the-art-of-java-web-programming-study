@@ -51,37 +51,11 @@
   </div>
 </div>
 
-<div class="modal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">${msg.title}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>${msg.content}</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
-      </div>
-    </div>
-  </div>
-</div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="${contextPath}/webjars/jquery/@jqueryVersion@/jquery.slim.min.js"></script>
 <script
     src="${contextPath}/webjars/bootstrap/@bootstrapVersion@/js/bootstrap.bundle.min.js"></script>
 
-<script>
-  // show modal
-  const target = document.querySelector(".modal");
-  const modal = new bootstrap.Modal(target);
-
-  if ('${msg}') {
-    modal.show();
-  }
-</script>
 </body>
 </html>
