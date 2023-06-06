@@ -43,8 +43,7 @@
     </authentication-provider>
   </authentication-manager>
 
-  <!-- 지금 예제에서는 일단 암호를 암호화하지는 말자.. 나중에 게시판, 쇼핑몰 프로젝트 진행시에는 암호화를 사용하자. -->
   <b:bean id="passwordEncoder"
-    class="org.springframework.security.crypto.password.NoOpPasswordEncoder"/>
+    class="org.springframework.security.crypto.factory.PasswordEncoderFactories" factory-method="createDelegatingPasswordEncoder"/>
 
 </b:beans>
