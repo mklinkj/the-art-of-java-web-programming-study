@@ -302,4 +302,10 @@
 
     </plugins>
   </build>
+  
+  
+  <modules>
+    <module>chap27/pro27-maven</module>
+  </modules>
+  
 </project>
