@@ -133,5 +133,41 @@ public class WebJarsController {
 
 
 
+### 동작에는 문제가 없지만... 약간 찝찝한 문제가.... 
+
+응답의 Content-Type 값이 정확하게 나오지 않는다..
+
+* 응답 헤더의 Content-Type이 css / js 모두  `text/html;charset=UTF-8`  로 나타남 (Firefox)
+
+  * 원래대로라면...
+
+    * JavaScript:  `application/javascript;charset=UTF-8`
+    * css: `text/css;charset=UTF-8`
+
+  * WebJarsController 의 메서드에다가 확장자를 보고 response에 ContentType을 설정해주면.. 되기는 될테지만.. 그렇게 까지 해야하는지? 😂😂😂
+
+    ```
+     execute script from 'http://localhost:8090/pro27/webjars_locator/jquery/jquery.slim.min.js' because its MIME type ('application/json') is not executable, and strict MIME type checking is enabled.
+    listMembers.do:1 Refused to execute script from 'http://localhost:8090/pro27/webjars_locator/bootstrap/js/bootstrap.bundle.min.js' because its MIME type ('application/json') is not executable, and strict MIME type checking is 
+    ```
+
+  * 실행은 되긴 되는데.. 콘솔 에러가 나서... ㅠㅠ
+
+    ```java
+          return ResponseEntity.status(HttpStatus.OK) //
+              .header(HttpHeaders.CONTENT_TYPE, getContentType(fullPath))
+              .cacheControl(CacheControl.maxAge(Duration.ofDays(30)))
+              .body(new ClassPathResource(fullPath));
+    ```
+
+    반환할 때... 확장자 보고 컨텐트 타입을 지정하게 했다..
+
+    * 특이하게도 캐시를 설정안하면 항상 새로받아서 설정해야했다. (css파일 자체가 커서...ㅠㅠ)
 
 
+
+그런데 아무리 그래도 웰케 느리지!! 확인해보니... 크롬 네트워크 탭에 `느린 3G`로 설정되어있었음 😂😂😂
+
+![image-20230607212310921](doc-resources/image-20230607212310921.png)
+
+그래도 캐시 문제 확인하는데는 도움이 되었음 👍
