@@ -18,9 +18,8 @@
     <property name="suffix" value=".jsp"/>
   </bean>
 
-  <mvc:resources mapping="/webjars/**" location="/webjars/">
-    <mvc:cache-control no-cache="true" />
-  </mvc:resources>
+  <mvc:resources mapping="/resources/**" location="/resources/"/>
+  <mvc:resources mapping="/favicon.ico" location="/resources/"/>
 
   <mvc:default-servlet-handler/>
 
