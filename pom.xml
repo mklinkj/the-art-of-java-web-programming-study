@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.mklinkj.taowjp</groupId>
+  <artifactId>taowjp-study-parent</artifactId>
+  <name>${project.artifactId}</name>
+  <packaging>pom</packaging>
+  <version>1.0.0-SNAPSHOT</version>
+  <properties>
+    <java.version>17</java.version>
+
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+
+    <lombok.version>1.18.26</lombok.version>
+    <log4j.version>2.20.0</log4j.version>
+
+    <commons-text.version>1.10.0</commons-text.version>
+
+    <jackson.version>2.15.2</jackson.version>
+    <jackson-databind.version>${jackson.version}</jackson-databind.version>
+
+    <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
+
+    <junit.version>5.9.3</junit.version>
+    <assertj.version>3.24.2</assertj.version>
+    <json-unit.version>2.38.0</json-unit.version>
+    <mockito.version>5.3.1</mockito.version>
+    <hamcrest.version>2.2</hamcrest.version>
+
+    <spring.version>6.0.9</spring.version>
+
+    <spring-security.version>6.1.0</spring-security.version>
+
+    <aspectj.version>1.9.19</aspectj.version>
+
+    <tomcat10.version>10.1.9</tomcat10.version>
+
+
+    <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
+    <jakarta.servlet.jsp-api.version>3.1.1</jakarta.servlet.jsp-api.version>
+
+    <jakarta.servlet.jsp.jstl-api.version>3.0.0</jakarta.servlet.jsp.jstl-api.version>
+    <jakarta.servlet.jsp.jstl.version>3.0.1</jakarta.servlet.jsp.jstl.version>
+
+    <!-- Hibernate Validator 로컬 테스트시 필요하다. -->
+    <jakarta.el.version>5.0.0-M1</jakarta.el.version>
+
+    <ojdbc.version>23.2.0.0</ojdbc.version>
+    <mysql-connector-j.version>8.0.33</mysql-connector-j.version>
+    <hsqldb.version>2.7.1</hsqldb.version>
+
+    <java-time-jsptags.version>2.0.0</java-time-jsptags.version>
+
+    <commons-io.version>2.12.0</commons-io.version>
+
+    <!-- webjars -->
+    <webjars-jquery.version>3.6.4</webjars-jquery.version>
+    <webjars-bootstrap.version>5.3.0</webjars-bootstrap.version>
+    <webjars-locator.version>0.46</webjars-locator.version>
+    <findbugs-jsr305.version>3.0.2</findbugs-jsr305.version>
+
+    <mybatis.version>3.5.13</mybatis.version>
+    <mybatis-spring.version>2.1.1</mybatis-spring.version>
+    <mybatis-dynamic-sql.version>1.5.0</mybatis-dynamic-sql.version>
+
+    <hikaricp.version>5.0.1</hikaricp.version>
+
+
+    <!-- #################################### -->
+    <!-- #### Servlet 4 Project Support #### -->
+    <!-- ################################### -->
+
+    <spring5.version>5.3.27</spring5.version>
+    <spring-security5.version>5.8.3</spring-security5.version>
+
+    <spring4.version>4.3.30.RELEASE</spring4.version>
+    <slf4j.version>2.0.7</slf4j.version>
+
+    <hibernate-validator-javax.version>6.0.23.Final</hibernate-validator-javax.version>
+    <!-- Hibernate Validator 로컬 테스트시 필요하다. -->
+    <javax.el.version>3.0.1-b12</javax.el.version>
+
+    <commons-fileupload.version>1.5</commons-fileupload.version>
+
+    <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
+    <javax.servlet.jsp-api.version>2.3.3</javax.servlet.jsp-api.version>
+    <javax.servlet.jsp.jstl-api.verson>1.2.2</javax.servlet.jsp.jstl-api.verson>
+    <jstl.version>1.2</jstl.version>
+
+    <java-time-jsptags-javax.version>1.1.4</java-time-jsptags-javax.version>
+
+    <tomcat9.version>9.0.75</tomcat9.version>
+    <jetty.version>11.0.15</jetty.version>
+    <jetty-javax.version>10.0.15</jetty-javax.version>
+    <!-- ################################### -->
+
+
+    <!-- Maven 플러그인 버전 관리 -->
+    <mybatis-generator-maven-plugin.version>1.4.2</mybatis-generator-maven-plugin.version>
+    <maven-war-plugin.version>3.3.2</maven-war-plugin.version>
+    <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
+    <maven-surefire-plugin.version>3.1.0</maven-surefire-plugin.version>
+    <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+    <maven-toolchains-plugin.version>3.1.0</maven-toolchains-plugin.version>
+
+    <!-- Jetty일 때는 provided, Tomcat일 때는 compile로 설정하기위해 프로퍼티로 분리했다. -->
+    <jstl-scope.type>provided</jstl-scope.type>
+
+    <!-- Jetty Http 포트 기본값 -->
+    <jetty.port>8090</jetty.port>
+    <!-- Jetty Context Path 설정 기본값 -->
+    <jetty-context-path>/</jetty-context-path>
+    <!-- XML 컨텍스트 설정일 때는 잘 되는데, Spring Java Config 설정일 때는 예외가 난다. 일단 자동 재배포 재시작의 기본 값은 비활성화 상태로 두자 -->
+    <jetty-auto-deploy-seconds>-1</jetty-auto-deploy-seconds>
+
+    <!-- Embedded Jetty로 실행할 때, web.xml을 환경별로 바꿀 상황이 생겨 환경변수로 분리했다.  -->
+    <web-xml-location>${project.basedir}/src/main/webapp/WEB-INF/web.xml</web-xml-location>
+
+    <!-- cargo 플러그인 설정 -->
+    <cargo.version>1.10.7</cargo.version>
+    <cargo-tomcat.containerId>tomcat10x</cargo-tomcat.containerId>
+    <cargo-tomcat.version>${tomcat10.version}</cargo-tomcat.version>
+    <cargo-context-path>${jetty-context-path}</cargo-context-path>
+    <cargo-server-port>${jetty.port}</cargo-server-port>
+  </properties>
+
+
+  <profiles>
+    <!-- Jetty 기본 웹 애플리케이션 실행  -->
+    <profile>
+      <id>jetty-run</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <jstl-scope.type>provided</jstl-scope.type>
+      </properties>
+      <build>
+        <plugins>
+          <!-- Jetty 서버 구동 -->
+          <!-- 도움말 자세히보기: mvnw jetty:help -Ddetail=true -Dgoal=run -->
+          <plugin>
+            <!-- https://www.eclipse.org/jetty/documentation/jetty-10/programming-guide/index.html#jetty-maven-plugin -->
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-maven-plugin</artifactId>
+            <version>${jetty.version}</version>
+            <configuration>
+              <httpConnector>
+                <!--host>localhost</host-->
+                <port>${jetty.port}</port>
+              </httpConnector>
+              <webApp>
+                <contextPath>${jetty-context-path}</contextPath>
+                <descriptor>${web-xml-location}</descriptor>
+                <sessionHandler>
+                  <sessionIdPathParameterName>none</sessionIdPathParameterName>
+                </sessionHandler>
+              </webApp>
+              <deployMode>EMBED</deployMode>
+              <stopKey>CTRL+C</stopKey>
+              <stopPort>8999</stopPort>
+              <!-- 9.x 설정: <scanIntervalSeconds> 대신 <scan> 사용 -->
+              <!-- 
+                변경 감지 자동 재시작시 ContextLoaderListener가 제대로 실행되지 않는 오류가 발생한다.
+                설정을 -1로하여 자동 재시작이 일어나지 않도록 한다.
+               -->
+              <scan>${jetty-auto-deploy-seconds}</scan>
+              <scanTargetPatterns>
+                <scanTargetPattern>
+                  <directory>src/main/webapp/WEB-INF</directory>
+                  <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                  </includes>
+                  <excludes>
+                    <exclude>**/*.jsp</exclude>
+                  </excludes>
+                </scanTargetPattern>
+              </scanTargetPatterns>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <!-- Tomcat 기본 웹 애플리케이션 실행  -->
+    <profile>
+      <id>tomcat-run</id>
+      <properties>
+        <jstl-scope.type>compile</jstl-scope.type>
+      </properties>
+      <build>
+        <plugins>
+          <!-- 실제 Tomcat 배포 실행 테스트 -->
+          <!-- mvn clean package -Ptomcat-run -DskipTests cargo:run -->
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven3-plugin</artifactId>
+            <version>${cargo.version}</version>
+            <configuration>
+              <container>
+                <containerId>${cargo-tomcat.containerId}</containerId>
+                <systemProperties>
+                  <file.encoding>UTF-8</file.encoding>
+                </systemProperties>
+                <zipUrlInstaller>
+                  <url>
+                    https://repo.maven.apache.org/maven2/org/apache/tomcat/tomcat/${cargo-tomcat.version}/tomcat-${cargo-tomcat.version}.zip
+                  </url>
+                  <downloadDir>${project.build.directory}/downloads</downloadDir>
+                  <extractDir>${project.build.directory}/extracts</extractDir>
+                </zipUrlInstaller>
+              </container>
+              <configuration>
+                <type>standalone</type>
+                <properties>
+                  <cargo.servlet.port>${cargo-server-port}</cargo.servlet.port>
+                </properties>
+              </configuration>
+              <deployables>
+                <deployable>
+                  <groupId>${project.groupId}</groupId>
+                  <artifactId>${project.artifactId}</artifactId>
+                  <type>war</type>
+                  <properties>
+                    <context>${cargo-context-path}</context>
+                  </properties>
+                </deployable>
+              </deployables>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>${maven-resources-plugin.version}</version>
+        </plugin>
+        <!-- JUnit 5 사용을 위해서 maven-surefire-plugin 버전을 올려두자! -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${maven-surefire-plugin.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>${maven-war-plugin.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin.version}</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+          <compilerArgs>
+            <arg>-Xlint:all</arg>
+            <arg>-Xlint:-processing
+            </arg> <!-- No processor claimed any of these annotations 경고는 노출되지않게 설정 -->
+            <arg>-Xlint:-path</arg> <!-- bad path element 경고 무시 -->
+          </compilerArgs>
+          <showWarnings>true</showWarnings>
+          <showDeprecation>true</showDeprecation>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-toolchains-plugin</artifactId>
+        <version>${maven-toolchains-plugin.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>toolchain</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <toolchains>
+            <jdk>
+              <version>${java.version}</version>
+            </jdk>
+          </toolchains>
+        </configuration>
+      </plugin>
+
+    </plugins>
+  </build>
+</project>
