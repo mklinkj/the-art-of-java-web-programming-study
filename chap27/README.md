@@ -267,7 +267,7 @@ public class WebJarsController {
     ```java
           return ResponseEntity.status(HttpStatus.OK) //
               .header(HttpHeaders.CONTENT_TYPE, getContentType(fullPath))
-              .cacheControl(CacheControl.maxAge(Duration.ofDays(30)))
+              .cacheControl(CacheControl.maxAge(Duration.ofDays(7)))
               .body(new ClassPathResource(fullPath));
     ```
 
@@ -283,3 +283,16 @@ public class WebJarsController {
 
 그래도 캐시 문제 확인하는데는 도움이 되었음 👍
 
+
+
+
+
+### 컨텐츠 타입을 확장자 보고 수동으로 판단했었는데...
+
+Java 1.7부터는 `Files.probeContentType()`란 메서드가 준비되어있다.
+
+```java
+Files.probeContentType(Path.of(classPathResource.getPath())))
+```
+
+css나 javascript 리소스를 정확하게 판단할 수 있었다.

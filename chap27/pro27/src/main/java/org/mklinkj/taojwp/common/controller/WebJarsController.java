@@ -1,6 +1,8 @@
 package org.mklinkj.taojwp.common.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.Duration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
@@ -30,7 +32,7 @@ public class WebJarsController {
   private static final WebJarAssetLocator LOCATOR = new WebJarAssetLocator();
 
   @ResponseBody
-  @GetMapping({"/webjars_locator/{webjar}/**", "/webjars_locator/{webjar}/**"})
+  @GetMapping("/webjars_locator/{webjar}/**")
   public ResponseEntity<Resource> locateWebjarAsset(
       @PathVariable String webjar, HttpServletRequest request) {
 
@@ -39,25 +41,18 @@ public class WebJarsController {
       String mvcPath =
           (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
       String fullPath = LOCATOR.getFullPath(webjar, mvcPath.substring(mvcPrefix.length()));
+      ClassPathResource classPathResource = new ClassPathResource(fullPath);
 
       return ResponseEntity.status(HttpStatus.OK) //
-          .header(HttpHeaders.CONTENT_TYPE, getContentType(fullPath))
-          .cacheControl(CacheControl.maxAge(Duration.ofDays(30)))
-          .body(new ClassPathResource(fullPath));
+          .header(
+              HttpHeaders.CONTENT_TYPE,
+              Files.probeContentType(Path.of(classPathResource.getPath())))
+          .cacheControl(CacheControl.maxAge(Duration.ofDays(7)))
+          .body(classPathResource);
 
     } catch (Exception e) {
       LOGGER.error(e.getMessage(), e);
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    }
-  }
-
-  /** js와 css를 사용할 일밖에 없어서 단순하게 설정하긴함. */
-  private String getContentType(String fullPath) {
-    if (fullPath.endsWith(".js")) {
-      // `application/javascript`는 최신이라 아래 처럼 쓰는게 호환성이 좋다고 해서.. 이렇게 써보자.
-      return "text/javascript";
-    } else {
-      return "text/css";
     }
   }
 }

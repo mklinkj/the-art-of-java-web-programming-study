@@ -46,7 +46,7 @@ class WebJarsControllerTests {
         .perform(get("/webjars_locator/bootstrap/js/bootstrap.bundle.min.js"))
         .andDo(print())
         .andExpect(status().isOk())
-        .andExpect(content().contentType("text/javascript"));
+        .andExpect(content().contentType("application/javascript"));
   }
 
   @Test
@@ -55,6 +55,6 @@ class WebJarsControllerTests {
         .perform(get("/webjars_locator/jquery/jquery.slim.min.js"))
         .andDo(print())
         .andExpect(status().isOk())
-        .andExpect(content().contentType("text/javascript"));
+        .andExpect(content().contentType("application/javascript"));
   }
 }
