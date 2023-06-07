@@ -12,7 +12,7 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet"
-        href="${contextPath}/webjars/bootstrap/@bootstrapVersion@/css/bootstrap.min.css">
+        href="${contextPath}/webjars_locator/bootstrap/css/bootstrap.min.css">
   <title>회원정보</title>
 </head>
 <body>
@@ -53,9 +53,9 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="${contextPath}/webjars/jquery/@jqueryVersion@/jquery.slim.min.js"></script>
+<script src="${contextPath}/webjars_locator/jquery/jquery.slim.min.js"></script>
 <script
-    src="${contextPath}/webjars/bootstrap/@bootstrapVersion@/js/bootstrap.bundle.min.js"></script>
+    src="${contextPath}/webjars_locator/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

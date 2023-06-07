@@ -22,7 +22,6 @@
     <mvc:cache-control no-cache="true" />
   </mvc:resources>
 
-
   <mvc:default-servlet-handler/>
 
   <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">

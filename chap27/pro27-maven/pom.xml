@@ -35,7 +35,7 @@
 
     <hibernate-validator.version>${hibernate-validator-javax.version}</hibernate-validator.version>
 
-    <cargo-context-path>/${project.artifactId}</cargo-context-path>
+    <cargo-context-path>/</cargo-context-path>
     <cargo-tomcat.containerId>tomcat9x</cargo-tomcat.containerId>
     <cargo-tomcat.version>${tomcat9.version}</cargo-tomcat.version>
   </properties>
