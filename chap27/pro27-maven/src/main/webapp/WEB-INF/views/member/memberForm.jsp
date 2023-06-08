@@ -3,20 +3,8 @@
 <%@ taglib prefix="javatime" uri="http://sargue.net/jsptags/time" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath}"></c:set>
-<!doctype html>
-<html lang="ko">
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet"
-        href="${contextPath}/webjars_locator/bootstrap/css/bootstrap.min.css">
-  <title>회원정보</title>
-</head>
-<body>
-<h1 class="text-center mt-4 mb-4">회원 가입창</h1>
+<h2 class="text-center mt-4 mb-4">회원 가입창</h2>
 
 <div class="card d-flex justify-content-center mx-auto col-6">
   <div class="card-body ">
@@ -60,12 +48,3 @@
     </form:form>
   </div>
 </div>
-
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="${contextPath}/webjars_locator/jquery/jquery.slim.min.js"></script>
-<script
-    src="${contextPath}/webjars_locator/bootstrap/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>

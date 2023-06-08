@@ -37,7 +37,6 @@
     <bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
       <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
     </bean>
-
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
       <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
       <property name="prefix" value="/WEB-INF/views/"/>

@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="javatime" uri="http://sargue.net/jsptags/time" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath}"></c:set>
 <!doctype html>
 <html lang="ko">
@@ -17,7 +18,7 @@
   <title>회원 정보 수정</title>
 </head>
 <body>
-<h1 class="text-center mt-4 mb-4">회원 정보 수정</h1>
+<h2 class="text-center mt-4 mb-4">회원 정보 수정</h2>
 
 <div class="card d-flex justify-content-center mx-auto col-6">
   <div class="card-body ">
@@ -72,12 +73,6 @@
 
 </div>
 
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="${contextPath}/webjars_locator/jquery/jquery.slim.min.js"></script>
-<script
-    src="${contextPath}/webjars_locator/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script>
   if('${result}') {
     alert('<fmt:message key="modify.${result}"/>');

@@ -54,16 +54,18 @@
       <%--<tiles:insertAttribute name="side"/>--%>
       <div class="nav">
         <ul class="list-group list-group-flush">
+          <li class="list-group-item"><a href="${contextPath}/main.do" class="text-dark h6 text-decoration-none">메인으로...</a></li>
           <li class="list-group-item"><a href="${contextPath}/member/listMembers.do" class="text-dark h6 text-decoration-none">회원 관리</a></li>
-          <li class="list-group-item"><a href="#" class="text-dark h6 text-decoration-none">게시판 관리</a></li>
-          <li class="list-group-item"><a href="#" class="text-dark h6 text-decoration-none">상품 관리</a></li>
+          <li class="list-group-item"><a href="${contextPath}/index.html" class="text-dark h6 text-decoration-none">예제 메인으로...</a></li>
         </ul>
       </div>
       <%--// <tiles:insertAttribute name="side"/>--%>
     </div>
-    <div id="content" class="col text-center">
+    <div id="content" class="col" style="min-height: 600px">
       <%--<tiles:insertAttribute name="body"/>--%>
-      <h1>메인 페이지 입니다.</h1>
+      <div class="text-center">
+        <h1>메인 페이지 입니다.</h1>
+      </div>
       <%--// <tiles:insertAttribute name="body"/>--%>
     </div>
   </div>
@@ -71,6 +73,7 @@
 
   <div id="footer" class="row">
     <%--<tiles:insertAttribute name="footer"/>--%>
+    <footer>
       <div class="container my-auto">
         <div class="text-center my-auto">
           <span>The Art of Java Web Programming - mklinkj - 2023</span>
@@ -81,10 +84,12 @@
   </div>
 </div>
 
+<%--<tiles:insertAttribute name="script"/>--%>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="${contextPath}/webjars_locator/jquery/jquery.slim.min.js"></script>
 <script
     src="${contextPath}/webjars_locator/bootstrap/js/bootstrap.bundle.min.js"></script>
+<%--// <tiles:insertAttribute name="script"/>--%>
 </body>
 </html>

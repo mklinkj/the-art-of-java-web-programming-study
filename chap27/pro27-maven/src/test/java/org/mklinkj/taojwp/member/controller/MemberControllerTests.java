@@ -59,7 +59,7 @@ class MemberControllerTests {
         .andExpect(status().isOk())
         .andExpect(model().attributeExists("memberList"))
         .andExpect(view().name("member/listMembers"))
-        .andExpect(forwardedUrl("/WEB-INF/views/member/listMembers.jsp"));
+        .andExpect(forwardedUrl("/WEB-INF/views/common/layout.jsp"));
   }
 
   @Test
@@ -69,7 +69,7 @@ class MemberControllerTests {
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(view().name("member/memberForm"))
-        .andExpect(forwardedUrl("/WEB-INF/views/member/memberForm.jsp"));
+        .andExpect(forwardedUrl("/WEB-INF/views/common/layout.jsp"));
   }
 
   @Test
@@ -80,7 +80,7 @@ class MemberControllerTests {
         .andExpect(status().isOk())
         .andExpect(view().name("member/memberDetail"))
         .andExpect(model().attributeExists("member"))
-        .andExpect(forwardedUrl("/WEB-INF/views/member/memberDetail.jsp"));
+        .andExpect(forwardedUrl("/WEB-INF/views/common/layout.jsp"));
   }
 
   @Transactional
@@ -113,7 +113,8 @@ class MemberControllerTests {
                 .with(csrf()))
         .andDo(print())
         .andExpect(status().isBadRequest())
-        .andExpect(forwardedUrl("/WEB-INF/views/member/memberForm.jsp"));
+        .andExpect(view().name("member/memberForm"))
+        .andExpect(forwardedUrl("/WEB-INF/views/common/layout.jsp"));
   }
 
   @Test
@@ -155,7 +156,8 @@ class MemberControllerTests {
                 .with(csrf()))
         .andDo(print())
         .andExpect(status().isBadRequest())
-        .andExpect(forwardedUrl("/WEB-INF/views/member/modMemberForm.jsp"));
+        .andExpect(view().name("member/modMemberForm"))
+        .andExpect(forwardedUrl("/WEB-INF/views/common/layout.jsp"));
   }
 
   @Test

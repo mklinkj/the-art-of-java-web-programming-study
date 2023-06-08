@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath}"></c:set>
 <!doctype html>
 <html lang="ko">
@@ -12,25 +13,26 @@
   <title><tiles:insertAttribute name="title"/></title>
 </head>
 <body>
-<div id="container">
-  <div id="header">
+<div id="container" class="container min-vw-100">
+  <div id="header" class="row">
+    <!-- 헤더 -->
     <tiles:insertAttribute name="header"/>
   </div>
-  <div id="sidebar-left">
-    <tiles:insertAttribute name="side"/>
+  <div class="row flex-nowrap">
+    <div id="sidebar-left" class="col-sm-2">
+      <tiles:insertAttribute name="side"/>
+    </div>
+    <div id="content" class="col" style="min-height: 600px">
+      <tiles:insertAttribute name="body"/>
+    </div>
   </div>
-  <div id="content">
-    <tiles:insertAttribute name="body"/>
-  </div>
-  <div id="footer">
+  <hr class="border border-primary border-1 opacity-75 ">
+
+  <div id="footer" class="row">
     <tiles:insertAttribute name="footer"/>
   </div>
 </div>
 
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="${contextPath}/webjars_locator/jquery/jquery.slim.min.js"></script>
-<script
-    src="${contextPath}/webjars_locator/bootstrap/js/bootstrap.bundle.min.js"></script>
+<tiles:insertAttribute name="script"/>
 </body>
 </html>

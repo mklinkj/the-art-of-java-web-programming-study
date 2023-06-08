@@ -10,10 +10,38 @@
     <put-attribute name="side" value="/WEB-INF/views/common/side.jsp"/>
     <put-attribute name="body" value=""/>
     <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp"/>
+    <put-attribute name="script" value="/WEB-INF/views/common/script.jsp"/>
   </definition>
 
   <definition name="main" extends="baseLayout">
     <put-attribute name="title" value="메인 페이지"/>
     <put-attribute name="body" value="/WEB-INF/views/main.jsp"/>
   </definition>
+
+  <definition name="login" extends="baseLayout">
+    <put-attribute name="title" value="로그인"/>
+    <put-attribute name="body" value="/WEB-INF/views/login.jsp"/>
+  </definition>
+
+  <definition name="member/listMembers" extends="baseLayout">
+    <put-attribute name="title" value="회원 목록 창"/>
+    <put-attribute name="body" value="/WEB-INF/views/member/listMembers.jsp"/>
+  </definition>
+
+  <definition name="member/memberDetail" extends="baseLayout">
+    <put-attribute name="title" value="회원 정보"/>
+    <put-attribute name="body" value="/WEB-INF/views/member/memberDetail.jsp"/>
+  </definition>
+
+  <definition name="member/modMemberForm" extends="baseLayout">
+    <put-attribute name="title" value="회원 정보 수정"/>
+    <put-attribute name="body" value="/WEB-INF/views/member/modMemberForm.jsp"/>
+  </definition>
+
+  <definition name="member/memberForm" extends="baseLayout">
+    <put-attribute name="title" value="회원 가입"/>
+    <put-attribute name="body" value="/WEB-INF/views/member/memberForm.jsp"/>
+  </definition>
+
+
 </tiles-definitions>

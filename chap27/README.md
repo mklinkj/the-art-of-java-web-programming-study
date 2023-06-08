@@ -166,6 +166,17 @@
 
 
 
+### 일단 Bootstrap으로 레이아웃을 구성해보고 있는데...
+
+* 
+* https://getbootstrap.kr/docs/5.2/layout/columns/
+
+
+
+
+
+
+
 
 
 ### 참고
@@ -362,3 +373,36 @@ css나 javascript 리소스를 정확하게 판단할 수 있었다.
 * Tocmat 하나에 여러개 띄울 것도 아니여서... 😅
 * 근래의 추세는 그냥 앞단에 L4나 HTTP두고 도메인 기준으로 분리하는 추세라서..
 
+
+
+### Tiles를 적용하고나서 MVC 테스트의 forward URL이  레이아웃 JSP 로만 보게되는 현상
+
+```
+...
+java.lang.AssertionError: Forwarded URL expected:</WEB-INF/views/member/memberForm.jsp> but was:</WEB-INF/views/common/layout.jsp>
+필요:/WEB-INF/views/member/memberForm.jsp
+실제   :/WEB-INF/views/common/layout.jsp
+...
+```
+
+> **Spring MVC 프로젝트에 Tiles 를 적용하고나서... .andExpect(forwardedUrl("포워딩URL")); 위 테스트 검증을 할 때... 포워딩 URL이 항상 Tiles의 레이아웃 JSP로 설정되는데... 세부 설정을 할 수가 없는 것이니?**
+>
+> > Tiles를 사용하는 Spring MVC 애플리케이션에서는 `forwardedUrl()` 메소드로 뷰 이름을 검증하는 것이 어려울 수 있습니다. JSP 페이지의 내용은 서블릿 컨테이너에 의해 렌더링되기 때문에, Spring MVC Test에서는 서블릿 컨테이너를 실행하지 않기 때문에 JSP 페이지의 내용에 대한 검증은 할 수 없습니다. [따라서 뷰 이름이 올바른지, 그리고 요청이 올바른 URL로 전달되었는지만 검증할 수 있습니다](https://stackoverflow.com/questions/28944538/empty-content-in-spring-mvc-test). 이 점 참고하시기 바랍니다.
+>
+> 
+
+음.. 일단 어쩔수 없이... `/WEB-INF/views/common/layout.jsp` 만 검사해야겠다.. 😅
+
+
+
+### 암호화된 암호 영역이 너무 길어서, 줄여서 표시되도록 ..
+
+```html
+          <td>
+            <span class="d-inline-block text-truncate" style="max-width: 150px">
+              ${mem.pwd}
+            </span>
+          </td>
+```
+
+* [Text truncation · Bootstrap v5.3 (getbootstrap.com)](https://getbootstrap.com/docs/5.3/helpers/text-truncation/)
