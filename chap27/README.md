@@ -119,7 +119,63 @@
 
     
 
+## 27.9 타일즈란?
 
+> * Spring 5 프로젝트인 [pro27-maven](pro27-maven) 프로젝트에만 적용하자!
+
+#### 디펜던시 추가
+
+```xml
+<dependency>
+    <groupId>org.apache.tiles</groupId>
+    <artifactId>tiles-jsp</artifactId>
+    <version>${tiles.version}</version>
+</dependency>
+```
+
+* `tiles-servlet`은 `tiles-jsp`가 전이 의존성으로 가져옴.
+
+### 컨텍스트 설정
+
+```xml
+  <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+    <property name="definitions">
+      <list>
+        <value>classpath:tiles/*.xml</value>
+      </list>
+    </property>
+    <property name="preparerFactoryClass"
+      value="org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory"/>
+  </bean>
+
+  <mvc:view-resolvers>
+    <bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
+      <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+      <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+      <property name="prefix" value="/WEB-INF/views/"/>
+      <property name="suffix" value=".jsp"/>
+    </bean>
+  </mvc:view-resolvers>
+```
+
+* Tiles 3 설정으로 일단은 이렇게 해봄... 
+* 기존 뷰 경로도 같이 사용될 수 있게 InternalResourceViewResolver 설정도 같이 둠.
+
+
+
+
+
+### 참고
+
+* Apache Tiles Integration with Spring MVC
+  * https://www.baeldung.com/spring-mvc-apache-tiles
+* Spring MVC: from JSP and Tiles to Thymeleaf
+  * https://spring.io/blog/2012/10/30/spring-mvc-from-jsp-and-tiles-to-thymeleaf
+* Spring MVC - Tiles로 jsp 구성하기
+  * https://seypark.tistory.com/126
 
 
 
@@ -159,6 +215,8 @@
 ## 의견
 
 * ...
+
+
 
 
 
@@ -296,3 +354,11 @@ Files.probeContentType(Path.of(classPathResource.getPath())))
 ```
 
 css나 javascript 리소스를 정확하게 판단할 수 있었다.
+
+
+
+### 그동안 예제 프로젝트에 Content Path를 프로젝트 이름으로 지정했는데,  그냥 `/`로 해도 될 것 같다.
+
+* Tocmat 하나에 여러개 띄울 것도 아니여서... 😅
+* 근래의 추세는 그냥 앞단에 L4나 HTTP두고 도메인 기준으로 분리하는 추세라서..
+

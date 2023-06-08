@@ -72,6 +72,17 @@
       <version>${spring.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.apache.tiles</groupId>
+      <artifactId>tiles-jsp</artifactId>
+      <version>${tiles.version}</version>
+    </dependency>
+    <!-- tiles-jsp가 전이 의존성으로 가져오는 항목중에 취약하다고 해서 최신 버전으로 넣음. -->
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+      <version>${commons-beanutils.version}</version>
+    </dependency>
 
     <dependency>
       <groupId>org.springframework.security</groupId>
