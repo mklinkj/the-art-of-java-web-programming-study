@@ -380,26 +380,31 @@ id, name, value(name의 값) 3가지를 전부 설정해준다. 그런데 이미
 
 
 
+#### 레이아웃을 감쌀 때.. div보단 th:block으로 감싸는게 해깔리지 않을 것 같다.
+
+* div로 감싸더라도 해당 div는 치환되어 없어진다.
+
+  ```html
+  <div th:fragment="header">
+    <nav class="navbar bg-primary">
+    ...
+  
+  <!-- 아래 처럼 하는게 나을 듯... -->
+  <th:block th:fragment="header">
+    <nav class="navbar bg-primary">
+    ...
+  ```
+
+  
+
+
+
 ### 참고 링크
 
 * Thymeleaf 3.1: What’s new and how to migrate
   * https://www.thymeleaf.org/doc/articles/thymeleaf31whatsnew.html
 * https://www.thymeleaf.org/doc/articles/thymeleaf3migration.html
   * https://www.thymeleaf.org/doc/articles/thymeleaf3migration.html
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -416,9 +421,11 @@ id, name, value(name의 값) 3가지를 전부 설정해준다. 그런데 이미
 
 ## 의견
 
-* ...
+* 결국 Thymeleaf도 잘 붙였다.
 
+  ![image-20230610072552328](doc-resources/image-20230610072552328.png)
 
+  * 상당히 시간이 걸렸지만.. 이 프로젝트는 Spring Boot 로 전환하기도 편해진 것 같다. 🎊🎉🧨
 
 
 

@@ -6,7 +6,7 @@
   <div class="container-fluid">
     <a class="navbar-brand">
       <img src="/resources/image/smile.png" alt="Logo" width="100" height="100" class="d-inline-block align-middle">
-      <span class="navbar-brand mb-0 text-light">스프링 실습 홈페이지!!</span>
+      <span class="navbar-brand mb-0 text-light">스프링 실습 홈페이지!! (Spring 5 + Tiles + Maven)</span>
     </a>
     <ul class="nav justify-content-end">
       <div>

@@ -1,66 +1,54 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+      layout:decorate="~{layout/layout.html}">
+<body>
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet"
-        th:href="@{/webjars_locator/bootstrap/css/bootstrap.min.css}">
   <title>회원정보</title>
 </head>
-<body>
-<h2 class="text-center mt-4 mb-4">회원 정보</h2>
 
-<div class="card d-flex justify-content-center mx-auto col-6">
-  <div class="card-body " th:object="${member}">
-    <div class="row mb-3">
-      <label for="inputId3" class="col-sm-3 col-form-label">아이디</label>
-      <div class="col-sm-8">
-        <input type="text" name="id" class="form-control" id="inputId3" th:value="*{id}"
-               readonly />
+<th:block layout:fragment="content">
+  <h2 class="text-center mt-4 mb-4">회원 정보</h2>
+
+  <div class="card d-flex justify-content-center mx-auto col-6">
+    <div class="card-body " th:object="${member}">
+      <div class="row mb-3">
+        <label for="inputId3" class="col-sm-3 col-form-label">아이디</label>
+        <div class="col-sm-8">
+          <input type="text" name="id" class="form-control" id="inputId3" th:value="*{id}"
+                 readonly />
+        </div>
       </div>
-    </div>
-    <div class="row mb-3">
-      <label for="inputName3" class="col-sm-3 col-form-label">이름</label>
-      <div class="col-sm-8">
-        <input type="text" name="name" class="form-control" id="inputName3" th:value="*{name}"
-               readonly />
+      <div class="row mb-3">
+        <label for="inputName3" class="col-sm-3 col-form-label">이름</label>
+        <div class="col-sm-8">
+          <input type="text" name="name" class="form-control" id="inputName3" th:value="*{name}"
+                 readonly />
+        </div>
       </div>
-    </div>
-    <div class="row mb-3">
-      <label for="inputEmail3" class="col-sm-3 col-form-label">이메일</label>
-      <div class="col-sm-8">
-        <input type="email" name="email" class="form-control" id="inputEmail3"
-               th:value="*{email}" readonly/>
+      <div class="row mb-3">
+        <label for="inputEmail3" class="col-sm-3 col-form-label">이메일</label>
+        <div class="col-sm-8">
+          <input type="email" name="email" class="form-control" id="inputEmail3"
+                 th:value="*{email}" readonly/>
+        </div>
       </div>
-    </div>
-    <div class="row mb-3">
-      <label for="inputJoinDate3" class="col-sm-3 col-form-label">가입일</label>
-      <div class="col-sm-8">
-        <input type="text" name="joinDate" class="form-control" id="inputJoinDate3"
-               th:value="*{joinDate}" readonly>
+      <div class="row mb-3">
+        <label for="inputJoinDate3" class="col-sm-3 col-form-label">가입일</label>
+        <div class="col-sm-8">
+          <input type="text" name="joinDate" class="form-control" id="inputJoinDate3"
+                 th:value="*{joinDate}" readonly>
+        </div>
       </div>
-    </div>
-    <div class="d-flex justify-content-center">
-      <a th:href="@{|/member/modMemberForm.do?id=*{id}|}">
-        <button type="button" class="btn btn-primary me-2">수정하기</button>
-      </a>
-      <a th:href="@{/member/listMembers.do}">
-        <button type="button" class="btn btn-outline-success">목록으로</button>
-      </a>
+      <div class="d-flex justify-content-center">
+        <a th:href="@{|/member/modMemberForm.do?id=*{id}|}">
+          <button type="button" class="btn btn-primary me-2">수정하기</button>
+        </a>
+        <a th:href="@{/member/listMembers.do}">
+          <button type="button" class="btn btn-outline-success">목록으로</button>
+        </a>
+      </div>
     </div>
   </div>
-</div>
-
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script th:src="@{/webjars_locator/jquery/jquery.slim.min.js}"></script>
-<script
-    th:src="@{/webjars_locator/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</th:block>
 </body>
-</html>
