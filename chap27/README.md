@@ -168,14 +168,8 @@
 
 ### 일단 Bootstrap으로 레이아웃을 구성해보고 있는데...
 
-* 
+* ✨ Tiles + Srpgin 5 + Maven 빌드 프로젝트에 잘 적용해서 진행했다.  
 * https://getbootstrap.kr/docs/5.2/layout/columns/
-
-
-
-
-
-
 
 
 
@@ -190,11 +184,208 @@
 
 
 
+## Spring 6 + Gradle 프로젝트에 Thymeleaf 적용
+
+> Spring 5 + Maven 프로젝트에 Tiles를 성공적으로 적용했다.
+>
+> 이번에는 Spring 6 + Gradle 프로젝트에 Thymeleaf를 잘 적용해보자 😄🤗
+>
+> 부트라면 starter만 추가하면 되긴 하는데.. 일반 스프링이라 설정이 좀더 필요하긴함.
 
 
 
+#### 디펜던시 추가
+
+```groovy
+implementation "org.thymeleaf:thymeleaf-spring6:${thymeleafVersion}"
+implementation "org.thymeleaf.extras:thymeleaf-extras-springsecurity6:${thymeleafVersion}"
+// https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect
+implementation "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:${thymeleafLayoutVersion}"
+// https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-java8time
+implementation "org.thymeleaf.extras:thymeleaf-extras-java8time:${thymeleafExtrasJava8timeVersion}"
+
+```
+
+* Spring Security를 사용중이니,  `thymeleaf-extras-springsecurity6` 도 추가
+* Layout 을 편하게 사용하려면 `thymeleaf-layout-dialect` 를 사용하는 것이 좋다고 해서 추가.
+  * layout/decorator 템플릿을 사용하여 콘텐츠의 스타일을 지정할 수 있는 Thymeleaf의 dialect.
+* Java 8의 LocalDate를 사용하고 있어서... `thymeleaf-extras-java8time` 추가
 
 
+
+#### 설정 추가 (action-servlet.xml)
+
+```xml
+  <bean id="templateResolver"
+    class="org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver">
+    <property name="prefix" value="/WEB-INF/templates/"/>
+    <property name="suffix" value=".html"/>
+    <property name="templateMode" value="HTML"/>
+    <property name="characterEncoding" value="UTF-8"/>
+  </bean>
+
+  <bean id="templateEngine" class="org.thymeleaf.spring6.SpringTemplateEngine">
+    <property name="enableSpringELCompiler" value="true"/>
+    <property name="messageSource" ref="messageSource" />
+    <property name="additionalDialects">
+      <set>
+        <bean class="nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect"/>
+        <bean class="org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect"/>
+        <bean class="org.thymeleaf.extras.java8time.dialect.Java8TimeDialect"/>
+      </set>
+    </property>
+    <property name="templateResolver" ref="templateResolver"/>
+  </bean>
+
+  <bean id="viewResolver" class="org.thymeleaf.spring6.view.ThymeleafViewResolver">
+    <property name="characterEncoding" value="UTF-8"/>
+    <property name="templateEngine" ref="templateEngine"/>
+    <property name="order" value="1"/>
+  </bean>
+```
+
+* Dialect 설정할 때... `additionalDialects`로 설정해야함. `dialect`로 설정하면 기본으로 포함된 것이 포함되지 않아. `th:href `같은 것들이 동작하지 않음
+
+
+
+#### 메시지 리소스 사용할 때..
+
+```html
+<div th:if="${param.error}" class="alert alert-danger" role="alert">
+  <span th:text="#{login.failure}"/>
+</div>
+```
+
+
+
+#### Thymeleaf에서는 CSRF Hidden 필드를 직접 써줘야함.
+
+```html
+<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+```
+
+* `<sec:csrfInput>` 같이 쓸 수 있는 방법이 없는 것 같다.
+
+
+
+#### th:errorclass 사용시 값을 css 클래스 값을 한번 따옴표(`'`)로 감싸줘야함.
+
+```html
+     <input type="password" name="pwd" th:field="*{pwd}" class="form-control"
+                      th:errorclass="'form-control border-danger'" id="inputPassword3"/>
+```
+
+
+
+#### input 태그에서 th:field와 th:value의 차이
+
+**thymeleaf 에서 th:field 를 쓰는 것과 th:value를 쓰는 것의 차이가 뭔지 아니?**
+
+>  `th:field`와 `th:value`는 Thymeleaf에서 폼 입력 필드를 처리하는 데 사용되는 두 가지 속성입니다. `th:field`는 `name`, `id`, `value` 속성을 모두 설정합니다. 따라서 가능한 경우 `th:field`를 사용하는 것이 좋습니다. 이는 Spring과의 추가적인 통합을 제공하며 모든 종류의 입력에 작동합니다 ¹.
+>
+> 반면, `th:value`는 HTML의 `value` 속성을 수정하는 데 사용됩니다. 예를 들어, `<input>` 태그의 값을 설정하려면 다음과 같이 작성할 수 있습니다:
+>
+> ```html
+> <input type="text" th:value="${model.field}">
+> ```
+>
+> 이렇게 하면 `<input>` 태그의 값이 `${model.field}`의 값으로 설정됩니다. 추가 정보가 필요하시면 알려주세요.
+>
+> 
+>
+> 출처: Bing과의 대화, 2023. 6. 10.(1) java - Spring MVC and Thymeleaf - What's the difference between th:value and th:field .... https://stackoverflow.com/questions/54677313/spring-mvc-and-thymeleaf-whats-the-difference-between-thvalue-and-thfield-w 액세스한 날짜 2023. 6. 10..
+> (2) Difference between th:text and th:value in Thymeleaf. https://stackoverflow.com/questions/47374349/difference-between-thtext-and-thvalue-in-thymeleaf 액세스한 날짜 2023. 6. 10..
+> (3) thymeleaf中th:field和th:value的区别_神石石的博客-CSDN博客. https://blog.csdn.net/wh1236666/article/details/107716996 액세스한 날짜 2023. 6. 10..
+> (4) spring-boot(thymeleaf)中th:field和th:value的区别 - CSDN博客. https://blog.csdn.net/qq_43279637/article/details/86406836 액세스한 날짜 2023. 6. 10..
+> (5) Thymeleaf th:field doesn't bind the value for input text. https://stackoverflow.com/questions/54823408/thymeleaf-thfield-doesnt-bind-the-value-for-input-text 액세스한 날짜 2023. 6. 10..
+
+이걸 물어본 이유가 ...
+
+```html
+        <div class="col-sm-8">
+          <input type="password" name="pwd" th:value="*{pwd}" class="form-control"
+                      th:errorclass="'form-control border-danger'" id="inputPassword3"/>
+          <span class="text-danger" th:errors="*{pwd}">암호 입력 오류 메시지</span>
+        </div>
+```
+
+pwd 같은 경우는 값들이 다음과 같이 복잡한 값이 들어가는데..
+
+```
+{bcrypt}$2a$10$nbBajJQNP74sZhR2/gWd5uqzfumh9yZytvho8m4c666/Zsa6Jcpta
+```
+
+이걸 `th:field="*{pwd}"`로 받으면 표시가 안된다.
+
+확실히 이유를 모르겠음, 일단은 이부분은 `th:value`를 쓰기로 했다.
+
+위의 빙 AI 답변대로 field를 쓰면 
+
+```html
+<input type="text" th:field="*{name}" class="form-control"
+                 th:errorclass="'form-control border-danger'" />
+
+<input type="text" class="form-control"
+                 id="name" name="name" value="최치원" />
+```
+
+id, name, value(name의 값) 3가지를 전부 설정해준다. 그런데 이미 태그에 id, name을 정의한 상태라면 그것을 우선함.
+
+그런데 여전히 pwd 필드에 대해서는 값을 출력하지 못하는 이유를 잘 모르겠다.. 🎃
+
+
+
+#### `<script th:inline="javascript">`에서 `th:inline="javascript"`를 꼭 써줘야 내부의 타임리프 인라인 코드를 해석해주니?
+
+> 네, `<script th:inline="javascript">`를 사용하면 Thymeleaf가 JavaScript `<script>` 블록을 처리할 수 있습니다. 이를 사용하면 HTML 템플릿 모드의 모든 기능을 JavaScript 블록에서 사용할 수 있습니다². 따라서 Thymeleaf 변수를 JavaScript 코드에서 사용하려면 `th:inline="javascript"` 속성을 명시적으로 지정해야 합니다⁵.
+>
+> 출처: Bing과의 대화, 2023. 6. 10.(1) [Thymeleaf] JavaScript Inlining (자바스크립트 인라인). https://maenco.tistory.com/entry/Thymeleaf-JavaScript-Inlining-자바스크립트-인라인 액세스한 날짜 2023. 6. 10..
+> (2) How set a JavaScript variable in Thymeleaf - Atta-Ur-Rehman Shah. https://attacomsian.com/blog/thymeleaf-set-javascript-variable 액세스한 날짜 2023. 6. 10..
+> (3) JavaScript Function Call with Thymeleaf | Baeldung. https://www.baeldung.com/thymeleaf-js-function-call 액세스한 날짜 2023. 6. 10..
+> (4) Thymeleaf踩坑（th:inline=“javascript“）_老秃爵的博客-CSDN博客. https://blog.csdn.net/weixin_49610478/article/details/108319573 액세스한 날짜 2023. 6. 10..
+> (5) ThymeleafでJavaScriptを埋め込む（インライン）方法 - ミルラク. https://miruraku.com/java/thymeleaf/javascript/inline/ 액세스한 날짜 2023. 6. 10..
+
+* 저거 안써가지고 처리가 안되는줄 알고 고생했다. 🎃
+
+  ```html
+  <script th:inline="javascript">
+    const result = /*[[${result}]]*/ false;
+    const message = /*[[#{|modify.${result}|}]]*/ 'Modify Success Message';
+    if (result) {
+      alert(message);
+    }
+  </script>
+  ```
+
+  관련해서 메시지 프로퍼티 처리도 잘 해결 했다.
+
+
+
+#### MVC 테스트 할 때.. forwardedUrl() 테스트는 의미가 없을 것 같다.
+
+```java
+  @Test
+  void testListMembersDo() throws Exception {
+    mockMvc
+        .perform(get("/member/listMembers.do"))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(model().attributeExists("memberList"))
+        .andExpect(view().name("member/listMembers"))
+        .andExpect(forwardedUrl("/WEB-INF/views/member/listMembers.html")); // forwardedUrl 값이 null
+  }
+```
+
+* forwardedUrl 코드는 지우고 view이름만 테스트하는 것이 낫겠다.
+
+
+
+### 참고 링크
+
+* Thymeleaf 3.1: What’s new and how to migrate
+  * https://www.thymeleaf.org/doc/articles/thymeleaf31whatsnew.html
+* https://www.thymeleaf.org/doc/articles/thymeleaf3migration.html
+  * https://www.thymeleaf.org/doc/articles/thymeleaf3migration.html
 
 
 

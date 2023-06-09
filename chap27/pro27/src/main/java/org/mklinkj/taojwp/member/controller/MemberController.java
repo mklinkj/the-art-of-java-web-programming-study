@@ -39,7 +39,7 @@ public class MemberController {
   }
 
   @GetMapping("/memberForm.do")
-  public void memberForm(@ModelAttribute("command") MemberVO command) {}
+  public void memberForm(@ModelAttribute("member") MemberVO command) {}
 
   /** 상세보기 폼과, 수정 폼은 동일한 로직 */
   @GetMapping({"/memberDetail.do", "/modMemberForm.do"})
@@ -67,7 +67,7 @@ public class MemberController {
       value = "/addMember.do",
       method = {RequestMethod.GET, RequestMethod.POST})
   public String addMember(
-      @ModelAttribute("command") @Valid MemberVO memberVO,
+      @ModelAttribute("member") @Valid MemberVO memberVO,
       BindingResult bindingResult,
       HttpServletRequest request,
       RedirectAttributes redirectAttributes,

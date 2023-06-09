@@ -7,7 +7,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -58,8 +57,7 @@ class MemberControllerTests {
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(model().attributeExists("memberList"))
-        .andExpect(view().name("member/listMembers"))
-        .andExpect(forwardedUrl("/WEB-INF/views/member/listMembers.jsp"));
+        .andExpect(view().name("member/listMembers"));
   }
 
   @Test
@@ -68,8 +66,7 @@ class MemberControllerTests {
         .perform(get("/member/memberForm.do"))
         .andDo(print())
         .andExpect(status().isOk())
-        .andExpect(view().name("member/memberForm"))
-        .andExpect(forwardedUrl("/WEB-INF/views/member/memberForm.jsp"));
+        .andExpect(view().name("member/memberForm"));
   }
 
   @Test
@@ -79,8 +76,7 @@ class MemberControllerTests {
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(view().name("member/memberDetail"))
-        .andExpect(model().attributeExists("member"))
-        .andExpect(forwardedUrl("/WEB-INF/views/member/memberDetail.jsp"));
+        .andExpect(model().attributeExists("member"));
   }
 
   @Transactional
@@ -113,7 +109,7 @@ class MemberControllerTests {
                 .with(csrf()))
         .andDo(print())
         .andExpect(status().isBadRequest())
-        .andExpect(forwardedUrl("/WEB-INF/views/member/memberForm.jsp"));
+        .andExpect(view().name("member/memberForm"));
   }
 
   @Test
@@ -155,7 +151,7 @@ class MemberControllerTests {
                 .with(csrf()))
         .andDo(print())
         .andExpect(status().isBadRequest())
-        .andExpect(forwardedUrl("/WEB-INF/views/member/modMemberForm.jsp"));
+        .andExpect(view().name("member/modMemberForm"));
   }
 
   @Test

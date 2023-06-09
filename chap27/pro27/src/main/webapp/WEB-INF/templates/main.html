@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet"
+        th:href="@{/webjars_locator/bootstrap/css/bootstrap.min.css}">
+  <title><!--<tiles:insertAttribute name="title"/>--></title>
+</head>
+<body>
+<div id="container" class="container min-vw-100">
+  <div id="header" class="row">
+    <!-- 헤더 -->
+    <!--<tiles:insertAttribute name="header"/>-->
+      <nav class="navbar bg-primary">
+        <div class="container-fluid">
+          <a class="navbar-brand">
+            <img th:src="@{/resources/image/smile.png}" alt="Logo" width="100" height="100" class="d-inline-block align-middle">
+            <span class="navbar-brand mb-0 text-light">스프링 실습 홈페이지!!</span>
+          </a>
+          <ul class="nav justify-content-end">
+            <div>
+              <th:block sec:authorize="isAuthenticated()">
+                <li class="nav-item">
+                  <form method="post" th:action="@{/logout}">
+                    <span class="text-light">[[${#authentication.name}]]님 환영합니다.😀</span>
+                    <button type="submit" class="btn btn-sm btn-light">로그아웃</button>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                  </form>
+                </li>
+              </th:block>
+              <th:block sec:authorize="isAnonymous()">
+                <li class="nav-item">
+                <a class="btn btn-outline-light" th:href="@{/member/memberForm.do}">회원가입</a>
+                <a class="btn btn-outline-light" th:href="@{/login.do}">로그인</a>
+                </li>
+              </th:block>
+            </div>
+          </ul>
+        </div>
+      </nav>
+    <!-- // <tiles:insertAttribute name="header"/>-->
+  </div>
+  <div class="row">
+    <div id="sidebar-left" class="col-sm-2">
+      <!--<tiles:insertAttribute name="side"/>-->
+      <div class="nav">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><a th:href="@{/main.do}" class="text-dark h6 text-decoration-none">메인으로...</a></li>
+          <li class="list-group-item"><a th:href="@{/member/listMembers.do}" class="text-dark h6 text-decoration-none">회원 관리</a></li>
+          <li class="list-group-item"><a th:href="@{/index.html}" class="text-dark h6 text-decoration-none">예제 메인으로...</a></li>
+        </ul>
+      </div>
+      <!--// <tiles:insertAttribute name="side"/>-->
+    </div>
+    <div id="content" class="col" style="min-height: 600px">
+      <!--<tiles:insertAttribute name="body"/>-->
+      <div class="text-center">
+        <h1>메인 페이지 입니다.</h1>
+      </div>
+      <!--// <tiles:insertAttribute name="body"/>-->
+    </div>
+  </div>
+  <hr class="border border-primary border-1 opacity-75 ">
+
+  <div id="footer" class="row">
+    <!--<tiles:insertAttribute name="footer"/>-->
+    <footer>
+      <div class="container my-auto">
+        <div class="text-center my-auto">
+          <span>The Art of Java Web Programming - mklinkj - 2023</span>
+        </div>
+      </div>
+    </footer>
+    <!--//<tiles:insertAttribute name="footer"/>-->
+  </div>
+</div>
+
+<!--<tiles:insertAttribute name="script"/>-->
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script th:src="@{/webjars_locator/jquery/jquery.slim.min.js}"></script>
+<script
+    th:src="@{/webjars_locator/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!--// <tiles:insertAttribute name="script"/>-->
+</body>
+</html>

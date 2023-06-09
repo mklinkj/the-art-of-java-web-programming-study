@@ -5,9 +5,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath}"></c:set>
 <h2 class="text-center mt-4 mb-4">회원관리</h2>
-<%-- 공통 로그인 헤더 // --%>
-<form method="get" action="listMembers.do">
 
+<form method="get" action="listMembers.do">
 <div class="input-group w-50 mb-3">
   <label class="input-group-text" for="inputKeyword01">회원 검색</label>
   <input class="form-control w-25" name="keyword" id="inputKeyword01" value="${searchDTO.keyword}" placeholder="검색어를 입력해주세요...">

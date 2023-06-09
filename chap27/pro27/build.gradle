@@ -32,8 +32,6 @@ dependencies {
 
   implementation "org.hibernate.validator:hibernate-validator:${hibernateValidatorVersion}"
 
-  implementation "net.sargue:java-time-jsptags:${javaTimeJspTagsVersion}"
-
   implementation "org.mybatis:mybatis:${mybatisVersion}"
   implementation "org.mybatis:mybatis-spring:${mybatisSpringVersion}"
   implementation "org.hsqldb:hsqldb:${hsqldbVersion}"
@@ -59,32 +57,12 @@ dependencies {
   implementation "org.webjars:bootstrap:${bootstrapVersion}"
   implementation "org.webjars:webjars-locator:${webjarsLocatorVersion}"
   implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonDatabindVersion}"
+
+  implementation "org.thymeleaf:thymeleaf-spring6:${thymeleafVersion}"
+  implementation "org.thymeleaf.extras:thymeleaf-extras-springsecurity6:${thymeleafVersion}"
+  implementation "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:${thymeleafLayoutVersion}"
+  implementation "org.thymeleaf.extras:thymeleaf-extras-java8time:${thymeleafExtrasJava8timeVersion}"
 }
-
-// TODO: webjar 사용시 webjars-locator 기능을 사용해보자, 괜히 버전 치환을 해서 복잡해지긴 했었음.
-// test task가 섞이면 치환이 안된다.
-// 테스트 같은 것은 별도로 먼저 돌려보고,
-// `gradle clean appRun` 또는 `gradle clean appRunWar` 를 따로 실행해서 확인하자!
-
-//import org.apache.tools.ant.filters.ReplaceTokens
-//
-//tasks.register('expandPropsWebapp', Copy) {
-//  from 'src/main/webapp'
-//  into "$buildDir/inplaceWebapp"
-//  filesMatching(["**/*.html", "**/*.jsp"], {
-//    filter(ReplaceTokens, tokens: [jqueryVersion: jqueryVersion, bootstrapVersion: bootstrapVersion, contextPath: "/" + project.name])
-//  })
-//  filteringCharset = 'UTF-8'
-//}
-//
-//processResources {
-//  dependsOn('expandPropsWebapp')
-//}
-//
-//war {
-//  webAppDirectory = file("$buildDir/inplaceWebapp")
-//}
-
 
 // gradle appRun 으로 실행
 gretty {
