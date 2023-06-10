@@ -27,23 +27,21 @@
             <span class="navbar-brand mb-0 text-light">스프링 실습 홈페이지!!</span>
           </a>
           <ul class="nav justify-content-end">
-            <div>
-              <sec:authorize access="isAuthenticated()">
-                <li class="nav-item">
-                  <form method="post" action="${contextPath}/logout">
-                    <span class="text-light"><sec:authentication property="principal.username"/>님 환영합니다.😀</span>
-                    <button type="submit" class="btn btn-sm btn-light">로그아웃</button>
-                    <sec:csrfInput/>
-                  </form>
-                </li>
-              </sec:authorize>
-              <sec:authorize access="!isAuthenticated()">
-                <li class="nav-item">
-                <a class="btn btn-outline-light" href="${contextPath}/member/memberForm.do">회원가입</a>
-                <a class="btn btn-outline-light" href="${contextPath}/login.do">로그인</a>
-                </li>
-              </sec:authorize>
-            </div>
+            <sec:authorize access="isAuthenticated()">
+              <li class="nav-item">
+                <form method="post" action="${contextPath}/logout">
+                  <span class="text-light"><sec:authentication property="principal.username"/>님 환영합니다.😀</span>
+                  <button type="submit" class="btn btn-sm btn-light">로그아웃</button>
+                  <sec:csrfInput/>
+                </form>
+              </li>
+            </sec:authorize>
+            <sec:authorize access="!isAuthenticated()">
+              <li class="nav-item">
+              <a class="btn btn-outline-light" href="${contextPath}/member/memberForm.do">회원가입</a>
+              <a class="btn btn-outline-light" href="${contextPath}/login.do">로그인</a>
+              </li>
+            </sec:authorize>
           </ul>
         </div>
       </nav>
@@ -61,7 +59,7 @@
       </div>
       <%--// <tiles:insertAttribute name="side"/>--%>
     </div>
-    <div id="content" class="col" style="min-height: 600px">
+    <div id="content" class="col-sm" style="min-height: 600px">
       <%--<tiles:insertAttribute name="body"/>--%>
       <div class="text-center">
         <h1>메인 페이지 입니다.</h1>

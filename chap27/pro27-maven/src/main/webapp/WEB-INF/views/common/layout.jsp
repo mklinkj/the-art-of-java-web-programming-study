@@ -20,15 +20,18 @@
   </div>
   <div class="row flex-nowrap">
     <div id="sidebar-left" class="col-sm-2">
+      <!-- 왼쪽 사이드 바 -->
       <tiles:insertAttribute name="side"/>
     </div>
-    <div id="content" class="col" style="min-height: 600px">
+    <div id="content" class="col-sm" style="min-height: 600px">
+      <!-- 컨텐츠 -->
       <tiles:insertAttribute name="body"/>
     </div>
   </div>
   <hr class="border border-primary border-1 opacity-75 ">
 
   <div id="footer" class="row">
+    <!-- 푸터 -->
     <tiles:insertAttribute name="footer"/>
   </div>
 </div>
