@@ -10,23 +10,21 @@
         <span class="navbar-brand mb-0 text-light">스프링 실습 홈페이지!! (Spring 6 + Thymeleaf + Gradle)</span>
       </a>
       <ul class="nav justify-content-end">
-        <div>
-          <th:block sec:authorize="isAuthenticated()">
-            <li class="nav-item">
-              <form method="post" th:action="@{/logout}">
-                <span class="text-light">[[${#authentication.name}]]님 환영합니다.😀</span>
-                <button type="submit" class="btn btn-sm btn-light">로그아웃</button>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-              </form>
-            </li>
-          </th:block>
-          <th:block sec:authorize="isAnonymous()">
-            <li class="nav-item">
-              <a class="btn btn-outline-light" th:href="@{/member/memberForm.do}">회원가입</a>
-              <a class="btn btn-outline-light" th:href="@{/login.do}">로그인</a>
-            </li>
-          </th:block>
-        </div>
+        <th:block sec:authorize="isAuthenticated()">
+          <li class="nav-item">
+            <form method="post" th:action="@{/logout}">
+              <span class="text-light">[[${#authentication.name}]]님 환영합니다.😀</span>
+              <button type="submit" class="btn btn-sm btn-light">로그아웃</button>
+              <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
+          </li>
+        </th:block>
+        <th:block sec:authorize="isAnonymous()">
+          <li class="nav-item">
+            <a class="btn btn-outline-light" th:href="@{/member/memberForm.do}">회원가입</a>
+            <a class="btn btn-outline-light" th:href="@{/login.do}">로그인</a>
+          </li>
+        </th:block>
       </ul>
     </div>
   </nav>
