@@ -1,5 +1,6 @@
 package org.mklinkj.taojwp.common.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.context.WebApplicationContext;
 
 @SpringJUnitWebConfig(
@@ -42,19 +44,29 @@ class WebJarsControllerTests {
         .andExpect(status().isOk())
         .andExpect(content().contentType("text/css"));
 
-    mockMvc
-        .perform(get("/webjars_locator/bootstrap/js/bootstrap.bundle.min.js"))
-        .andDo(print())
-        .andExpect(status().isOk())
-        .andExpect(content().contentType("application/javascript"));
+    MvcResult result =
+        mockMvc
+            .perform(get("/webjars_locator/bootstrap/js/bootstrap.bundle.min.js"))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andReturn();
+
+    // 시스템에 따라 달라질 때가 있는 것 같음.
+    assertThat(result.getResponse().getContentType()) //
+        .containsAnyOf("application/javascript", "text/javascript");
   }
 
   @Test
   void testWebjarsLocator_jQuery() throws Exception {
-    mockMvc
-        .perform(get("/webjars_locator/jquery/jquery.slim.min.js"))
-        .andDo(print())
-        .andExpect(status().isOk())
-        .andExpect(content().contentType("application/javascript"));
+    MvcResult result =
+        mockMvc
+            .perform(get("/webjars_locator/jquery/jquery.slim.min.js"))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andReturn();
+
+    // 시스템에 따라 달라질 때가 있는 것 같음.
+    assertThat(result.getResponse().getContentType()) //
+        .containsAnyOf("application/javascript", "text/javascript");
   }
 }
