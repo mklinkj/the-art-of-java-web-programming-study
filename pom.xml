@@ -16,7 +16,7 @@
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
 
-    <lombok.version>1.18.26</lombok.version>
+    <lombok.version>1.18.28</lombok.version>
     <log4j.version>2.20.0</log4j.version>
 
     <commons-text.version>1.10.0</commons-text.version>
@@ -56,7 +56,7 @@
 
     <java-time-jsptags.version>2.0.0</java-time-jsptags.version>
 
-    <commons-io.version>2.12.0</commons-io.version>
+    <commons-io.version>2.13.0</commons-io.version>
 
     <!-- webjars -->
     <webjars-jquery.version>3.6.4</webjars-jquery.version>
@@ -310,6 +310,7 @@
   
   <modules>
     <module>chap27/pro27-maven</module>
+    <module>chap28/pro28-maven</module>
   </modules>
   
 </project>

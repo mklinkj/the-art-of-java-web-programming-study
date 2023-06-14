@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout.html}">
+<body>
+<head>
+  <title>회원정보</title>
+</head>
+
+<th:block layout:fragment="content">
+  <h2 class="text-center mt-4 mb-4">회원정보</h2>
+
+  <form method="get" th:action="@{/member/listMembers.do}">
+    <div class="input-group w-50 mb-3">
+      <label class="input-group-text" for="inputKeyword01">회원 검색</label>
+      <input class="form-control w-25" name="keyword" id="inputKeyword01" th:value="${searchDTO.keyword}" placeholder="검색어를 입력해주세요...">
+      <select class="form-select" name="type">
+        <option th:each="type : ${searchTypes}" th:value="${type.name}" th:text="${type.description}" th:selected="${searchDTO.type != null and type.name == searchDTO.type.name}"></option>
+      </select>
+      <button class="btn btn-outline-secondary" type="submit">검색</button>
+    </div>
+  </form>
+
+  <table class="table table-bordered">
+    <thead class="table-primary">
+    <tr class="text-center">
+      <th>아이디</th>
+      <th>비밀번호</th>
+      <th>이름</th>
+      <th>이메일</th>
+      <th>가입일</th>
+      <th>삭제</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr th:if="${memberList.isEmpty()}" class="text-center">
+        <td colspan="6">
+          <b>등록된 회원이 없습니다.</b>
+        </td>
+      </tr>
+      <tr th:each="mem : ${memberList}" class="text-center">
+        <td><a class="text-decoration-none" th:href="@{|/member/memberDetail.do?id=${mem.id}|}" th:text="${mem.id}"></a></td>
+        <td>
+          <span class="d-inline-block text-truncate" style="max-width: 150px" th:text="${mem.pwd}" />
+        </td>
+        <td th:text="${mem.name}"></td>
+        <td th:text="${mem.email}" />
+        <td th:text="${#temporals.format(mem.joinDate, 'yyyy-MM-dd')}"/>
+        <td>
+          <form th:id="|'deleteForm_'${mem.id}|" th:action="@{/member/delMember.do}"
+                method="post">
+            <input type="hidden" name="id" th:value="${mem.id}">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <button type="submit" class="btn btn-sm btn-outline-danger">삭제</button>
+          </form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="text-center">
+    <a th:href="@{/member/memberForm.do}">회원 가입하기</a>
+  </div>
+</th:block>
+
+<script layout:fragment="script" th:inline="javascript">
+  const result = /*[[${result}]]*/ false;
+  const message = /*[[#{|list.${result}|}]]*/ 'List Result Message';
+  if (result) {
+    alert(message);
+  }
+</script>
+</body>

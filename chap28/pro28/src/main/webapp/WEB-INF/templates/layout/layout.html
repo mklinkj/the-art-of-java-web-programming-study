@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet"
+        th:href="@{/webjars_locator/bootstrap/css/bootstrap.min.css}">
+  <title>레이아웃 페이지</title>
+</head>
+<body>
+<div id="container" class="container min-vw-100">
+  <div id="header" class="row" >
+    <!-- 헤더 -->
+    <th:block th:include="layout/header :: header">
+    </th:block>
+  </div>
+  <div class="row" id="sidebar-left">
+    <div class="col-sm-2" >
+      <!-- 왼쪽 사이드바 -->
+      <th:block th:include="layout/side :: side">
+      </th:block>
+    </div>
+    <div id="content" class="col-sm" style="min-height: 600px">
+      <div class="container-fluid">
+        <th:block layout:fragment="content">
+        </th:block>
+      </div>
+    </div>
+  </div>
+  <hr class="border border-primary border-1 opacity-75">
+
+  <div id="footer" class="row">
+    <!-- 푸터 -->
+    <th:block th:include="layout/footer :: footer">
+    </th:block>
+  </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script th:src="@{/webjars_locator/jquery/jquery.slim.min.js}"></script>
+<script
+    th:src="@{/webjars_locator/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+<th:block layout:fragment="script">
+
+</th:block>
+
+</body>
+</html>
