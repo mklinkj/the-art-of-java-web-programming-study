@@ -14,7 +14,7 @@
 
     그래서 metadata-complete="true" 설정을 제거했다.
   -->
-  <display-name>Chap27-Maven-Servlet</display-name>
+  <display-name>Chap28-Maven-Servlet</display-name>
 
   <!-- Spring 컨택스트 정리보다 나중에 실행 되도록 ContextLoaderListener 보다 앞에 위치해야한다. -->
   <listener>
@@ -47,11 +47,22 @@
       <param-value>true</param-value>
     </init-param>
   </filter>
-
   <filter-mapping>
     <filter-name>CharacterEncodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+
+
+  <filter>
+    <display-name>springMultipartFilter</display-name>
+    <filter-name>springMultipartFilter</filter-name>
+    <filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>springMultipartFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
 
   <filter>
     <filter-name>springSecurityFilterChain</filter-name>
@@ -79,5 +90,4 @@
     <welcome-file>index.htm</welcome-file>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
-
 </web-app>

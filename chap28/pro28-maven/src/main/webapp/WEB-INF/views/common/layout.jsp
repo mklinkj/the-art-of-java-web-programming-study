@@ -23,7 +23,7 @@
       <!-- 왼쪽 사이드 바 -->
       <tiles:insertAttribute name="side"/>
     </div>
-    <div id="content" class="col-sm" style="min-height: 600px">
+    <div id="content" class="col-sm" style="min-height: 500px">
       <!-- 컨텐츠 -->
       <tiles:insertAttribute name="body"/>
     </div>

@@ -43,5 +43,16 @@
     <put-attribute name="body" value="/WEB-INF/views/member/memberForm.jsp"/>
   </definition>
 
+  <!-- 파일 업로드 -->
+  <definition name="file/uploadForm" extends="baseLayout">
+    <put-attribute name="title" value="파일 업로드 하기"/>
+    <put-attribute name="body" value="/WEB-INF/views/file/uploadForm.jsp"/>
+  </definition>
+
+  <definition name="file/result" extends="baseLayout">
+    <put-attribute name="title" value="파일 업로드 결과"/>
+    <put-attribute name="body" value="/WEB-INF/views/file/result.jsp"/>
+  </definition>
+
 
 </tiles-definitions>
