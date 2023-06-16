@@ -73,6 +73,40 @@ class FileDownloadControllerTests {
             });
   }
 
+  @Test
+  void testDownloadThumbnailFile() throws Exception {
+    initUploadFile();
+
+    mockMvc
+        .perform(get("/file/downloadThumbnail/%s".formatted(IMAGE_FILE_NAME)))
+        .andDo(print())
+        .andExpect(
+            result -> {
+              assertThat(result.getResponse().getStatus()) //
+                  .isEqualTo(HttpStatus.OK.value());
+              assertThat(result.getResponse().getContentType()) //
+                  .isNotEqualTo(MediaType.IMAGE_PNG_VALUE)
+                  .describedAs("컨트롤러 메서드에서 명시적으로 설정을 하지 않아서 null");
+            });
+  }
+
+  @Test
+  void testDownloadThumbnailOutStream() throws Exception {
+    initUploadFile();
+
+    mockMvc
+        .perform(get("/file/downloadThumbnailOut/%s".formatted(IMAGE_FILE_NAME)))
+        .andDo(print())
+        .andExpect(
+            result -> {
+              assertThat(result.getResponse().getStatus()) //
+                  .isEqualTo(HttpStatus.OK.value());
+              assertThat(result.getResponse().getContentType()) //
+                  .isNotEqualTo(MediaType.IMAGE_PNG_VALUE)
+                  .describedAs("컨트롤러 메서드에서 명시적으로 설정을 하지 않아서 null");
+            });
+  }
+
   /** 임시 디렉토리에 업로드 파일 초기화 */
   private void initUploadFile() throws Exception {
     ClassPathResource imageResource =

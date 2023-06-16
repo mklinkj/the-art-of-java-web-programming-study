@@ -25,6 +25,12 @@
   <div class="result-images ">
     <th:block th:each="imageFileName : ${map.fileList}">
       <div class="border border-primary rounded-1 ">
+        <img class="mx-auto d-block" style="max-width: 500px;" th:src="@{|/file/downloadThumbnail/${imageFileName}|}">
+      </div>
+      <div class="border border-primary rounded-1 ">
+        <img class="mx-auto d-block" style="max-width: 500px;" th:src="@{|/file/downloadThumbnailOut/${imageFileName}|}">
+      </div>
+      <div class="border border-primary rounded-1 ">
         <img class="mx-auto d-block" style="max-width: 500px;" th:src="@{|/file/download?imageFileName=${imageFileName}|}">
       </div>
     </th:block>

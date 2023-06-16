@@ -62,6 +62,8 @@ dependencies {
   implementation "org.thymeleaf.extras:thymeleaf-extras-springsecurity6:${thymeleafVersion}"
   implementation "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:${thymeleafLayoutVersion}"
   implementation "org.thymeleaf.extras:thymeleaf-extras-java8time:${thymeleafExtrasJava8timeVersion}"
+
+  implementation "net.coobird:thumbnailator:${thumbnailatorVersion}"
 }
 
 // gradle appRun 으로 실행
