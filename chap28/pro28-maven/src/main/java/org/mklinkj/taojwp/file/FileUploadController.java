@@ -22,7 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Slf4j
 @Controller
 public class FileUploadController {
-  private static final String IMAGE_REPO_PATH = ProjectDataUtils.getProperty("image_repo_path");
+  private final String imageRepoPath = ProjectDataUtils.getProperty("image_repo_path");
 
   @GetMapping("/form")
   public String form() {
@@ -67,7 +67,7 @@ public class FileUploadController {
       String originalFileName = multipartFile.getOriginalFilename();
       fileList.add(originalFileName);
 
-      File file = new File(IMAGE_REPO_PATH + File.separator + fileName);
+      File file = new File(imageRepoPath + File.separator + fileName);
 
       if (multipartFile.getSize() != 0) {
         if (!file.exists()) {
@@ -75,7 +75,7 @@ public class FileUploadController {
             file.createNewFile();
           }
         }
-        multipartFile.transferTo(new File(IMAGE_REPO_PATH + File.separator + originalFileName));
+        multipartFile.transferTo(new File(imageRepoPath + File.separator + originalFileName));
       }
     }
     return fileList;

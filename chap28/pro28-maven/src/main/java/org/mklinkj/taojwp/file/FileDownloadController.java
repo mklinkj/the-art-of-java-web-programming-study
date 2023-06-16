@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/file")
 @Controller
 public class FileDownloadController {
-  private static final String IMAGE_REPO_PATH = ProjectDataUtils.getProperty("image_repo_path");
+  private final String imageRepoPath = ProjectDataUtils.getProperty("image_repo_path");
 
   @GetMapping("/download")
   public void download(
@@ -25,7 +25,7 @@ public class FileDownloadController {
       throws Exception {
 
     OutputStream out = response.getOutputStream();
-    String downFile = IMAGE_REPO_PATH + File.separator + imageFileName;
+    String downFile = imageRepoPath + File.separator + imageFileName;
     File file = new File(downFile);
 
     response.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache");
