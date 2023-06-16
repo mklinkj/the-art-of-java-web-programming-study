@@ -208,12 +208,36 @@ Google 계정을 사용하므로, 계정 ID / PW을 Vault에다 저장해서 쓰
 > >네, `jakarta.mail-api`의 구현 라이브러리가 있습니다. Jakarta Mail API의 구현체로 알려진 JavaMail/JakartaMail은 이제 **Eclipse Angus**라는 독립적인 프로젝트로 제공됩니다. Eclipse Angus 프로젝트 페이지에서 더 많은 정보를 찾을 수 있습니다.
 >
 > * https://mvnrepository.com/artifact/jakarta.mail/jakarta.mail-api/2.1.2
+>
+> * 디펜던시 설정
+>
+>   ```groovy
+>     implementation "jakarta.mail:jakarta.mail-api:${jakartaMailApiVersion}"
+>     implementation "org.eclipse.angus:jakarta.mail:${jakartaMailImplVersion}"
+>   ```
+>
+>   
 
 
 
 ### 스프링 5 + Java Mail
 
-> 
+> * 디펜던시 설정
+>
+>   ```xml
+>       <dependency>
+>         <groupId>javax.mail</groupId>
+>         <artifactId>javax.mail-api</artifactId>
+>         <version>${javax.mail.version}</version>
+>       </dependency>
+>       <dependency>
+>         <groupId>com.sun.mail</groupId>
+>         <artifactId>javax.mail</artifactId>
+>         <version>${javax.mail.version}</version>
+>       </dependency>
+>   ```
+>
+>   
 
 
 

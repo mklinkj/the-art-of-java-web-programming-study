@@ -14,9 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringJUnitConfig(
     locations = {
-      "classpath:config/action-service.xml",
-      "classpath:config/action-security.xml",
-      "classpath:config/action-repository.xml"
+      "classpath:config/root-context.xml",
+      "classpath:config/security-context.xml",
+      "file:src/main/webapp/WEB-INF/action-servlet.xml"
     })
 class MemberMapperImplTests {
 
