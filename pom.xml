@@ -72,6 +72,8 @@
 
     <commons-beanutils.version>1.9.4</commons-beanutils.version>
 
+    <thumbnailator.version>0.4.19</thumbnailator.version>
+
     <!-- #################################### -->
     <!-- #### Servlet 4 Project Support #### -->
     <!-- ################################### -->

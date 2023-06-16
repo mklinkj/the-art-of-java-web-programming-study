@@ -18,6 +18,12 @@
   <div class="result-images ">
     <c:forEach var="imageFileName" items="${map.fileList}">
       <div class="border border-primary rounded-1 ">
+        <img class="mx-auto d-block" style="max-width: 500px;" src="${contextPath}/file/downloadThumbnail/${imageFileName}">
+      </div>
+      <div class="border border-primary rounded-1 ">
+        <img class="mx-auto d-block" style="max-width: 500px;" src="${contextPath}/file/downloadThumbnailOut/${imageFileName}">
+      </div>
+      <div class="border border-primary rounded-1 ">
         <img class="mx-auto d-block" style="max-width: 500px;" src="${contextPath}/file/download?imageFileName=${imageFileName}">
       </div>
     </c:forEach>
