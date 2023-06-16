@@ -74,6 +74,10 @@
 
     <thumbnailator.version>0.4.19</thumbnailator.version>
 
+    <vault3.version>3.0.2</vault3.version>
+    <vault2.version>2.3.3</vault2.version>
+
+
     <!-- #################################### -->
     <!-- #### Servlet 4 Project Support #### -->
     <!-- ################################### -->
@@ -92,6 +96,8 @@
     <javax.el.version>3.0.1-b12</javax.el.version>
 
     <commons-fileupload.version>1.5</commons-fileupload.version>
+
+    <javax.mail.version>1.6.2</javax.mail.version>
 
     <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
     <javax.servlet.jsp-api.version>2.3.3</javax.servlet.jsp-api.version>

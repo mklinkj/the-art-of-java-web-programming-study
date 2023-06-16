@@ -54,5 +54,11 @@
     <put-attribute name="body" value="/WEB-INF/views/file/result.jsp"/>
   </definition>
 
+  <!-- 메일 전송 -->
+  <definition name="mail/sendMail" extends="baseLayout">
+    <put-attribute name="title" value="메일 전송 하기"/>
+    <put-attribute name="body" value="/WEB-INF/views/mail/sendMail.jsp"/>
+  </definition>
+
 
 </tiles-definitions>

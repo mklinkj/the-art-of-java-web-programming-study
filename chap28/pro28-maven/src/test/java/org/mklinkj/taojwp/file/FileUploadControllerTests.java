@@ -28,9 +28,8 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringJUnitWebConfig(
     locations = {
       "file:src/main/webapp/WEB-INF/action-servlet.xml",
-      "classpath:config/action-repository.xml",
-      "classpath:config/action-service.xml",
-      "classpath:config/action-security.xml"
+      "classpath:config/root-context.xml",
+      "classpath:config/security-context.xml"
     })
 @Slf4j
 class FileUploadControllerTests {

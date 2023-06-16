@@ -188,3 +188,157 @@ Tomcat 에다 직접 설정해도 되는데, 프로젝트 별로 설정하기 �
 ```
 
 ✨ 예상외로 별로 바꿀 것이 없었다. 컨트롤러 코드자체가 Spring Web이하의 클래스만 쓰다보니.. 그대로 활용가능 했다.
+
+
+
+---
+
+## Mail 설정
+
+Google 계정을 사용하므로, 계정 ID / PW을 Vault에다 저장해서 쓰자..
+
+메일을 2개 가입해야함...
+
+
+
+### 스프링 6 + Java Mail
+
+> https://mvnrepository.com/artifact/jakarta.mail/jakarta.mail-api 이거 구현체 라이브러리가 따로 있니?
+>
+> >네, `jakarta.mail-api`의 구현 라이브러리가 있습니다. Jakarta Mail API의 구현체로 알려진 JavaMail/JakartaMail은 이제 **Eclipse Angus**라는 독립적인 프로젝트로 제공됩니다. Eclipse Angus 프로젝트 페이지에서 더 많은 정보를 찾을 수 있습니다.
+>
+> * https://mvnrepository.com/artifact/jakarta.mail/jakarta.mail-api/2.1.2
+
+
+
+### 스프링 5 + Java Mail
+
+> 
+
+
+
+### Gmail 앱 비밀번호 설정
+
+> * Java Mail 클라이언트에서 Gmail의 smtp 서버에 로그인 하려면, 기본 암호로는 로그인이 안됨.
+>
+> * 앱 비밀번호를 설정해야함.
+>
+>   * 2단계 인증을 활성화하고 앱 비밀번호 설정하여, 그것을 smtp 로그인 암호로 사용하면 됨.
+>
+>     ![image-20230617045938093](doc-resources/image-20230617045938093.png)
+
+
+
+### 비동기 설정
+
+* AsyncConfig
+
+  ```java
+  @Configuration
+  @EnableAsync
+  public class AsyncConfig implements AsyncConfigurer {
+  
+    @Override
+    public Executor getAsyncExecutor() {
+      ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+      executor.setThreadNamePrefix("async-thread-");
+      executor.setCorePoolSize(5);
+      executor.setMaxPoolSize(10);
+      executor.setQueueCapacity(30);
+      executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+      executor.initialize();
+      return executor;
+    }
+  }
+  ```
+
+  #### 바드에게 의미 해석
+
+  > 제공하신 코드는 `Executor` 인스턴스를 반환하는 메소드입니다. `Executor`는 비동기적으로 작업을 실행하는 데 사용할 수 있는 객체입니다. 코드는 `ThreadPoolTaskExecutor` 인스턴스를 생성합니다. `ThreadPoolTaskExecutor`는 작업을 실행하기 위해 스레드 풀을 사용하는 `Executor`의 한 유형입니다.
+  >
+  > `ThreadPoolTaskExecutor` 인스턴스는 다음 매개변수로 구성됩니다.
+  >
+  > - `threadNamePrefix`: 스레드 풀의 스레드 이름에 사용되는 접두사입니다.
+  > - `corePoolSize`: 스레드 풀에 항상 유지되는 스레드 수입니다.
+  > - `maxPoolSize`: 스레드 풀이 생성하는 최대 스레드 수입니다.
+  > - `queueCapacity`: 스레드 풀에 대기할 수 있는 최대 작업 수입니다.
+  > - `rejectedExecutionHandler`: 스레드 풀에서 거부된 작업을 처리하는 데 사용되는 정책입니다.
+  >
+  > `ThreadPoolTaskExecutor` 인스턴스가 생성되면 초기화되고 반환됩니다.
+  >
+  > 다음은 코드에 대한 보다 자세한 설명입니다.
+  >
+  > 코드 스니펫
+  >
+  > ```java
+  > ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+  > ```
+  >
+  > 이 줄은 새로운 `ThreadPoolTaskExecutor` 인스턴스를 생성합니다.
+  >
+  > 코드 스니펫
+  >
+  > ```java
+  > executor.setThreadNamePrefix("async-thread-");
+  > ```
+  >
+  > 이 줄은 스레드 풀의 스레드 이름에 사용되는 접두사를 설정합니다. 접두사는 "async-thread-"입니다.
+  >
+  > 코드 스니펫
+  >
+  > ```java
+  > executor.setCorePoolSize(5);
+  > ```
+  >
+  > 이 줄은 스레드 풀에 항상 유지되는 스레드 수를 설정합니다. 스레드 수는 5입니다.
+  >
+  > 코드 스니펫
+  >
+  > ```java
+  > executor.setMaxPoolSize(10);
+  > ```
+  >
+  > 이 줄은 스레드 풀이 생성하는 최대 스레드 수를 설정합니다. 최대 스레드 수는 10입니다.
+  >
+  > 코드 스니펫
+  >
+  > ```java
+  > executor.setQueueCapacity(30);
+  > ```
+  >
+  > 이 줄은 스레드 풀에 대기할 수 있는 최대 작업 수를 설정합니다. 최대 대기열 용량은 30입니다.
+  >
+  > 코드 스니펫
+  >
+  > ```java
+  > executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+  > ```
+  >
+  > 이 줄은 스레드 풀에서 거부된 작업을 처리하는 데 사용되는 정책을 설정합니다. 사용되는 정책은 `ThreadPoolExecutor.CallerRunsPolicy`입니다. 즉, 작업은 작업을 제출한 스레드에서 실행됩니다.
+  >
+  > 코드 스니펫
+  >
+  > ```java
+  > executor.initialize();
+  > ```
+  >
+  > 이 줄은 `ThreadPoolTaskExecutor` 인스턴스를 초기화합니다.
+  >
+  > 코드 스니펫
+  >
+  > ```java
+  > return executor;
+  > ```
+  >
+  > 이 줄은 `ThreadPoolTaskExecutor` 인스턴스를 반환합니다.
+
+  ### `executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());` 이게 스레드풀에 제출하려했는데... 풀이 꽉차서 거부된 스레드는 본인이 실행해라라는 의미이니?
+
+  > 네, 맞습니다. `ThreadPoolExecutor.CallerRunsPolicy`는 스레드 풀에 작업을 제출했지만 풀이 꽉 차서 거부된 경우 작업을 제출한 스레드에서 작업을 실행하는 정책입니다.
+  >
+  > > Pool도 꽉차있고, Queue도 전부다 꽉차있어서 할 수있는 것이 없을 때이지?
+  > >
+  > > >네, 맞습니다. 스레드 풀이 꽉 차서 작업을 실행할 스레드가 없고, 작업 대기열도 꽉 차서 작업을 추가할 수 없을 때 `ThreadPoolExecutor.CallerRunsPolicy`는 작업을 제출한 스레드에서 작업을 실행합니다.
+
+  
+
