@@ -32,9 +32,9 @@ import org.springframework.web.context.WebApplicationContext;
 @Slf4j
 class FileDownloadControllerTests {
 
-  final String IMAGE_FILE_NAME = "image_file.png";
+  private final String IMAGE_FILE_NAME = "image_file_01.png";
 
-  final String UPLOAD_PATH_FORMAT = "/upload_test_file/%s";
+  private final String UPLOAD_PATH_FORMAT = "/upload_test_file/%s";
 
   @TempDir private File tempDir;
 
