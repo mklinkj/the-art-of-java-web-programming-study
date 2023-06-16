@@ -3,13 +3,13 @@
 <div>
   <h1>업로드가 완료되었습니다.</h1>
   <div class="mb-3 row">
-    <label for="staticId" class="col-sm-1 col-form-label">아이디</label>
+    <label for="staticId" class="col-sm-2 col-form-label">아이디</label>
     <div class="col-sm-3">
       <input type="text" class="form-control" id="staticId" name="id" value="${map.id}" readonly>
     </div>
   </div>
   <div class="mb-3 row">
-    <label for="inputName" class="col-sm-1 col-form-label">이름</label>
+    <label for="inputName" class="col-sm-2 col-form-label">이름</label>
     <div class="col-sm-3">
       <input type="text" class="form-control" id="inputName" name="name" value="${map.name}" readonly>
     </div>

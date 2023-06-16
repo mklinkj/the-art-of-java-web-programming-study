@@ -5,7 +5,7 @@
 >   * 예제 프로젝트
 >   * Spring 6 + Gradle 빌드
 >     * [pro28](pro28)
->       * Servlet 3 부터 자체 내장된 기능으로 사용.
+>       * Servlet 3 부터 서블릿 컨테이너 자체에 내장된 기능으로 사용.
 >   * Spring 5 + Maven 빌드
 >       * [pro28-maven](pro28-maven)
 >     * commons-fileupload 사용.
@@ -64,7 +64,24 @@
 
 ---
 
-## 스프링 시큐리티와 multipart-form (Spring 5 + Spring Security5 + Servlet 4)
+## 스프링 시큐리티와 multipart-form (Spring 5 + Spring Security5 + Servlet 4 + JSP)
+
+### 디펜던시 추가
+
+```xml
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>${commons-fileupload.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>${commons-io.version}</version>
+    </dependency>
+```
+
+
 
 ## src/main/webapp/META-INF/context.xml 에 다음을 설정
 
@@ -123,3 +140,51 @@ Tomcat 에다 직접 설정해도 되는데, 프로젝트 별로 설정하기 �
 
     > maxUploadSizePerFile 설정이 안먹어서, web.xml에 max-file-size 설정을 해줘야하는 설정이 중복된상태가 됨.. 😅
 
+
+
+---
+
+## 스프링 시큐리티와 multipart-form (Spring 6 + Spring Security6 + Servlet 6 + Thymeleaf)
+
+### 디펜던시 추가
+
+* 서블릿 컨테이너가 자체적으로 지원하는 기능을 사용해서, 추가할 내용 없음.
+
+
+
+### web.xml에 디스패쳐 서블릿 설정 이하에 `<multipart-config>` 설정을 추가한다.
+
+```xml
+  <servlet>
+    <servlet-name>action</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <load-on-startup>1</load-on-startup> <!-- 값이 1 이상이면 Tomcat 실행시 미리 메모리에 로드 -->
+    <multipart-config>
+      <!-- 임시 파일을 저장할 공간 : 기본은 시스템 임시 폴더이다.  -->
+      <!--<location>${java.io.tmpdir}</location>-->
+      <!-- 업로드되는 파일의 최대 크기 -->
+      <max-file-size>10485760</max-file-size> <!-- 10MB -->
+      <!-- 한번에 올릴 수 있는 최대 크기 -->
+      <max-request-size>52428800</max-request-size> <!-- 50MB -->
+      <!-- 파일이 메모리에 기록되는 임계값  -->
+      <file-size-threshold>10485760</file-size-threshold> <!-- 10MB -->
+    </multipart-config>
+  </servlet>
+```
+
+* location 같은 경우는 시스템 기본 값을 쓰게하는 게 낫겠다.
+
+
+
+### Thymeleaf에서는 백틱으로 감싼 JavaScript 구문에 모델 변수 값을 사용할 때.. 이스케이프를 하지 말아야한다.
+
+```html
+   $("#d_file").append(
+        `<div class="mb-3">
+          <label for="formFile${count}" class="form-label">${count}번 파일</label>
+          <input class="form-control" type="file" id="formFile${count}" name="file${count}">
+        </div>`
+    );
+```
+
+✨ 예상외로 별로 바꿀 것이 없었다. 컨트롤러 코드자체가 Spring Web이하의 클래스만 쓰다보니.. 그대로 활용가능 했다.
