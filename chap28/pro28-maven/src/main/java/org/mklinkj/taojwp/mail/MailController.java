@@ -24,13 +24,12 @@ public class MailController {
 
   @PostMapping("/sendMail")
   public String sendSimpleMail(RedirectAttributes redirectAttributes) {
+    Book book = new Book();
+    book.setName("자바 웹을 다루는 기술");
+    book.setDesc("JSP, 서블릿, 스프링까지 실무에서 알아야 할 기술은 따로 있다!");
+    book.setLink("https://www.yes24.com/Product/Goods/68371015");
 
     try {
-      Book book = new Book();
-      book.setName("자바 웹을 다루는 기술");
-      book.setDesc("JSP, 서블릿, 스프링까지 실무에서 알아야 할 기술은 따로 있다!");
-      book.setLink("https://www.yes24.com/Product/Goods/68371015");
-
       mailService.sendMail(
           vaultClient().get("mail.owner.username"),
           "테스트 메일",

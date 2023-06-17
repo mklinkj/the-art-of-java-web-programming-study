@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<body>
+<head>
+  <meta charset="UTF-8">
+  <title>FreeMarker 템플릿 테스트 - 이메일</title>
+</head>
+<body>
+<h1 th:text="|신간 도서 - ${book.name}|">신간 도서 - {책 이름}</h1>
+<h3>신간 도서를 소개합니다.</h3>
+<p th:text="${book.desc}">
+    {책 설명}
+</p>
+<ul>
+  <li><a th:href="@{${book.link}}" th:text="|${book.name} 구매하러가기|">{책 이름} 구매하러가기</a></li>
+</ul>
+</body>
+</html>

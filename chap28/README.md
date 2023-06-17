@@ -383,7 +383,7 @@ Google 계정을 사용하므로, 계정 ID / PW을 Vault에다 저장해서 쓰
 
 
 
-### FreeMarker 적용
+### FreeMarker 활용
 
 * https://freemarker.apache.org/docs/pgui_quickstart_all.html 에 나온대로
 
@@ -431,3 +431,16 @@ Google 계정을 사용하므로, 계정 ID / PW을 Vault에다 저장해서 쓰
 
 
 
+### Thymeleaf 활용
+
+> 이메일 템플릿 관련해서 구체적으로 가이드가 있어서 좋은데... 번역을 먼저 해야겠다.
+>
+> * https://www.thymeleaf.org/doc/articles/springmail.html
+
+
+
+
+
+
+
+---
