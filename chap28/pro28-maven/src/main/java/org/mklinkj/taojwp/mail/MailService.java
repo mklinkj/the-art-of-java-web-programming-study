@@ -19,7 +19,7 @@ public class MailService {
   private final SimpleMailMessage preConfiguredMessage;
 
   @Async
-  public void sendMail(String to, String subject, String body) throws MessagingException {
+  public void sendMail(String to, String subject, String body, boolean html) throws MessagingException {
     MimeMessage message = mailSender.createMimeMessage();
 
     MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
@@ -27,7 +27,7 @@ public class MailService {
     // messageHelper.setFrom("xxxxx@naver.com", "홍길동");
     messageHelper.setSubject(subject);
     messageHelper.setTo(to);
-    messageHelper.setText(body);
+    messageHelper.setText(body, html);
     mailSender.send(message);
   }
 

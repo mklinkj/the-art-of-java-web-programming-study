@@ -43,6 +43,4 @@
       <property name="suffix" value=".jsp"/>
     </bean>
   </mvc:view-resolvers>
-
-
 </beans>

@@ -364,5 +364,70 @@ Google 계정을 사용하므로, 계정 ID / PW을 Vault에다 저장해서 쓰
   > >
   > > >네, 맞습니다. 스레드 풀이 꽉 차서 작업을 실행할 스레드가 없고, 작업 대기열도 꽉 차서 작업을 추가할 수 없을 때 `ThreadPoolExecutor.CallerRunsPolicy`는 작업을 제출한 스레드에서 작업을 실행합니다.
 
+
+
+
+
+---
+
+## HTML 형식 메일보내기는 FreeMarker/Thymeleaf를 사용해보면 좋을 것 같다..
+
+> Gradle 프로젝트는 Thymeleaf로 템플릿을 만들고, 
+>
+> * https://www.thymeleaf.org/doc/articles/springmail.html
+>
+> Maven 프로젝트는 FreeMarker를 사용해보면 좋을 것 같다.
+>
+> * https://docs.spring.io/spring-framework/reference/web/webmvc-view/mvc-freemarker.html
+> * https://www.baeldung.com/freemarker-in-spring-mvc-tutorial
+
+
+
+### FreeMarker 적용
+
+* https://freemarker.apache.org/docs/pgui_quickstart_all.html 에 나온대로
+
+  * 설정 부분은 설정 빈로 만들고, (어플리케이션 수명주기와 같이해야한다함..)
+  * 실행 부분은 서비스 빈으로 만듬.
+
+* 거의 메뉴얼 보고 했는데... 주의할 점이.. 메뉴얼에서는 System.out에다가 출력을 하고 있어서.. 이걸 close해버리면 테스트가 제대로 안된다.. 당연하게도 실제환경에서도 큰 문제가 있겠지만... 🎃
+
+  ```java
+  public String bookEmailTemplate(Book book) { 
+    try {
+      /* Get the template (uses cache internally) */
+      Template template = freemarkerCfg.getTemplate("book_mail.ftl");
+      try (Writer out = new OutputStreamWriter(System.out)) {
+        template.process(Map.of("book", book), out);
+        return out.toString();
+      }
+    } catch (Exception e) {
+        throw new IllegalStateException(e);
+    }
+  }
+  ```
+
+  이거를 OutputStream 사용 부분을 StringWriter로 바꿔주면 잘 된다.
+
+  ```java
+    public String bookEmailTemplate(Book book) {
+      try {
+        /* Get the template (uses cache internally) */
+        Template template = freemarkerCfg.getTemplate("book_mail.ftl");
+        StringWriter out = new StringWriter();
+        template.process(Map.of("book", book), out);
+        return out.toString();
+      } catch (Exception e) {
+        throw new IllegalStateException(e);
+      }
+    }
+  ```
+
   
+
+  * https://freemarker.apache.org/docs/pgui_quickstart.html
+    * https://freemarker.apache.org/docs/pgui_quickstart_merge.html
+    * https://freemarker.apache.org/docs/pgui_quickstart_all.html
+
+
 
