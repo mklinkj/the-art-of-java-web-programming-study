@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="javatime" uri="http://sargue.net/jsptags/time" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath}"></c:set>
 <h2 class="text-center mt-4 mb-4">회원 정보 수정</h2>
 
@@ -61,7 +61,8 @@
 </div>
 
 <script>
-  if('${result}') {
-    alert('<fmt:message key="modify.${result}"/>');
-  }
+  <c:if test="${not empty result}">
+    <c:set var="code" value="modify.${result}"/>
+    alert('<spring:message code="${code}"/>');
+  </c:if>
 </script>

@@ -437,10 +437,51 @@ Google 계정을 사용하므로, 계정 ID / PW을 Vault에다 저장해서 쓰
 >
 > * https://www.thymeleaf.org/doc/articles/springmail.html
 
-
-
-
+가이드에는 메시지 처리등 더 복잡한 내용이 있었지만, FreeMarker 적용했던 수준과 비슷하게 간단하게 적용했다.
 
 
 
 ---
+
+## 스프링 인터셉터
+
+> 인터셉터 적용은 Spring 5, 6이나 별차이가 없겠다. 
+
+
+
+### 다국어 기능
+
+* `HandlerInterceptorAdapter` 5.3 부터 Depreacted 되었다. 
+  * Java 8 부터 인터페이스에 default 메서드를 정의할 수 있어서 `HandlerInterceptor` 인터페이스를 구현해서 쓰라는 것 같다.
+
+
+
+* LocaleInterceptor에서 다른 메서드는 구현할 필요가 없으니...  preHandle만 구현하자!
+
+* 파라미터 값이 없을 때, 기본 값 로케일을 설정하는 저자님 방법 보다는... locale 파라미터가 유입 되었을 때만, 로케일을 새로 설정하는 것이 낫겠다.
+
+  ```java
+      if (locale != null && !locale.isBlank()) {
+        LOGGER.info("### new locale: {}", locale);
+        session.setAttribute(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME, new Locale(locale));
+      }
+  ```
+
+  * 단순 페이지면 저자님 방법도 될 것 같긴한데, 나는 Tiles / Thymeleaf 적용도 했고 복잡해져서인지... 저자님 방법으로는 결국은 항상 기본값 로케일을 설정해버리는 문제가 생겼다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
