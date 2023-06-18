@@ -471,7 +471,40 @@ Google 계정을 사용하므로, 계정 ID / PW을 Vault에다 저장해서 쓰
 
 
 
+#### 현재 로케일 판단 방법
 
+* JSP
+
+  ```jsp
+    <%-- 현재 URL에 쿼리 스트링만 추가하면 좋긴한데, 간단하게 로케일 변경시에는 메인 페이지에서 바뀌도록 했다. --%>
+    <c:choose>
+      <c:when test="${pageContext.response.locale eq 'en'}">
+        <a class="btn btn-sm btn-outline-info" href="${contextPath}/main.do?locale=ko">Korean</a>
+        <a class="btn btn-sm btn-outline-info disabled">English</a>
+      </c:when>
+      <c:otherwise>
+        <a class="btn btn-sm btn-outline-info disabled">한글</a>
+        <a class="btn btn-sm btn-outline-info" href="${contextPath}/main.do?locale=en">영어</a>
+      </c:otherwise>
+    </c:choose>
+  ```
+
+  
+
+* Thymeleaf
+
+  ```html
+    <th:block th:if="${#locale.toLanguageTag() == 'en'}">
+      <a class="btn btn-sm btn-outline-info" th:href="@{/main.do?locale=ko}">Korean</a>
+      <a class="btn btn-sm btn-outline-info disabled">English</a>
+    </th:block>
+    <th:block th:if="${#locale.toLanguageTag() == 'ko'}">
+      <a class="btn btn-sm btn-outline-info disabled">한글</a>
+      <a class="btn btn-sm btn-outline-info" th:href="@{/main.do?locale=en}">영어</a>
+    </th:block>
+  ```
+
+  
 
 
 
