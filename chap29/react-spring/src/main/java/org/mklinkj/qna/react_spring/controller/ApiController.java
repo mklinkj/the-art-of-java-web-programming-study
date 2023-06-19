@@ -1,4 +1,4 @@
-package org.mklinkj.qna.react_spring;
+package org.mklinkj.qna.react_spring.controller;
 
 import java.util.Map;
 import org.springframework.web.bind.annotation.GetMapping;

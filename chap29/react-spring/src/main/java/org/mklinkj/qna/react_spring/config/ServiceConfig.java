@@ -11,7 +11,10 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration.AccessLevel;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.EncodedResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -19,21 +22,30 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.stereotype.Controller;
 
 @Configuration
+// 서비스 설정에서는 Controller와 MVC 설정 클래스를 제외하고 스캔하게 했다.
+@ComponentScan(
+    basePackages = "org.mklinkj.qna.react_spring",
+    excludeFilters = {
+      @Filter(type = FilterType.ANNOTATION, value = Controller.class),
+      @Filter(type = FilterType.ASSIGNABLE_TYPE, value = WebConfiguration.class)
+    })
 @EnableJpaRepositories(basePackages = "org.mklinkj.qna.react_spring.repository")
 public class ServiceConfig {
 
   @Bean(destroyMethod = "close")
-  HikariDataSource dataSource() {
+  public HikariDataSource dataSource() {
     HikariConfig config = new HikariConfig();
 
     config.setDriverClassName("org.hsqldb.jdbc.JDBCDriver");
-    // 메모리:  jdbc:hsqldb:mem:the_art_of_java_web
-    // 독립실행: jdbc:hsqldb:hsql://hsqldb-host:9001/the_art_of_java_web
+    // 메모리  DB:  jdbc:hsqldb:mem:the_art_of_java_web
+    // 독립실행 DB:  jdbc:hsqldb:hsql://hsqldb-host:9001/the_art_of_java_web
     config.setJdbcUrl("jdbc:hsqldb:mem:the_art_of_java_web");
     config.setUsername("SA");
     config.setPassword("");
+    // 아래는 HikariCP 공식 홈페이지의 MySQL 추천 옵션이긴 함.
     config.addDataSourceProperty("cachePrepStmts", "true");
     config.addDataSourceProperty("prepStmtCacheSize", "250");
     config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
@@ -42,7 +54,7 @@ public class ServiceConfig {
   }
 
   @Bean
-  ModelMapper getMapper() {
+  public ModelMapper getMapper() {
     ModelMapper modelMapper = new ModelMapper();
     modelMapper
         .getConfiguration() //
@@ -54,7 +66,7 @@ public class ServiceConfig {
   }
 
   @Bean
-  LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource)
+  public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource)
       throws IOException {
 
     LocalContainerEntityManagerFactoryBean emfBean = new LocalContainerEntityManagerFactoryBean();
@@ -81,7 +93,7 @@ public class ServiceConfig {
   }
 
   @Bean
-  JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+  public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
     JpaTransactionManager transactionManager = new JpaTransactionManager();
     transactionManager.setEntityManagerFactory(entityManagerFactory);
     return transactionManager;

@@ -1,4 +1,4 @@
-package org.mklinkj.qna.react_spring;
+package org.mklinkj.qna.react_spring.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @SpringJUnitWebConfig(classes = {ServiceConfig.class, WebConfiguration.class})
-class ApiControllerTest {
+class ApiControllerTests {
   private MockMvc mockMvc;
 
   @BeforeEach
