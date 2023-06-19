@@ -17,10 +17,19 @@ repositories {
 }
 
 dependencies {
+  implementation "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
+
   implementation "org.springframework:spring-context:${springVersion}"
   implementation "org.springframework:spring-webmvc:${springVersion}"
+  implementation "org.springframework:spring-jdbc:${springVersion}"
 
-  implementation "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
+  implementation "org.springframework.data:spring-data-jpa:${springDataVersion}"
+  implementation "org.hibernate.orm:hibernate-core:${hibernateVersion}"
+
+  implementation "com.zaxxer:HikariCP:${hikariCpVersion}"
+  implementation "org.hsqldb:hsqldb:${hsqldbVersion}"
+
+  implementation "org.modelmapper:modelmapper:${modelMapperVersion}"
 
   implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonDatabindVersion}"
 
@@ -28,8 +37,8 @@ dependencies {
 
   testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
   testImplementation "org.springframework:spring-test:${springVersion}"
-  
-  testImplementation "org.hamcrest:hamcrest:${hamcrestVersion}"  
+
+  testImplementation "org.hamcrest:hamcrest:${hamcrestVersion}"
   testImplementation "org.mockito:mockito-core:${mockitoVersion}"
   testImplementation "org.assertj:assertj-core:${assertJVersion}"
   testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitAssertJVersion}"
@@ -56,11 +65,11 @@ gretty {
   inplaceMode = "soft"
   loggingLevel = "DEBUG"
   jvmArgs = [
-    "-Djava.security.egd=file:/dev/./urandom",
-    "--add-opens=java.base/java.io=ALL-UNNAMED",
-    "--add-opens=java.base/java.lang=ALL-UNNAMED",
-    "--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED",
-    "-Djava.security.egd=file:/dev/./urandom"
+      "-Djava.security.egd=file:/dev/./urandom",
+      "--add-opens=java.base/java.io=ALL-UNNAMED",
+      "--add-opens=java.base/java.lang=ALL-UNNAMED",
+      "--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED",
+      "-Djava.security.egd=file:/dev/./urandom"
   ]
 }
 
@@ -120,11 +129,12 @@ war {
 }
 
 tasks.war {
- dependsOn copyReactBuildFiles
+  dependsOn copyReactBuildFiles
 }
 
 // War 배포하지 않고 실행할 때...
 import org.akhikhl.gretty.AppStartTask
+
 task('appRunReact', type: AppStartTask) {
   dependsOn updateReactView
 }
