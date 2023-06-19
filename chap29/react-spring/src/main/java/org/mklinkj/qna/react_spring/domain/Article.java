@@ -22,4 +22,16 @@ public class Article {
   private String title;
 
   private String content;
+
+  public void changeWriter(String writer) {
+    this.writer = writer;
+  }
+
+  public void changeTitle(String title) {
+    this.title = title;
+  }
+
+  public void changeContent(String content) {
+    this.content = content;
+  }
 }

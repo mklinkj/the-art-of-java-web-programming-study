@@ -2,8 +2,6 @@ package org.mklinkj.qna.react_spring.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -11,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.mklinkj.qna.react_spring.config.ServiceConfig;
 import org.mklinkj.qna.react_spring.dto.ArticleDTO;
+import org.mklinkj.qna.react_spring.test.TestHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +21,7 @@ class ArticleServiceTests {
 
   @Autowired private ArticleService articleService;
 
-  @Autowired private EntityManager entityManager;
+  @Autowired private TestHelper testHelper;
 
   @Order(1)
   @Transactional
@@ -44,16 +43,7 @@ class ArticleServiceTests {
   @Transactional
   @Test
   void testSaveThenFind() {
-
-    TypedQuery<Integer> query =
-        entityManager.createQuery(
-            """
-              SELECT max(a.articleNo) + 1
-                FROM Article a
-            """,
-            Integer.class);
-    int newId = query.getSingleResult();
-
+    Integer newId = testHelper.createNewId();
     LOGGER.info("newId: {}", newId);
 
     ArticleDTO articleDTO =

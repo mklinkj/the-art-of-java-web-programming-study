@@ -10,9 +10,9 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Configuration
+@Configuration()
 @EnableWebMvc
-// MVC 설정에서는 Controller만 스캔하게 했다.
+// 웹 MVC 설정에서는 Controller만 스캔하게 했다.
 @ComponentScan(
     basePackages = "org.mklinkj.qna.react_spring",
     includeFilters = @Filter(type = FilterType.ANNOTATION, value = Controller.class))

@@ -42,6 +42,7 @@ dependencies {
   testImplementation "org.mockito:mockito-core:${mockitoVersion}"
   testImplementation "org.assertj:assertj-core:${assertJVersion}"
   testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitAssertJVersion}"
+  testImplementation "net.javacrumbs.json-unit:json-unit-spring:${jsonUnitAssertJVersion}"
 }
 
 tasks.named('test') {

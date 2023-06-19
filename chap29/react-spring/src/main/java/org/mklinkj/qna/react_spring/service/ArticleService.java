@@ -38,4 +38,18 @@ public class ArticleService {
   public void deleteById(Integer articleNo) {
     articleRepository.deleteById(articleNo);
   }
+
+  @Transactional
+  public void modify(ArticleDTO articleDTO) {
+
+    Optional<Article> result = articleRepository.findById(articleDTO.getArticleNo());
+
+    Article currentArticle = result.orElseThrow();
+
+    currentArticle.changeTitle(articleDTO.getTitle());
+    currentArticle.changeContent(articleDTO.getContent());
+    currentArticle.changeWriter(articleDTO.getWriter());
+
+    articleRepository.save(currentArticle);
+  }
 }
