@@ -1,0 +1,130 @@
+plugins {
+  id 'war'
+  id "org.gretty" version "${grettyVersion}"
+  id "io.freefair.lombok" version "${lombokPluginVersion}"
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of("${javaVersion}")
+  }
+}
+
+[compileJava, compileTestJava]*.options*.encoding = "${projectEncoding}"
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation "org.springframework:spring-context:${springVersion}"
+  implementation "org.springframework:spring-webmvc:${springVersion}"
+
+  implementation "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
+
+  implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonDatabindVersion}"
+
+  runtimeOnly "jakarta.servlet:jakarta.servlet-api:${jakartaServletApiVersion}"
+
+  testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+  testImplementation "org.springframework:spring-test:${springVersion}"
+  
+  testImplementation "org.hamcrest:hamcrest:${hamcrestVersion}"  
+  testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+  testImplementation "org.assertj:assertj-core:${assertJVersion}"
+  testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitAssertJVersion}"
+}
+
+tasks.named('test') {
+  // Use JUnit Platform for unit tests.
+  useJUnitPlatform()
+  /*
+    터미널에서 테스트 클래스 실행 예시
+    > gradlew test --tests *TestClassName.testMethodName
+  */
+  testLogging {
+    outputs.upToDateWhen { false }
+    showStandardStreams = true
+  }
+}
+
+// gradle appRun 으로 실행
+gretty {
+  httpPort = 8090
+  contextPath = "/"
+  servletContainer = "tomcat10"
+  inplaceMode = "soft"
+  loggingLevel = "DEBUG"
+  jvmArgs = [
+    "-Djava.security.egd=file:/dev/./urandom",
+    "--add-opens=java.base/java.io=ALL-UNNAMED",
+    "--add-opens=java.base/java.lang=ALL-UNNAMED",
+    "--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED",
+    "-Djava.security.egd=file:/dev/./urandom"
+  ]
+}
+
+// React 빌드 통합
+def frontendDir = "$projectDir/frontend"
+
+task installReact(type: Exec) {
+  workingDir "$frontendDir"
+  inputs.dir "$frontendDir"
+  group = BasePlugin.BUILD_GROUP
+  if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+    commandLine "npm.cmd", "audit", "fix"
+    commandLine 'npm.cmd', 'install'
+  } else {
+    commandLine "npm", "audit", "fix"
+    commandLine 'npm', 'install'
+  }
+}
+
+task buildReact(type: Exec) {
+  dependsOn "installReact"
+  workingDir "$frontendDir"
+  inputs.dir "$frontendDir"
+  group = BasePlugin.BUILD_GROUP
+  if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+    commandLine "npm.cmd", "run-script", "build"
+  } else {
+    commandLine "npm", "run-script", "build"
+  }
+}
+
+task copyReactBuildFiles(type: Copy) {
+  dependsOn "buildReact"
+  from "$frontendDir/build"
+  into "$buildDir/frontend/statics"
+}
+
+task updateReactView(type: Copy) {
+  dependsOn "buildReact"
+  from "$frontendDir/build"
+  into "$buildDir/inplaceWebapp/statics"
+}
+
+// Gretty가 프로젝트에 "src/main/webapp" 경로가 반드시 있을 것으로 간주한다.
+// 빌드할 프로젝트에 webapp 경로가 없다면 만들어 주자.
+def mkdirWebappIfNoExist = { ->
+  def webappDir = new File("$projectDir/src/main/webapp")
+  if (!webappDir.exists()) {
+    webappDir.mkdir()
+  }
+}
+mkdirWebappIfNoExist()
+
+// gretty appRunWar를 실행하면 같이 처리됨.
+war {
+  from "$buildDir/frontend"
+}
+
+tasks.war {
+ dependsOn copyReactBuildFiles
+}
+
+// War 배포하지 않고 실행할 때...
+import org.akhikhl.gretty.AppStartTask
+task('appRunReact', type: AppStartTask) {
+  dependsOn updateReactView
+}

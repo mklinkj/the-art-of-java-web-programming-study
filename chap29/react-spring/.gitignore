@@ -1,0 +1,51 @@
+# 배치 파일로 만들어지는 프로젝트 로컬의 settings.gradle, gradle.properties, .gitattributes 들은 무시 처리
+settings.gradle
+gradle.properties
+.gitattributes
+
+# Gretty가 생성하는 듯 한데, 무시하자.
+tomcat.8080
+
+# 하위 프로젝트에서는 wrapper 파일을 포함하지 않는다.
+gradlew
+gradlew.bat
+gradle/
+
+HELP.md
+.gradle
+build/
+bin/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
