@@ -68,7 +68,29 @@
 
 ## 기타
 
-* ...
+
+
+### React Bootstrap을 사용해보자.
+
+* 가이드: https://react-bootstrap.netlify.app/docs/getting-started/introduction
+
+* 예제코드: https://codesandbox.io/s/github/react-bootstrap/code-sandbox-examples/tree/master/basic-v5
+
+* 설치
+  ```sh
+  npm install react-bootstrap bootstrap
+  ```
+  
+* index.js에 bootstrap.min.css 추가 필요
+
+  ```jsx
+  // Importing the Bootstrap CSS
+  import 'bootstrap/dist/css/bootstrap.min.css';
+  ```
+
+  
+
+
 
 
 
