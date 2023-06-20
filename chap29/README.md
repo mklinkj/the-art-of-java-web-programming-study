@@ -49,11 +49,22 @@
 
   
 
+### API서버의 CORS 설정
+
+API 컨트롤러에 아래 내용을 정의함.
+
+```java
+@CrossOrigin({"http://localhost:8090"})
+```
+
+
+
 
 
 ## 의견
 
-* ...
+* 아직은 React에 대해 잘 몰라서..  Props, State등을 복잡하게 사용한 것 같긴한데... 처음 생각한대로 잘 동작해서 기분은 좋다.. 😅
+* React Bootstrap이 꽤 괜찮은 것 같다. 쉽게 부트 스트랩을 적용했음.
 
 
 
@@ -90,7 +101,12 @@
 
   
 
+### React + Spring REST API 통합 테스트 프로젝트는 잘 진행되었다. 
 
+* 메인 화면
 
+  ![image-20230620202003027](doc-resources/image-20230620202003027.png)
 
+* 폼 화면
+  ![image-20230620202049188](doc-resources/image-20230620202049188.png)
 

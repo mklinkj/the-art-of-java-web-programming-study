@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin("*")
+@CrossOrigin({"http://localhost:8090"})
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/board")
@@ -44,7 +44,8 @@ public class BoardController {
   @PostMapping("/")
   public ResponseEntity<Map<String, String>> addArticle(@RequestBody ArticleDTO articleDTO) {
     try {
-      articleService.save(articleDTO);
+
+      articleService.register(articleDTO);
       return ResponseEntity //
           .ok(Map.of("result", "success"));
 

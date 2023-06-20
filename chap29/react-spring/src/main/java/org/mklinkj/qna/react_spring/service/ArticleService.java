@@ -1,5 +1,6 @@
 package org.mklinkj.qna.react_spring.service;
 
+import jakarta.persistence.EntityExistsException;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,12 @@ public class ArticleService {
   }
 
   @Transactional
-  public void save(ArticleDTO articleDTO) {
+  public void register(ArticleDTO articleDTO) {
+    Optional<Article> result = articleRepository.findById(articleDTO.getArticleNo());
+
+    if (result.isPresent()) {
+      throw new EntityExistsException("해당 게시물 ID는 이미 있어요 😅");
+    }
     Article article = modelMapper.map(articleDTO, Article.class);
     articleRepository.save(article);
   }

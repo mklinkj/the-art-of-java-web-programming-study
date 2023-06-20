@@ -42,7 +42,7 @@ class ArticleServiceTests {
 
   @Transactional
   @Test
-  void testSaveThenFind() {
+  void testRegisterThenFind() {
     Integer newId = testHelper.createNewId();
     LOGGER.info("newId: {}", newId);
 
@@ -54,7 +54,7 @@ class ArticleServiceTests {
             .content("새 상품을 소개합니다. %d".formatted(newId))
             .build();
 
-    articleService.save(articleDTO);
+    articleService.register(articleDTO);
 
     ArticleDTO newArticle = articleService.findById(newId);
 
