@@ -29,9 +29,11 @@ import lombok.extern.slf4j.Slf4j;
     maxFileSize = 10 * MEGA_BYTE,
     maxRequestSize = 15 * MEGA_BYTE
     // location은 임시로 저장하는 경로인데, 명시하지 않으면...
-    // 시스템 임시 폴더에 저장될 것 같다. (정확한 임시파일 저장 경로를 "java.io.tmpdir" 일것 같았는데... 모르겠음...)
-    // 이 값을 비우고 Part의 InputStream을 얻어서 다른 곳으로 복사하는 방식이 나을 것 같긴하다.
-    // 스프링이 이런식인 것 같음...
+    // IntelliJ 내장 톰켓 환경에서는 아래경로에 다운로드가 된다. 😅
+    // %APPDATA%\..\Local\JetBrains\IntelliJIdeaXXXX.X\tomcat\{UUID}}\work\Catalina\localhost\pro15
+    // 시스템 임시 폴더에 저장될 줄 알았는데... 그렇게 동작하지 않았다.
+    //
+    // 스터디 환경에서는 location 값을 설정하지 않고 Part의 InputStream을 얻어서 다른 곳으로 복사하는 방식이 나을 것 같긴하다.
     /* , location = "C:\\upload\\art_of_java_web" */ )
 public class FileUpload extends AbstractHttpServlet {
   @Override
