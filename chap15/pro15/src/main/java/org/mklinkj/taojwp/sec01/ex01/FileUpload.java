@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @WebServlet("/upload.do")
 @MultipartConfig(
-    fileSizeThreshold = 1,
+    fileSizeThreshold = MEGA_BYTE,
     maxFileSize = 10 * MEGA_BYTE,
     maxRequestSize = 15 * MEGA_BYTE
     // location은 임시로 저장하는 경로인데, 명시하지 않으면...
