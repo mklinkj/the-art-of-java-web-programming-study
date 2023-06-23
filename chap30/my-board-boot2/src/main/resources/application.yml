@@ -1,0 +1,28 @@
+server:
+  port: 8090
+
+spring:
+  freemarker:
+    template-loader-path: classpath:/freemarker
+  messages:
+    basename: messages/messages
+    encoding: UTF-8
+    cache-duration: 60
+    # Duration 접미사가 없이 쓰면 기본은 초 단위
+    # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.core.spring.messages.cache-duration
+  main:
+    allow-bean-definition-overriding: true
+
+logging:
+  pattern:
+    console: "%clr(%d{HH:mm:ss.SSS}){faint} %clr([%thread]){magenta} %clr(%-5level) %clr(%logger{72}){cyan} - %clr(%msg%n){faint}"
+  level:
+    root: info
+    web: debug
+    sql: debug
+
+    org.springframework.security: debug
+
+    # 사용자 정의 패키지
+    org.mklinkj: debug
+    org.mklinkj.taojwp.member.mapper: trace
