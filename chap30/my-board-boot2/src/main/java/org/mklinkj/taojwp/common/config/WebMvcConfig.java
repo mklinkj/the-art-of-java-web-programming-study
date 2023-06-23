@@ -20,7 +20,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
   @Bean
   SessionLocaleResolver localeResolver() {
     SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
-    sessionLocaleResolver.setDefaultLocale(Locale.KOREA);
+    sessionLocaleResolver.setDefaultLocale(new Locale("ko"));
     return sessionLocaleResolver;
   }
 
@@ -36,6 +36,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
         .addResourceLocations("/resources/");
 
     registry.addResourceHandler("/index.html").addResourceLocations("/");
+
+    registry
+        .addResourceHandler("/webjars/**")
+        .addResourceLocations("/webjars/")
+        .resourceChain(false);
   }
 
   @Override

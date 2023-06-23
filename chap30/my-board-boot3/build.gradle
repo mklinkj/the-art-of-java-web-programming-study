@@ -54,12 +54,12 @@ dependencies {
 
 
 
-  // #############################
-  // ### 외부 라이브러리       ###
-  // #############################  
+  // ####################
+  // ### 외부 라이브러리 ###
+  // ####################
   implementation "org.webjars:jquery:${jqueryVersion}"
   implementation "org.webjars:bootstrap:${bootstrapVersion}"
-  implementation "org.webjars:webjars-locator:${webjarsLocatorVersion}"
+  implementation 'org.webjars:webjars-locator-core'
   
   implementation "net.coobird:thumbnailator:${thumbnailatorVersion}"
   implementation "org.springframework.vault:spring-vault-core:${springVaultVersion}"

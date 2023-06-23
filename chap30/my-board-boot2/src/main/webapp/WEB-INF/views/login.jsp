@@ -4,19 +4,7 @@
 <%@ taglib prefix="javatime" uri="http://sargue.net/jsptags/time" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath}"></c:set>
-<!doctype html>
-<html lang="ko">
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet"
-        href="${contextPath}/webjars_locator/bootstrap/css/bootstrap.min.css">
-  <title>회원정보</title>
-</head>
-<body>
 <h1 class="text-center mt-4 mb-4"> 로그인</h1>
 
 <div class="card d-flex justify-content-center mx-auto col-6">
@@ -51,12 +39,3 @@
     </form>
   </div>
 </div>
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="${contextPath}/webjars_locator/jquery/jquery.slim.min.js"></script>
-<script
-    src="${contextPath}/webjars_locator/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-</body>
-</html>

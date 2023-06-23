@@ -282,3 +282,46 @@ spring:
 
     * `th:include`가 deprected 됨
     * 값  부분을 `~{ .. }`으로 감싸라고 경고나옴..  이것 정도만 고쳤음.
+
+
+
+### WebJars 다시확인 - 해결됨.
+
+`build.gradle`에는... 아래 디펜던시만 추가 `webjars-locator-core`의 버전은 부트가 관리함.
+
+```groovy
+implementation 'org.webjars:webjars-locator-core'
+```
+
+메이븐은 pom.xml 에 다음 추가
+
+```xml
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>webjars-locator-core</artifactId>
+    </dependency>
+```
+
+
+
+MVC 설정에 다음 내용추가.
+
+````java
+  @Override
+  public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    // ...
+    registry
+        .addResourceHandler("/webjars/**")
+        .addResourceLocations("/webjars/")
+        .resourceChain(false);
+  }
+````
+
+
+
+위와 같이 했을 때... Spring Boot 2, Spring Boot 3 모두 잘 동작했다.
+
+WebJars Locator 컨트롤러 만든것은 필요가 없어졌으니 제거함.
+
+
+
