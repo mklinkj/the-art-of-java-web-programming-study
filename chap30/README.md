@@ -145,6 +145,22 @@ public class TomcatConfig {
 }
 ```
 
+좀 더 확인을 해봤을 때...
+
+```java
+  @Bean
+  TomcatServletWebServerFactory tomcatFactory() {
+    TomcatServletWebServerFactory tomcatFactory = new TomcatServletWebServerFactory();
+
+    tomcatFactory.addContextCustomizers(
+        customizer -> customizer.setAllowCasualMultipartParsing(true));
+
+    return tomcatFactory;
+  }
+```
+
+위처럼 CuntextCustomizer를 람다식으로 추가해 줄수도 있었다.
+
 
 
 ### Spring Security XML과 Java 설정의 `form-login` > `login-page="/login.do"`

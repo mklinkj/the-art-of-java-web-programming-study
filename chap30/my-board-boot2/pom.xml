@@ -4,6 +4,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
+  <!-- TODO: pom.xml의 공통 부모화는 정리가 되면 하자! -->
   <!--
   <parent>
     <groupId>org.mklinkj.taowjp</groupId>
@@ -12,7 +13,6 @@
     <relativePath>../../pom.xml</relativePath>
   </parent>
   -->
-  
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
