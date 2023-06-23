@@ -260,3 +260,25 @@ spring:
 
 왠지 이렇게 하고 싶진 않은데.... 🎃 다른 방법을 모르겠음... 😂😂😂
 
+
+
+
+
+### Spring 6 + Thymeleaf + Gradle 프로젝트는 Spring Boot 3로 쉽게 전환했다.
+
+* 위의 시행착오를 미리 겪어서도 그렇고...
+
+  * 앞어서 Java 설정으로 바꾼 것은 대부분 변경없이 그대로 썼음.
+
+* Spring Boot 가 기본 뷰 템플릿이 Thymeleaf이다보니 템플릿 경로만 기본 규약대로 잘 이동해주기만 하면됨.
+
+  * 단지 몇가지 Depreacted 경고가 나오는데..
+
+    ```html
+    <th:block th:include="layout/side :: side">
+    ==>
+    <th:block th:insert="~{layout/side :: side}">
+    ```
+
+    * `th:include`가 deprected 됨
+    * 값  부분을 `~{ .. }`으로 감싸라고 경고나옴..  이것 정도만 고쳤음.

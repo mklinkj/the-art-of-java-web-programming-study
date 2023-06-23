@@ -38,6 +38,7 @@
     
     
     <!-- ### Spring Boot Dependencies에 없는 버전 정의 ### -->
+    <mybatis-spring-boot-starter.version>2.3.1</mybatis-spring-boot-starter.version>
     <tiles.version>3.0.8</tiles.version>
     <commons-beanutils.version>1.9.4</commons-beanutils.version>
     <java-time-jsptags-javax.version>1.1.4</java-time-jsptags-javax.version>
@@ -58,7 +59,7 @@
 
 
    <!-- #################################### -->
-   <!-- ### Spring Boot Starter 디펜던시 ### -->
+   <!-- ### Spring Boot Starter 디펜던시   ### -->
    <!-- #################################### -->
    <dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -83,7 +84,7 @@
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
-			<version>2.3.1</version>
+			<version>${mybatis-spring-boot-starter.version}</version>
 		</dependency>
 
 		<dependency>
