@@ -16,7 +16,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.7.12</version>
+    <version>2.7.13</version>
     <relativePath/>
     <!-- lookup parent from repository -->
   </parent>
@@ -33,10 +33,15 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
 
     <!-- ### Spring Boot Dependencies에 존재하는 버전 재정의 ### -->
-    <!-- https://repo1.maven.org/maven2/org/springframework/boot/spring-boot-dependencies/2.7.12/spring-boot-dependencies-2.7.12.pom -->
-    <hsqldb.version>2.7.1</hsqldb.version>
+    <!-- https://repo1.maven.org/maven2/org/springframework/boot/spring-boot-dependencies/2.7.13/spring-boot-dependencies-2.7.13.pom -->
+    <hsqldb.version>2.7.2</hsqldb.version>
     
-    
+    <!-- Maven 플러그인 버전 재정의 -->
+    <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
+    <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+    <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
+
+
     <!-- ### Spring Boot Dependencies에 없는 버전 정의 ### -->
     <mybatis-spring-boot-starter.version>2.3.1</mybatis-spring-boot-starter.version>
     <tiles.version>3.0.8</tiles.version>

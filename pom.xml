@@ -24,21 +24,21 @@
     <jackson.version>2.15.2</jackson.version>
     <jackson-databind.version>${jackson.version}</jackson-databind.version>
 
-    <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
+    <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
 
     <junit.version>5.9.3</junit.version>
     <assertj.version>3.24.2</assertj.version>
     <json-unit.version>2.38.0</json-unit.version>
-    <mockito.version>5.3.1</mockito.version>
+    <mockito.version>5.4.0</mockito.version>
     <hamcrest.version>2.2</hamcrest.version>
 
-    <spring.version>6.0.9</spring.version>
+    <spring.version>6.0.10</spring.version>
 
-    <spring-security.version>6.1.0</spring-security.version>
+    <spring-security.version>6.1.1</spring-security.version>
 
     <aspectj.version>1.9.19</aspectj.version>
 
-    <tomcat10.version>10.1.9</tomcat10.version>
+    <tomcat10.version>10.1.10</tomcat10.version>
 
 
     <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
@@ -52,7 +52,7 @@
 
     <ojdbc.version>23.2.0.0</ojdbc.version>
     <mysql-connector-j.version>8.0.33</mysql-connector-j.version>
-    <hsqldb.version>2.7.1</hsqldb.version>
+    <hsqldb.version>2.7.2</hsqldb.version>
 
     <java-time-jsptags.version>2.0.0</java-time-jsptags.version>
 
@@ -61,7 +61,7 @@
     <!-- webjars -->
     <webjars-jquery.version>3.6.4</webjars-jquery.version>
     <webjars-bootstrap.version>5.3.0</webjars-bootstrap.version>
-    <webjars-locator.version>0.46</webjars-locator.version>
+    <webjars-locator.version>0.47</webjars-locator.version>
     <findbugs-jsr305.version>3.0.2</findbugs-jsr305.version>
 
     <mybatis.version>3.5.13</mybatis.version>
@@ -74,7 +74,7 @@
 
     <thumbnailator.version>0.4.19</thumbnailator.version>
 
-    <vault3.version>3.0.2</vault3.version>
+    <vault3.version>3.0.3</vault3.version>
     <vault2.version>2.3.3</vault2.version>
 
     <freemarker.version>2.3.32</freemarker.version>
@@ -85,7 +85,7 @@
     <!-- ################################### -->
 
     <spring5.version>5.3.28</spring5.version>
-    <spring-security5.version>5.8.3</spring-security5.version>
+    <spring-security5.version>5.8.4</spring-security5.version>
 
     <spring4.version>4.3.30.RELEASE</spring4.version>
     <slf4j.version>2.0.7</slf4j.version>
@@ -108,7 +108,7 @@
 
     <java-time-jsptags-javax.version>1.1.4</java-time-jsptags-javax.version>
 
-    <tomcat9.version>9.0.75</tomcat9.version>
+    <tomcat9.version>9.0.76</tomcat9.version>
     <jetty.version>11.0.15</jetty.version>
     <jetty-javax.version>10.0.15</jetty-javax.version>
     <!-- ################################### -->
@@ -116,9 +116,9 @@
 
     <!-- Maven 플러그인 버전 관리 -->
     <mybatis-generator-maven-plugin.version>1.4.2</mybatis-generator-maven-plugin.version>
-    <maven-war-plugin.version>3.3.2</maven-war-plugin.version>
+    <maven-war-plugin.version>3.4.0</maven-war-plugin.version>
     <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
-    <maven-surefire-plugin.version>3.1.0</maven-surefire-plugin.version>
+    <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
     <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
     <maven-toolchains-plugin.version>3.1.0</maven-toolchains-plugin.version>
 
