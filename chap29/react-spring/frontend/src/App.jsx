@@ -170,7 +170,7 @@ function ArticleRow(props) {
     <tr>
       <td>{article.articleNo}</td>
       <td>
-        <a href="#" onClick={() => {
+        <a href="#!" onClick={() => {
           props.setSelectedArticle(article);
           props.onChangeMode("modify")
         }}>{article.title}</a>
