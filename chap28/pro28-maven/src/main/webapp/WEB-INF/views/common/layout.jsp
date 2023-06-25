@@ -9,7 +9,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet"
-        href="${contextPath}/webjars_locator/bootstrap/css/bootstrap.min.css">
+        href="${contextPath}/webjars/bootstrap/css/bootstrap.min.css">
   <title><tiles:insertAttribute name="title"/></title>
 </head>
 <body>
