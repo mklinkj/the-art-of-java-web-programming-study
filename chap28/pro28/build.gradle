@@ -1,8 +1,8 @@
 plugins {
   id 'java'
   id "io.freefair.lombok" version "${lombokPluginVersion}"
-  id "org.gretty" version "${grettyVersion}"
   id 'war'
+  id "org.gretty" version "${grettyVersion}"
   id 'org.jetbrains.kotlin.jvm' version "${kotlinJvmPluginVersion}"
 }
 
@@ -38,9 +38,6 @@ dependencies {
   implementation "org.hsqldb:hsqldb:${hsqldbVersion}"
 
   compileOnly "jakarta.servlet:jakarta.servlet-api:${jakartaServletApiVersion}"
-  compileOnly "jakarta.servlet.jsp:jakarta.servlet.jsp-api:${jakartaServletJspApiVersion}"
-  runtimeOnly "jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:${jakartaServletJspJstlApiVersion}"
-  runtimeOnly "org.glassfish.web:jakarta.servlet.jsp.jstl:${jakartaServletJspJstlVersion}"
 
   testRuntimeOnly "org.glassfish:jakarta.el:${jakartaElVersion}"
 
@@ -51,6 +48,7 @@ dependencies {
   testImplementation "org.assertj:assertj-core:${assertJVersion}"
 
   testImplementation "org.springframework:spring-test:${springVersion}"
+  testImplementation "io.micrometer:context-propagation:${ioMicrometerVersion}"
   testImplementation "org.springframework.security:spring-security-test:${springSecurityVersion}"
   testRuntimeOnly "jakarta.servlet:jakarta.servlet-api:${jakartaServletApiVersion}"
 
@@ -61,7 +59,11 @@ dependencies {
 
   implementation "org.thymeleaf:thymeleaf-spring6:${thymeleafVersion}"
   implementation "org.thymeleaf.extras:thymeleaf-extras-springsecurity6:${thymeleafVersion}"
-  implementation "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:${thymeleafLayoutVersion}"
+  
+  // Gretty로 실행할 때는 공식 라이브러리는 안되고, zhanhb 버전을 써야 레이아웃 페이지 접근시 예외가 발생하지 않는다.
+  // implementation "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:${thymeleafLayoutVersion}"
+  
+  implementation "com.github.zhanhb:thymeleaf-layout-dialect:${zhanhbThymeleafLayoutVersion}"
   implementation "org.thymeleaf.extras:thymeleaf-extras-java8time:${thymeleafExtrasJava8timeVersion}"
 
   implementation "net.coobird:thumbnailator:${thumbnailatorVersion}"
@@ -79,10 +81,12 @@ gretty {
   contextPath = project.name
   servletContainer = "tomcat10"
   jvmArgs = [
-      "-Djava.security.egd=file:/dev/./urandom",
-      "--add-opens=java.base/java.io=ALL-UNNAMED",
-      "--add-opens=java.base/java.lang=ALL-UNNAMED",
-      "--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED"
+    "-Djava.security.egd=file:/dev/./urandom",
+    "--add-opens=java.base/java.lang=ALL-UNNAMED",
+    "--add-opens=java.base/java.io=ALL-UNNAMED",
+	  "--add-opens=java.base/java.util=ALL-UNNAMED",
+	  "--add-opens=java.base/java.util.concurrent=ALL-UNNAMED",
+    "--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED"
   ]
 }
 
