@@ -16,7 +16,7 @@ import org.springframework.web.multipart.support.MultipartFilter;
 
 @RequiredArgsConstructor
 @Configuration
-@PropertySource("classpath:config/jdbc.properties")
+@PropertySource("classpath:config/db-oracle.properties")
 public class RootConfig {
 
   private final Environment environment;
@@ -55,6 +55,6 @@ public class RootConfig {
   @Primary
   @Bean(initMethod = "resetDB")
   DBDataInitializer dbDataInitializer() {
-    return new DBDataInitializer(dataSource(), "sql/hsqldb/init-sql.sql");
+    return new DBDataInitializer(dataSource(), "sql/oracle/init-sql.sql");
   }
 }

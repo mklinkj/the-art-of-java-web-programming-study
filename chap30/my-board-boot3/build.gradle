@@ -38,7 +38,7 @@ dependencies {
   // ##################################
   // ### Spring Boot - DB , MyBatis ###
   // ##################################
-  implementation 'org.hsqldb:hsqldb'
+  runtimeOnly "com.oracle.database.jdbc:ojdbc11:${ojdbcVersion}"
   implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisSpringBootStarterVersion}"
   testImplementation "org.mybatis.spring.boot:mybatis-spring-boot-starter-test:${mybatisSpringBootStarterVersion}"
 

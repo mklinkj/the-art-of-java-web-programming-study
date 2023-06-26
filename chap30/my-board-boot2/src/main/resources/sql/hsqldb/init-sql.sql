@@ -10,7 +10,7 @@ CREATE TABLE t_member
 );
 
 INSERT INTO t_member (id, pwd, name, email, join_date)
-VALUES ('mklinkj', '{noop}1234', '정션링크', 'mklinkj@github.com', '2023-02-01');
+VALUES ('mklinkj', '{bcrypt}$2a$10$x.jjGAH0ejiHcWnOtT.fh.7DIST36OLKLHucPkaSrh4/aczSZpAbu', '정션링크', 'mklinkj@github.com', '2023-02-01');
 
 INSERT INTO t_member (id, pwd, name, email, join_date)
 VALUES ('hong', '{bcrypt}$2a$10$gjrfhS0Hht9nD6IFaP1.EuZi7wUROvgsw0UxUvQw66uRPk1svxMEm', '홍길동', 'hong@gamil.com', '2023-02-02');

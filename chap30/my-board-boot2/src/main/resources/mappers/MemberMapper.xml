@@ -5,7 +5,7 @@
 <mapper namespace="org.mklinkj.taojwp.member.mapper.MemberMapper">
   <sql id="member_select">
     SELECT id, pwd, name, email, join_date
-    FROM t_member
+    FROM t30_member
   </sql>
 
 
@@ -18,7 +18,7 @@
   </resultMap>
 
   <insert id="addMember" parameterType="memberVO">
-    INSERT INTO t_member (id, pwd, name, email)
+    INSERT INTO t30_member (id, pwd, name, email)
     VALUES (#{id}, #{pwd}, #{name}, #{email})
   </insert>
 
@@ -49,7 +49,7 @@
 
 
   <update id="updateMember" parameterType="memberVO">
-    UPDATE t_member
+    UPDATE t30_member
     SET pwd   = #{pwd}
       , name  = #{name}
       , email = #{email}
@@ -58,7 +58,7 @@
 
   <delete id="deleteMember" parameterType="string">
     DELETE
-    FROM t_member
+    FROM t30_member
     WHERE id = #{id}
   </delete>
 
@@ -83,23 +83,25 @@
     ORDER BY join_date DESC
   </select>
 
-  <!--
-    <insert id="foreachInsert" parameterType="list">
-      <foreach item="item" collection="list" open="INSERT ALL" separator=","
-        close="SELECT * FROM DUAL">
-        INTO t_member(id, pwd, name, email)
-        VALUES (
-        #{item.id},
-        #{item.pwd},
-        #{item.name},
-        #{item.email}
-        )
-      </foreach>
-    </insert>
-  -->
-  
+  <!-- Oracle 대응 멀티 INSERT -->
   <insert id="foreachInsert" parameterType="list">
-    INSERT INTO t_member (id, pwd, name, email)
+    <foreach item="item" collection="list" open="INSERT ALL" separator=" "
+      close="SELECT * FROM DUAL">
+      INTO t30_member(id, pwd, name, email)
+      VALUES (
+      #{item.id},
+      #{item.pwd},
+      #{item.name},
+      #{item.email}
+      )
+    </foreach>
+  </insert>
+
+
+  <!-- MySQL, HSQLDB 대응 멀티 INSERT -->
+  <!--
+  <insert id="foreachInsert" parameterType="list">
+    INSERT INTO t30_member (id, pwd, name, email)
     VALUES
     <foreach item="item" collection="list" separator=",">
       (#{item.id},
@@ -108,4 +110,5 @@
       #{item.email})
     </foreach>
   </insert>
+  -->
 </mapper>
