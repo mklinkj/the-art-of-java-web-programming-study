@@ -95,8 +95,7 @@ public class BoardController {
     if (!attachFileList.isEmpty()) {
       // TODO: 아직은 파일 1개만 첨부 가능
       AttachFile attachFile = attachFileList.get(0);
-      File srcFile =
-          new File(uploadTempPath + File.separator + File.separator + attachFile.getTempFileName());
+      File srcFile = new File(uploadTempPath + File.separator + attachFile.getTempFileName());
       File destDir = new File(uploadPath + File.separator + articleNo);
       destDir.mkdirs();
       File destFile =
@@ -155,8 +154,7 @@ public class BoardController {
     if (!attachFileList.isEmpty()) {
       AttachFile attachFile = attachFileList.get(0);
 
-      File srcFile =
-          new File(uploadTempPath + File.separator + File.separator + attachFile.getTempFileName());
+      File srcFile = new File(uploadTempPath + File.separator + attachFile.getTempFileName());
       File destDir = new File(uploadPath + File.separator + articleVO.getArticleNo());
       destDir.mkdirs();
 
@@ -228,8 +226,7 @@ public class BoardController {
     if (!attachFileList.isEmpty()) {
       AttachFile attachFile = attachFileList.get(0);
 
-      File srcFile =
-          new File(uploadTempPath + File.separator + File.separator + attachFile.getTempFileName());
+      File srcFile = new File(uploadTempPath + File.separator + attachFile.getTempFileName());
       File destDir = new File(uploadPath + File.separator + articleNo);
       destDir.mkdirs();
       File destFile =

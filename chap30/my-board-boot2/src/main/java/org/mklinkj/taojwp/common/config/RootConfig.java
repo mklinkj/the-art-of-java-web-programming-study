@@ -3,16 +3,14 @@ package org.mklinkj.taojwp.common.config;
 import java.io.IOException;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.datasource.pooled.PooledDataSource;
 import org.mklinkj.taojwp.common.util.DBDataInitializer;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.transaction.TransactionManager;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.multipart.support.MultipartFilter;
 
@@ -25,6 +23,20 @@ import org.springframework.web.multipart.support.MultipartFilter;
 public class RootConfig {
 
   private final Environment environment;
+
+  /*
+   * 스프링 부트가 자동 설정해주는 것을 그대로 유지하면서도
+   * 프로퍼티 처리는 별도로 관리하고 싶어서 아래와 같이 처리
+   */
+  @Bean
+  public DataSource dataSource() {
+    return DataSourceBuilder.create() //
+        .driverClassName(environment.getProperty("jdbc.driver"))
+        .url(environment.getProperty("jdbc.url"))
+        .username(environment.getProperty("jdbc.username"))
+        .password(environment.getProperty("jdbc.password"))
+        .build();
+  }
 
   @Bean
   MultipartFilter multipartFilter() {
@@ -40,22 +52,6 @@ public class RootConfig {
     resolver.setDefaultEncoding("UTF-8");
     resolver.setUploadTempDir(new FileSystemResource(environment.getProperty("upload_temp_path")));
     return resolver;
-  }
-
-  @Bean
-  DataSource dataSource() {
-    PooledDataSource dataSource = new PooledDataSource();
-
-    dataSource.setDriver(environment.getProperty("jdbc.driver"));
-    dataSource.setUrl(environment.getProperty("jdbc.url"));
-    dataSource.setUsername(environment.getProperty("jdbc.username"));
-    dataSource.setPassword(environment.getProperty("jdbc.password"));
-    return dataSource;
-  }
-
-  @Bean
-  TransactionManager transactionManager() {
-    return new DataSourceTransactionManager(dataSource());
   }
 
   @Primary
