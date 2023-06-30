@@ -71,7 +71,6 @@
   <a href="${contextPath}/member/memberForm.do">회원가입하기</a>
 </div>
 
-
 <script>
   <c:if test="${not empty result}">
     <c:set var="code" value="list.${result}"/>

@@ -13,6 +13,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
 
+
 logging:
   pattern:
     console: "%clr(%d{HH:mm:ss.SSS}){faint} %clr([%thread]){magenta} %clr(%-5level) %clr(%logger{72}){cyan} - %clr(%msg%n){faint}"

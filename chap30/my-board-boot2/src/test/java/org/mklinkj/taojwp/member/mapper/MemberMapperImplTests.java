@@ -76,7 +76,7 @@ class MemberMapperImplTests {
   @Rollback
   @Test
   void testDeleteMember() {
-    String id = "mklinkj";
+    String id = "no_article";
     int result = memberMapper.deleteMember(id);
     assertThat(result).isEqualTo(1);
   }

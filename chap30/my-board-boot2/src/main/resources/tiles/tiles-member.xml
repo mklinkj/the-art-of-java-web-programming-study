@@ -5,12 +5,12 @@
 <tiles-definitions>
   <definition name="baseLayout"
     template="/WEB-INF/views/common/layout.jsp">
+    <put-attribute name="script_lib" value="/WEB-INF/views/common/script.jsp"/>
     <put-attribute name="title" value=""/>
     <put-attribute name="header" value="/WEB-INF/views/common/header.jsp"/>
     <put-attribute name="side" value="/WEB-INF/views/common/side.jsp"/>
     <put-attribute name="body" value=""/>
     <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp"/>
-    <put-attribute name="script" value="/WEB-INF/views/common/script.jsp"/>
   </definition>
 
   <definition name="main" extends="baseLayout">
@@ -60,5 +60,26 @@
     <put-attribute name="body" value="/WEB-INF/views/mail/sendMail.jsp"/>
   </definition>
 
+
+  <!-- 게시판 -->
+  <definition name="board/listArticles" extends="baseLayout">
+    <put-attribute name="title" value="게시물 목록"/>
+    <put-attribute name="body" value="/WEB-INF/views/board/listArticles.jsp"/>
+  </definition>
+
+  <definition name="board/articleForm" extends="baseLayout">
+    <put-attribute name="title" value="새글 쓰기"/>
+    <put-attribute name="body" value="/WEB-INF/views/board/articleForm.jsp"/>
+  </definition>
+
+  <definition name="board/viewArticle" extends="baseLayout">
+    <put-attribute name="title" value="게시물 보기"/>
+    <put-attribute name="body" value="/WEB-INF/views/board/viewArticle.jsp"/>
+  </definition>
+
+  <definition name="board/replyForm" extends="baseLayout">
+    <put-attribute name="title" value="답글 쓰기"/>
+    <put-attribute name="body" value="/WEB-INF/views/board/replyForm.jsp"/>
+  </definition>
 
 </tiles-definitions>

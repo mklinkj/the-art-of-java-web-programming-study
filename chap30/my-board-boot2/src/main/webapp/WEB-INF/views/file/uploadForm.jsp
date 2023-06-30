@@ -1,4 +1,5 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <div>
   <h1>파일 업로드 하기</h1>
@@ -25,6 +26,7 @@
     <div id="d_file">
     </div>
   </form>
+
   <script>
     let count = 1;
 

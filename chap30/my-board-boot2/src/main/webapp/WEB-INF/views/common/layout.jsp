@@ -8,9 +8,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <sec:csrfMetaTags/>
   <link rel="stylesheet"
         href="${contextPath}/webjars/bootstrap/css/bootstrap.min.css">
   <title><tiles:insertAttribute name="title"/></title>
+  <tiles:insertAttribute name="script_lib"/>
 </head>
 <body>
 <div id="container" class="container min-vw-100">
@@ -30,12 +32,11 @@
   </div>
   <hr class="border border-primary border-1 opacity-75 ">
 
+
   <div id="footer" class="row">
     <!-- 푸터 -->
     <tiles:insertAttribute name="footer"/>
   </div>
 </div>
-
-<tiles:insertAttribute name="script"/>
 </body>
 </html>

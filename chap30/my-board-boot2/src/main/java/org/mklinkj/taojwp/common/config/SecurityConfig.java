@@ -49,6 +49,11 @@ public class SecurityConfig {
                     "/mail/*",
                     "/error")
                 .permitAll()
+                .mvcMatchers(
+                    "/board/listArticles.do",
+                    "/board/viewArticle.do"
+                )
+                .permitAll()
                 .anyRequest()
                 .authenticated());
 
