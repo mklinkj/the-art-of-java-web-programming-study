@@ -27,7 +27,7 @@ INSERT INTO t30_member (id, pwd, name, email, join_date)
 VALUES ('choi', '{bcrypt}$2a$10$gjrfhS0Hht9nD6IFaP1.EuZi7wUROvgsw0UxUvQw66uRPk1svxMEm', '최치원', 'choi@gamil.com', TO_DATE('2023-02-05 10:00:00', 'YYYY-MM-DD HH24:MI:SS'));
 
 INSERT INTO t30_member (id, pwd, name, email, join_date)
-VALUES ('no_article', '{noop}1234', '글안씀', 'mklinkj@github.com', TO_DATE('2023-02-06 10:00:00', 'YYYY-MM-DD HH24:MI:SS'));
+VALUES ('no_article', '{noop}1234', '글안씀', 'no_article@github.com', TO_DATE('2023-02-06 10:00:00', 'YYYY-MM-DD HH24:MI:SS'));
 
 
 CREATE TABLE t30_board
