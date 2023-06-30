@@ -14,6 +14,16 @@ spring:
     allow-bean-definition-overriding: true
 
 
+mybatis:
+  type-aliases-package: "org.mklinkj.taojwp.board.domain;org.mklinkj.taojwp.member.domain;org.mklinkj.taojwp.member.dto"
+  mapper-locations:
+    - "classpath:mappers/BoardMapper.xml"
+    - "classpath:mappers/MemberMapper.xml"
+  configuration:
+    map-underscore-to-camel-case: true
+    jdbc-type-for-null: null
+
+
 logging:
   pattern:
     console: "%clr(%d{HH:mm:ss.SSS}){faint} %clr([%thread]){magenta} %clr(%-5level) %clr(%logger{72}){cyan} - %clr(%msg%n){faint}"
