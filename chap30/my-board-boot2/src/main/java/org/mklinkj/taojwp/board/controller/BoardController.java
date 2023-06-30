@@ -197,6 +197,8 @@ public class BoardController {
   @PostMapping("/replyForm.do")
   public String replyForm(@RequestParam("parentNo") Integer parentNo, HttpSession session) {
     LOGGER.info("### replyForm.do parentNo: {}", parentNo);
+    // TODO: 부모글 게시물 번호를  Session 을 통해 전달할까?
+    // Model에다  부모글 게시물 번호를 설정하고 페이지에서 그 값을 다시 폼 전송하면 될텐데? 세션의 장점이 있는지? 딱히 없어보임 😅
     session.setAttribute("parentNo", parentNo);
     return "board/replyForm";
   }

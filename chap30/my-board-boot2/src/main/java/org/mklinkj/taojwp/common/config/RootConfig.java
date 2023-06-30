@@ -1,6 +1,7 @@
 package org.mklinkj.taojwp.common.config;
 
 import java.io.IOException;
+import java.util.Objects;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import org.mklinkj.taojwp.common.util.DBDataInitializer;
@@ -50,7 +51,9 @@ public class RootConfig {
     resolver.setMaxInMemorySize(10485760);
     resolver.setMaxUploadSizePerFile(10485760);
     resolver.setDefaultEncoding("UTF-8");
-    resolver.setUploadTempDir(new FileSystemResource(environment.getProperty("upload_temp_path")));
+    resolver.setUploadTempDir(
+        new FileSystemResource(
+            Objects.requireNonNull(environment.getProperty("upload_temp_path"))));
     return resolver;
   }
 
