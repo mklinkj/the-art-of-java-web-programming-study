@@ -30,7 +30,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
@@ -73,7 +74,7 @@ public class BoardController {
   @PostMapping("/addArticle.do")
   public String addArticle(
       ArticleVO articleVO,
-      MultipartHttpServletRequest multipartHttpServletRequest,
+      @RequestPart("imageFile") List<MultipartFile> multipartFileList,
       RedirectAttributes redirectAttributes)
       throws IOException {
 
@@ -81,8 +82,7 @@ public class BoardController {
 
     articleVO.setId(loginMember.getName());
 
-    List<AttachFile> attachFileList =
-        fileUploadService.uploadArticleAttachFile(multipartHttpServletRequest);
+    List<AttachFile> attachFileList = fileUploadService.uploadArticleAttachFile(multipartFileList);
 
     if (!attachFileList.isEmpty()) {
       // TODO: 아직은 파일 1개만 첨부 가능
@@ -127,7 +127,8 @@ public class BoardController {
   @PostMapping("/modArticle.do")
   public String modArticle(
       ArticleVO articleVO,
-      MultipartHttpServletRequest multipartHttpServletRequest,
+      @RequestParam("originalFileName") String originalFileName,
+      @RequestPart("imageFile") List<MultipartFile> fileList,
       RedirectAttributes redirectAttributes)
       throws IOException {
 
@@ -142,8 +143,7 @@ public class BoardController {
           ModalMessage.builder().title("잘못된 수정 요청").content("자신의 글만 수정 가능합니다. 😅").build());
     }
 
-    List<AttachFile> attachFileList =
-        fileUploadService.uploadArticleAttachFile(multipartHttpServletRequest);
+    List<AttachFile> attachFileList = fileUploadService.uploadArticleAttachFile(fileList);
 
     if (!attachFileList.isEmpty()) {
       articleVO.setImageFileName(attachFileList.get(0).getOriginalFileName());
@@ -157,6 +157,11 @@ public class BoardController {
       File srcFile = new File(uploadTempPath + File.separator + attachFile.getTempFileName());
       File destDir = new File(uploadPath + File.separator + articleVO.getArticleNo());
       destDir.mkdirs();
+
+      if (originalFileName != null && !originalFileName.isBlank()) {
+        File previousFile = new File(destDir, originalFileName);
+        previousFile.delete();
+      }
 
       File destFile = new File(destDir, attachFile.getOriginalFileName());
       Files.move(srcFile.toPath(), destFile.toPath(), REPLACE_EXISTING);
@@ -207,15 +212,14 @@ public class BoardController {
   public String addReply(
       ArticleVO articleVO,
       HttpSession session,
-      MultipartHttpServletRequest multipartHttpServletRequest,
+      @RequestPart("imageFile") List<MultipartFile> multipartFileList,
       RedirectAttributes redirectAttributes)
       throws IOException {
     int parentNo = (Integer) session.getAttribute("parentNo");
     Authentication loginMember = SecurityContextHolder.getContext().getAuthentication();
     session.removeAttribute("parentNo");
 
-    List<AttachFile> attachFileList =
-        fileUploadService.uploadArticleAttachFile(multipartHttpServletRequest);
+    List<AttachFile> attachFileList = fileUploadService.uploadArticleAttachFile(multipartFileList);
 
     if (!attachFileList.isEmpty()) {
       articleVO.setImageFileName(attachFileList.get(0).getOriginalFileName());

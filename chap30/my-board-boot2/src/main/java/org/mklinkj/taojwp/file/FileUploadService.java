@@ -69,37 +69,33 @@ public class FileUploadService {
    *
    * 그려면 이 메서드의 역활은 그냥 임시 경로에 업로드 해두는 역활이 된다.
    */
-  public List<AttachFile> uploadArticleAttachFile(MultipartHttpServletRequest multipartRequest)
+  public List<AttachFile> uploadArticleAttachFile(List<MultipartFile> multipartFileList)
       throws IOException {
 
-    List<AttachFile> fileList = new ArrayList<>();
-    Iterator<String> fileNames = multipartRequest.getFileNames();
+    List<AttachFile> attachFileList = new ArrayList<>(multipartFileList.size());
 
-    while (fileNames.hasNext()) {
-      String fileName = fileNames.next();
-      MultipartFile multipartFile = multipartRequest.getFile(fileName);
-      String originalFileName =
-          Paths.get(multipartFile.getOriginalFilename()).getFileName().toString();
+    for (MultipartFile multipartFile : multipartFileList) {
+      if (multipartFile.getOriginalFilename().isBlank() || multipartFile.getSize() == 0) {
+        continue;
+      }
 
       AttachFile attachFile =
           AttachFile.builder()
-              .originalFileName(originalFileName)
+              .originalFileName(multipartFile.getOriginalFilename())
               .uuid(UUID.randomUUID().toString())
               .build();
-
-      fileList.add(attachFile);
+      attachFileList.add(attachFile);
 
       File file = new File(uploadTempPath + File.separator + attachFile.getTempFileName());
 
-      if (multipartFile.getSize() != 0) {
-        if (!file.exists()) {
-          if (file.getParentFile().mkdirs()) {
-            file.createNewFile();
-          }
+      if (!file.exists()) {
+        if (file.getParentFile().mkdirs()) {
+          file.createNewFile();
         }
-        multipartFile.transferTo(file);
       }
+      multipartFile.transferTo(file);
     }
-    return fileList;
+
+    return attachFileList;
   }
 }

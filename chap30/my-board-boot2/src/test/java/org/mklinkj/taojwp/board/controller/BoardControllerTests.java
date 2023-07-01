@@ -129,6 +129,7 @@ class BoardControllerTests {
                 .param("articleNo", "100")
                 .param("title", "제목_수정")
                 .param("content", "내용_수정")
+                .param("originalFileName", "") // 먼저 등록된 첨부파일 이름
                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
                 .with(csrf()))
         .andDo(print())
