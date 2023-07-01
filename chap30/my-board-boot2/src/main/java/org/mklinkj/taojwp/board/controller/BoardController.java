@@ -127,7 +127,7 @@ public class BoardController {
   @PostMapping("/modArticle.do")
   public String modArticle(
       ArticleVO articleVO,
-      @RequestParam("originalFileName") String originalFileName,
+      @RequestParam(name = "originalFileName", defaultValue = "") String originalFileName,
       @RequestPart("imageFile") List<MultipartFile> fileList,
       RedirectAttributes redirectAttributes)
       throws IOException {

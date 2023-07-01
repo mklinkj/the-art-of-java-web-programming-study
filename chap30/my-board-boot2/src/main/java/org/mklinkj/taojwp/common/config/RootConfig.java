@@ -1,5 +1,7 @@
 package org.mklinkj.taojwp.common.config;
 
+import static org.mklinkj.taojwp.board.constant.Constants.MEGA_BYTE;
+
 import java.io.IOException;
 import java.util.Objects;
 import javax.sql.DataSource;
@@ -47,9 +49,9 @@ public class RootConfig {
   @Bean
   CommonsMultipartResolver commonsMultipartResolver() throws IOException {
     CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-    resolver.setMaxUploadSize(52428800);
-    resolver.setMaxInMemorySize(10485760);
-    resolver.setMaxUploadSizePerFile(10485760);
+    resolver.setMaxUploadSize(50 * MEGA_BYTE);
+    resolver.setMaxInMemorySize(10 * MEGA_BYTE);
+    resolver.setMaxUploadSizePerFile(10 * MEGA_BYTE);
     resolver.setDefaultEncoding("UTF-8");
     resolver.setUploadTempDir(
         new FileSystemResource(
