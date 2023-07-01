@@ -1,5 +1,9 @@
 server:
   port: 8090
+  tomcat:
+    max-http-form-post-size: 10MB
+  servlet:
+    context-path: "/pro30"
 
 spring:
   freemarker:
@@ -20,6 +24,15 @@ spring:
       enabled: true
       location: C:\upload\art_of_java_web\temp
 
+mybatis:
+  type-aliases-package: "org.mklinkj.taojwp.board.domain;org.mklinkj.taojwp.member.domain;org.mklinkj.taojwp.member.dto"
+  mapper-locations:
+    - "classpath:mappers/**/*.xml"
+  configuration:
+    map-underscore-to-camel-case: true
+    # 그냥 NULL로만 적으면 인식이 안된다. 따음표나 쌍따옴표로 감싸줘야한다.
+    jdbc-type-for-null: "NULL"
+
 
 logging:
   pattern:
@@ -34,4 +47,5 @@ logging:
     # 사용자 정의 패키지
     org.mklinkj: debug
     org.mklinkj.taojwp.member.mapper: trace
+    org.mklinkj.taojwp.board.mapper: trace
 

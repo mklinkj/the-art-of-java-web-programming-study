@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout.html}">
+<body>
+<head>
+  <title>회원 정보 수정</title>
+</head>
+
+<th:block layout:fragment="content" th:with="
+  articlesList=${articlesMap.articlesList},
+  totArticles=${articlesMap.totArticles},
+  ceilTotArticles=${articlesMap.ceilTotArticles},
+  section=${articlesMap.section},
+  pageNum=${articlesMap.pageNum},
+  pageSize=${articlesMap.pageSize},
+  pageNaviSize=${articlesMap.pageNaviSize}
+">
+
+  <h2 class="text-center mt-4 mb-4">게시물 목록</h2>
+
+  <table class="table table-bordered">
+    <thead class="table-primary">
+    <tr class="text-center">
+      <th>글번호</th>
+      <th>작성자</th>
+      <th>제목</th>
+      <th>작성일</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:if="${#lists.isEmpty(articlesList)}">
+      <tr class="text-center">
+        <td colspan="4">
+          <b>등록된 글이 없습니다.</b>
+        </td>
+      </tr>
+    </th:block>
+    <th:block th:unless="${#lists.isEmpty(articlesList)}">
+      <th:block th:each="article : ${articlesList}">
+        <tr class="text-center">
+          <td th:text="${article.articleNo}"></td>
+          <td th:text="${article.id}"></td>
+
+          <td class="text-start">
+            <span class="m-1"></span>
+            <th:block th:if="${article.level > 1}">
+              <span th:class="|m-${article.level}|"></span>
+              <span class="text-secondary">[답변]</span>
+              <a class="text-decoration-none"
+                 th:href="@{|/board/viewArticle.do?articleNo=${article.articleNo}|}"
+                 th:text="${article.title}"></a>
+            </th:block>
+            <th:block th:unless="${article.level > 1}">
+              <a class="text-decoration-none"
+                 th:href="@{|/board/viewArticle.do?articleNo=${article.articleNo}|}"
+                 th:text="${article.title}"></a>
+            </th:block>
+          </td>
+          <td th:text="${#temporals.format(article.writeDate, 'yyyy-MM-dd')}"></td>
+        </tr>
+      </th:block>
+    </th:block>
+    </tbody>
+  </table>
+
+  <nav th:if="${totArticles != null}" aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      <!-- 페이지 네비게이션 번호 -->
+      <th:block th:each="pageNaviNo : ${#numbers.sequence(1, pageNaviSize)}">
+        <!-- 이전 -->
+        <th:block th:if="${section > 1 && pageNaviNo == 1}">
+          <li class="page-item">
+            <a class="page-link"
+               th:href="@{|/board/listArticles.do?section=${section - 1}&pageNum=1|}">pre</a>
+          </li>
+        </th:block>
+
+        <th:block th:if="${ceilTotArticles >= ((section - 1) * pageSize + pageNaviNo) * pageSize}">
+          <li th:classappend="${pageNum == pageNaviNo} ? 'active' : ''" class="page-item">
+            <a class="page-link"
+               th:href="@{|/board/listArticles.do?section=${section}&pageNum=${pageNaviNo}|}"
+               th:text="${(section - 1) * pageSize + pageNaviNo}"></a>
+          </li>
+
+          <th:block
+              th:if="${pageNaviNo eq pageNaviSize and ceilTotArticles >= ((section - 1) * pageSize + pageNaviNo + 1) * pageSize}">
+            <li class="page-item">
+              <a class="page-link"
+                 th:href="@{|/board/listArticles.do?section=${section + 1}&pageNum=1|}">next</a>
+            </li>
+          </th:block>
+        </th:block>
+      </th:block>
+
+    </ul>
+  </nav>
+
+
+  <div class="text-center">
+    <a class="text-decoration-none" th:href="@{/board/articleForm.do}">글쓰기</a>
+  </div>
+
+
+  <div th:if="${msg != null}" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" th:text="${msg.title}"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"
+                  aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p th:text="${msg.content}"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</th:block>
+
+<script layout:fragment="script" th:inline="javascript">
+  // show modal
+  const target = document.querySelector(".modal");
+  const modal = new bootstrap.Modal(target);
+
+  const message = /*[[${msg}]]*/ false;
+
+  if (message) {
+    modal.show();
+  }
+</script>
+
+
+</body>
+</html>

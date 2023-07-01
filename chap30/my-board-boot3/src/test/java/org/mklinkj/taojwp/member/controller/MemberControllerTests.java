@@ -164,7 +164,7 @@ class MemberControllerTests {
     mockMvc
         .perform(
             post("/member/delMember.do") //
-                .param("id", "mklinkj")
+                .param("id", "no_article")
                 .with(csrf()))
         .andDo(print())
         .andExpect(status().isFound())

@@ -325,3 +325,147 @@ WebJars Locator 컨트롤러 만든것은 필요가 없어졌으니 제거함.
 
 
 
+## Thymeleaf  전환시 특이한 점
+
+> 이미 다 바꾸고 소스코드 보면서 쓰기는 쓰는데..
+
+### `<sec:csrfInput>`. `<*sec*:csrfMetaTags />` 를 사용할 수 없기 때문에.. 수동으로 써줘야함.
+
+* 메타 테그
+
+  ```html
+  <meta name="_csrf_parameter" th:content="${_csrf.parameterName}" />
+  <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+  <meta name="_csrf" th:content="${_csrf.token}" />
+  ```
+
+* csrf hidden 
+
+  ```html
+  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+  ```
+
+  
+
+### context path 를 어떻게 ?
+
+```javascript
+  const contextPath = (() => {
+    // 어쩔 수 없이 뒤에 /가 포함된 context path가 /pro30 이라면 /pro30/ 이된다. 끝의 /가 있다면 제거해서 처리하자.
+    let contextPath = /*[[@{/}]]*/ "";
+    if (contextPath == "/") {
+      return "";
+    } else {
+      if (contextPath.endsWith("/")) {
+        return contextPath.slice(0, -1);
+      }
+    }
+  })();
+```
+
+ html 에서는 `@{ ... }` 여기다 주소 적어놓으면 타임리프가 알아서 처리하는데, JavaScript 에서는 어떻게 처리할지 몰라서 위의 함수를 만들었음.
+
+예전에는..  아래 방식이 되었을 것으로 보이는데...
+
+```javascript
+let contextPath = /*[[${#request.contextPath}]]*/ "";
+```
+
+지금 Thymeleaf 3.1 에서는 막은 것 같음. 에러남..🎃
+
+> 'request', 'session', 'servletContext' 및 'response' 표현식 유틸리티 객체는 더 이상 템플릿 표현식에 기본적으로 사용할 수 없으며 사용을 권장하지 않습니다. 꼭 필요한 경우에는 컨텍스트 변수로 수동으로 추가해야 합니다.
+
+쓸려면 수동으로 변수로 내보내라는 것 같음..
+
+
+
+###  ETC
+
+* 순번 시퀀싱
+
+  ```  html
+  <th:block th:each="pageNaviNo : ${#numbers.sequence(1, pageNaviSize)}">
+  ```
+
+* list 비었는지 검사
+
+  ```html
+  <th:block th:unless="${#lists.isEmpty(articlesList)}">
+  ```
+
+* 날짜 포멧
+
+  ```html
+  <td th:text="${#temporals.format(article.writeDate, 'yyyy-MM-dd')}"></td>
+  ```
+
+* 특정 조건일 때  css  클래스 추가
+
+  ``` html
+  <li th:classappend="${pageNum == pageNaviNo} ? 'active' : ''" class="page-item">
+  ```
+
+*  자바스크립트에서 속성 값 처리
+
+  ```javascript
+    const message = /*[[${msg}]]*/ false;
+  
+    if (message) {
+      modal.show();
+    }
+  ```
+
+  변수로 먼저 받아서 값이 없을 때, 기본값 설정해서 처리하는게 괜찮아보이긴 하다.
+
+
+
+## 기타 특이한 점
+
+### 부트의 내장 톰켓 실행시, post 사이즈도 조정을 해야, 원하는대로 큰 파일 업로드가 가능했다.
+
+```yml
+server:
+  ...
+  tomcat:
+    max-http-form-post-size: 10MB
+```
+
+위의 설정을 추가해줘야했음.
+
+
+
+### MyBatis 의 JDBC Type For NULL 설정시 확인사항
+
+```yml
+mybatis:
+  ...
+  configuration:
+    ...
+    # 그냥 NULL로만 적으면 인식이 안된다. 따음표나 쌍따옴표로 감싸줘야한다.
+    jdbc-type-for-null: "NULL"
+```
+
+* 컬럼에 NULL 값을 저장할 때 어떻게할지 설정해주는 것인데...
+* 이 부분은 NULL 값을 그냥 쓰면 안되었음. 따옴표나 쌍따옴표로 감싸줘야 정상 인식 했음.
+
+
+
+### Boot3 프로젝트에서 commons-io 디펜던시 제거
+
+* 디렉토리를 삭제할 때, Java 의 기본 메서드로는 반드시 빈디렉토리여야지만 삭제가 가능함.
+* `commons-io`의 `FileUtils.deleteDirectory(dir)`는  디렉토리가 비어있지 않아도 일괄 삭제가 가능한데, 이거 하나의 사용때문에 common-io를 디펜던시하기엔 좀 그럼...
+
+```java
+private boolean deleteDirectory(File directoryToBeDeleted) {
+    File[] allContents = directoryToBeDeleted.listFiles();
+    if (allContents != null) {
+      for (File file : allContents) {
+        deleteDirectory(file);
+      }
+    }
+    return directoryToBeDeleted.delete();
+  }
+```
+
+빙챗한테 해결책을 물어보니 재귀로 지울 수 밖에 없다고 하여 위의 메서드 추가해서 사용.
+

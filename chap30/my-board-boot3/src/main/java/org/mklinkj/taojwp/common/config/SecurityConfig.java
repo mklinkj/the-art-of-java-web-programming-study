@@ -49,6 +49,10 @@ public class SecurityConfig {
                     "/mail/*",
                     "/error")
                 .permitAll()
+                .requestMatchers(
+                    "/board/listArticles.do", //
+                    "/board/viewArticle.do")
+                .permitAll()
                 .anyRequest()
                 .authenticated());
 

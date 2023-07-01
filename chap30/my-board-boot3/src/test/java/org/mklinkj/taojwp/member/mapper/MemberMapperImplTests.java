@@ -4,17 +4,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.mklinkj.taojwp.common.config.MyBatisConfig;
-import org.mklinkj.taojwp.common.config.RootConfig;
 import org.mklinkj.taojwp.member.domain.MemberVO;
 import org.mklinkj.taojwp.member.dto.SearchDTO;
 import org.mklinkj.taojwp.member.dto.SearchType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.transaction.annotation.Transactional;
 
-@SpringJUnitConfig({MyBatisConfig.class, RootConfig.class})
+@SpringBootTest
 class MemberMapperImplTests {
 
   @Autowired private MemberMapper memberMapper;
@@ -78,7 +76,7 @@ class MemberMapperImplTests {
   @Rollback
   @Test
   void testDeleteMember() {
-    String id = "mklinkj";
+    String id = "no_article";
     int result = memberMapper.deleteMember(id);
     assertThat(result).isEqualTo(1);
   }

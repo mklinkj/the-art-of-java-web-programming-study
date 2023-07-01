@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout.html}">
+<body>
+<head>
+  <title>답글 쓰기</title>
+</head>
+<th:block layout:fragment="content">
+<h2 class="text-center mt-4 mb-4">답글 쓰기</h2>
+
+<div class="card d-flex justify-content-center mx-auto col-9">
+  <div class="card-body ">
+    <form method="post" th:action="@{/board/addReply.do}" enctype="multipart/form-data">
+      <div class="row mb-3">
+        <label for="inputParentNo" class="col-sm-2 col-form-label text-center">부모 글번호</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control-plaintext" id="inputParentNo" th:value="${session.parentNo}">
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label for="inputTitle3" class="col-sm-2 col-form-label text-center">글 제목</label>
+        <div class="col-sm-10">
+          <input type="text" name="title" class="form-control" id="inputTitle3">
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label for="inputContent3" class="col-sm-2 col-form-label text-center align-text-top">글 내용</label>
+        <div class="col-sm-10">
+          <textarea class="form-control" rows="10" maxlength="4000" name="content" id="inputContent3"></textarea>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label for="inputImageFile" class="col-sm-3 col-form-label text-center">이미지 파일 첨부</label>
+        <div class="col-sm-9">
+          <input type="file" name="imageFile" class="form-control" id="inputImageFile" onchange="readURL(this)">
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div id="preview_div" class="ro mb-3 d-none">
+          <img id="preview" src="#" class="col-5 img-thumbnail rounded mx-auto d-block" >
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary me-2">답글 반영하기</button>
+        <a th:href="@{|/board/viewArticle.do?articleNo=${session.parentNo}|}">
+         <button type="button" class="btn btn-secondary">취소</button>
+        </a>
+      </div>
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    </form>
+  </div>
+</div>
+</th:block>
+
+<script layout:fragment="script" th:inline="javascript">
+  function readURL(input) {
+   if (input.files && input.files[0]) {
+     const reader = new FileReader();
+     reader.onload = function (e) {
+       $('#preview').attr('src', e.target.result);
+     }
+     reader.readAsDataURL(input.files[0]);
+     $('#preview_div').removeClass('d-none');
+   }
+  }
+</script>
