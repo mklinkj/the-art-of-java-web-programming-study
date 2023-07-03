@@ -18,7 +18,7 @@ spring:
 mybatis:
   type-aliases-package: "org.mklinkj.taojwp.board.domain;org.mklinkj.taojwp.member.domain;org.mklinkj.taojwp.member.dto"
   mapper-locations:
-    - "classpath:mappers/BoardMapper.xml"
+    - "classpath:mappers/OracleBoardMapper.xml"
     - "classpath:mappers/MemberMapper.xml"
   configuration:
     map-underscore-to-camel-case: true

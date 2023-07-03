@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.mklinkj.taojwp.board.domain.ArticleVO;
 
 @Mapper
-public interface BoardMapper {
+public interface OracleBoardMapper {
 
   List<ArticleVO> selectAllArticles();
 

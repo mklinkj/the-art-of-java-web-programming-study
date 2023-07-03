@@ -72,7 +72,7 @@
 
     <commons-beanutils.version>1.9.4</commons-beanutils.version>
 
-    <thumbnailator.version>0.4.19</thumbnailator.version>
+    <thumbnailator.version>0.4.20</thumbnailator.version>
 
     <vault3.version>3.0.3</vault3.version>
     <vault2.version>2.3.3</vault2.version>

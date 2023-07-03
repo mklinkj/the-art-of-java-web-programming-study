@@ -52,7 +52,7 @@
     <commons-fileupload.version>1.5</commons-fileupload.version>
     <commons-io.version>2.13.0</commons-io.version>
 
-    <thumbnailator.version>0.4.19</thumbnailator.version>
+    <thumbnailator.version>0.4.20</thumbnailator.version>
 
     <webjars-jquery.version>3.6.4</webjars-jquery.version>
     <webjars-bootstrap.version>5.3.0</webjars-bootstrap.version>
