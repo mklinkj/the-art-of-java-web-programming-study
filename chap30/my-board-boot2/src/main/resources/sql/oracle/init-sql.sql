@@ -1,4 +1,5 @@
 -- * 외래키 관계가 있어서 게시판 테이블이 먼저 삭제되야한다.
+DROP TABLE t30_attach_file;
 DROP TABLE t30_board;
 DROP TABLE t30_member;
 
@@ -174,3 +175,36 @@ INSERT INTO t30_board (article_no, parent_no, title, content, image_file_name, w
 INSERT INTO t30_board (article_no, parent_no, title, content, image_file_name, write_date, id) VALUES (101, 0, '101테스트글입니다.', '101테스트글입니다.', null, TIMESTAMP '2023-04-03 12:00:00', 'mklinkj');
 INSERT INTO t30_board (article_no, parent_no, title, content, image_file_name, write_date, id) VALUES (102, 0, '102테스트글입니다.', '102테스트글입니다.', null, TIMESTAMP '2023-04-03 12:00:00', 'mklinkj');
 
+
+CREATE TABLE t30_attach_file
+(
+    uuid          VARCHAR2(100)           NOT NULL,
+    file_name     VARCHAR2(250)           NOT NULL,
+    file_type     CHAR(1) DEFAULT 'I'     NOT NULL,
+    register_date DATE    DEFAULT SYSDATE NOT NULL,
+    article_no    NUMBER(10)              NOT NULL,
+    CONSTRAINT FK_t30_attach_file__t30_board FOREIGN KEY (article_no)
+        REFERENCES t30_board (article_no) ON DELETE CASCADE
+);
+
+INSERT INTO t30_attach_file (uuid, file_name, file_type, register_date, article_no)
+VALUES ('bf0890ec-3a79-4f63-a560-63e84ed4dcad', 'file_name_1.png', 'I',
+        TIMESTAMP '2023-07-01 00:00:00', 20);
+INSERT INTO t30_attach_file (uuid, file_name, file_type, register_date, article_no)
+VALUES ('90d08496-6da0-41ab-b9c5-3917007024ba', 'file_name_2.png', 'I',
+        TIMESTAMP '2023-07-01 00:00:00', 20);
+INSERT INTO t30_attach_file (uuid, file_name, file_type, register_date, article_no)
+VALUES ('d76170e7-bed7-4c16-8831-6c06ec10b305', 'file_name_3.png', 'I',
+        TIMESTAMP '2023-07-01 00:00:00', 20);
+
+
+
+INSERT INTO t30_attach_file (uuid, file_name, file_type, register_date, article_no)
+VALUES ('08bd6332-e4c3-4d99-bf13-6ddaa5c3a201', 'file_name_4.png', 'I',
+        TIMESTAMP '2023-07-02 00:00:00', 30);
+INSERT INTO t30_attach_file (uuid, file_name, file_type, register_date, article_no)
+VALUES ('dab145b3-9cec-4e58-a9d2-8be341d16093', 'file_name_5.png', 'I',
+        TIMESTAMP '2023-07-02 00:00:00', 30);
+INSERT INTO t30_attach_file (uuid, file_name, file_type, register_date, article_no)
+VALUES ('4f4fa02f-570a-46b9-9ed8-5218b568d97e', 'file_name_6.png', 'I',
+        TIMESTAMP '2023-07-02 00:00:00', 30);

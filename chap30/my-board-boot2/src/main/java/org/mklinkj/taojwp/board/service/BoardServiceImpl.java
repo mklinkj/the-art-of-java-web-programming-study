@@ -38,6 +38,7 @@ public class BoardServiceImpl implements BoardService {
   @Override
   public List<Integer> removeArticle(int articleNo) {
     List<Integer> removedArticleNo = boardDAO.selectArticleNumbersToDelete(articleNo);
+    // 게시물 자신만 지우지 않고, 답글까지 전부 지운다.
     boardDAO.deleteArticle(articleNo);
     return removedArticleNo;
   }

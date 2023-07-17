@@ -16,10 +16,9 @@ spring:
     allow-bean-definition-overriding: true
 
 mybatis:
-  type-aliases-package: "org.mklinkj.taojwp.board.domain;org.mklinkj.taojwp.member.domain;org.mklinkj.taojwp.member.dto"
+  type-aliases-package: "org.mklinkj.taojwp.board.domain;org.mklinkj.taojwp.member.domain;org.mklinkj.taojwp.member.dto;org.mklinkj.taojwp.file.domain"
   mapper-locations:
-    - "classpath:mappers/OracleBoardMapper.xml"
-    - "classpath:mappers/MemberMapper.xml"
+    - "classpath:mappers/**/*.xml"
   configuration:
     map-underscore-to-camel-case: true
     # 그냥 NULL로만 적으면 인식이 안된다. 따음표나 쌍따옴표로 감싸줘야한다.

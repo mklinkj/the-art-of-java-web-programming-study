@@ -64,9 +64,9 @@
   <dependencies>
 
 
-    <!-- #################################### -->
+    <!-- ###################################### -->
     <!-- ### Spring Boot Starter 디펜던시   ### -->
-    <!-- #################################### -->
+    <!-- ##################################### -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-freemarker</artifactId>
@@ -121,7 +121,7 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- ########################### -->
+    <!-- ############################ -->
     <!-- ### Spring Boot JSP 지원 ### -->
     <!-- ########################### -->
     <dependency>

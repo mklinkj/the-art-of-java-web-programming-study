@@ -1,4 +1,5 @@
 -- * 외래키 관계가 있어서 게시판 테이블이 먼저 삭제되야한다.
+DROP TABLE t30_attach_file;
 DROP TABLE t30_board;
 DROP TABLE t30_member;
 

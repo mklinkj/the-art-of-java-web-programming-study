@@ -1,4 +1,4 @@
-package org.mklinkj.taojwp.file;
+package org.mklinkj.taojwp.file.service;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,15 +7,26 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.mklinkj.taojwp.board.dao.AttachFileDAO;
 import org.mklinkj.taojwp.common.util.ProjectDataUtils;
+import org.mklinkj.taojwp.file.domain.AttachFile;
+import org.mklinkj.taojwp.file.domain.FileType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+@RequiredArgsConstructor
 @Service
-public class FileUploadService {
+public class FileService {
   private final String imageRepoPath = ProjectDataUtils.getProperty("image_repo_path");
   private final String uploadTempPath = ProjectDataUtils.getProperty("upload_temp_path");
+
+  private final String uploadPath = ProjectDataUtils.getProperty("upload_path");
+
+  private final AttachFileDAO attachFileDAO;
 
   /**
    * 여러 이미지 파일 업로드 예제
@@ -69,8 +80,8 @@ public class FileUploadService {
    *
    * 그려면 이 메서드의 역활은 그냥 임시 경로에 업로드 해두는 역활이 된다.
    */
-  public List<AttachFile> uploadArticleAttachFile(List<MultipartFile> multipartFileList)
-      throws IOException {
+  public List<AttachFile> uploadArticleAttachFile(
+      List<MultipartFile> multipartFileList, Integer articleNo) throws IOException {
 
     List<AttachFile> attachFileList = new ArrayList<>(multipartFileList.size());
 
@@ -81,12 +92,14 @@ public class FileUploadService {
 
       AttachFile attachFile =
           AttachFile.builder()
-              .originalFileName(multipartFile.getOriginalFilename())
               .uuid(UUID.randomUUID().toString())
+              .fileName(multipartFile.getOriginalFilename())
+              .fileType(FileType.I) // TODO: 기능을 완료하기 전까진 기본 이미지로 간주.
+              .articleNo(articleNo)
               .build();
       attachFileList.add(attachFile);
 
-      File file = new File(uploadTempPath + File.separator + attachFile.getTempFileName());
+      File file = new File(uploadTempPath + File.separator + attachFile.getStoredFileName());
 
       if (!file.exists()) {
         if (file.getParentFile().mkdirs()) {
@@ -96,6 +109,42 @@ public class FileUploadService {
       multipartFile.transferTo(file);
     }
 
+    attachFileDAO.insertAttachFile(attachFileList);
+
     return attachFileList;
+  }
+
+  public void removeAttachFile(List<Integer> articleNoList) throws IOException {
+    for (int removedArticleNo : articleNoList) {
+      File imageDir = new File(uploadPath + File.separator + removedArticleNo);
+      FileUtils.deleteDirectory(imageDir);
+    }
+    attachFileDAO.deleteByArticleNoList(articleNoList);
+  }
+
+  /**
+   * UUID.확장자 형태의 파일명으로 부터 원본 이름을 얻는 메서드
+   *
+   * @param uuidFileName "uuid.확장자" 형태의 파일명
+   * @return 원본 이름
+   */
+  public String getOriginalFileName(String uuidFileName) {
+    String uuid = FilenameUtils.getBaseName(uuidFileName);
+    AttachFile attachFile = attachFileDAO.findById(uuid);
+
+    if (attachFile == null) {
+      return null;
+    } else {
+      return attachFile.getFileName();
+    }
+  }
+
+  /**
+   * 특정 게시물의 첨부파일 목록 가져오기
+   *
+   * @param articleNo 게시물 번호
+   */
+  public List<AttachFile> getAttachFileList(Integer articleNo) {
+    return attachFileDAO.findByArticleNo(articleNo);
   }
 }

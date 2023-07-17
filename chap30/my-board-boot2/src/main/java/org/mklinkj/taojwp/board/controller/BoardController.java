@@ -13,14 +13,13 @@ import java.util.NoSuchElementException;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
 import org.mklinkj.taojwp.board.domain.ArticleVO;
 import org.mklinkj.taojwp.board.exception.InvalidRequestException;
 import org.mklinkj.taojwp.board.service.BoardService;
 import org.mklinkj.taojwp.common.domain.ModalMessage;
 import org.mklinkj.taojwp.common.util.ProjectDataUtils;
-import org.mklinkj.taojwp.file.AttachFile;
-import org.mklinkj.taojwp.file.FileUploadService;
+import org.mklinkj.taojwp.file.domain.AttachFile;
+import org.mklinkj.taojwp.file.service.FileService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -45,7 +44,7 @@ public class BoardController {
 
   private final BoardService boardService;
 
-  private final FileUploadService fileUploadService;
+  private final FileService fileService;
 
   @GetMapping("/listArticles.do")
   public String listArticles(
@@ -82,20 +81,13 @@ public class BoardController {
 
     articleVO.setId(loginMember.getName());
 
-    List<AttachFile> attachFileList = fileUploadService.uploadArticleAttachFile(multipartFileList);
-
-    if (!attachFileList.isEmpty()) {
-      // TODO: 아직은 파일 1개만 첨부 가능
-      AttachFile attachFile = attachFileList.get(0);
-      articleVO.setImageFileName(attachFile.getOriginalFileName());
-    }
-
     int articleNo = boardService.addArticle(articleVO);
 
-    if (!attachFileList.isEmpty()) {
-      // TODO: 아직은 파일 1개만 첨부 가능
-      AttachFile attachFile = attachFileList.get(0);
-      File srcFile = new File(uploadTempPath + File.separator + attachFile.getTempFileName());
+    List<AttachFile> attachFileList =
+        fileService.uploadArticleAttachFile(multipartFileList, articleNo);
+
+    for (AttachFile attachFile : attachFileList) {
+      File srcFile = new File(uploadTempPath + File.separator + attachFile.getStoredFileName());
       File destDir = new File(uploadPath + File.separator + articleNo);
       destDir.mkdirs();
       File destFile =
@@ -104,7 +96,7 @@ public class BoardController {
                   + File.separator
                   + articleNo
                   + File.separator
-                  + attachFile.getOriginalFileName());
+                  + attachFile.getStoredFileName());
       Files.move(srcFile.toPath(), destFile.toPath(), REPLACE_EXISTING);
     }
 
@@ -120,14 +112,17 @@ public class BoardController {
     if (article == null) {
       throw new NoSuchElementException("해당 게시물이 없습니다. 조회하려는 게시물번호: " + articleNo);
     }
+
     model.addAttribute("article", article);
+    List<AttachFile> attachFileList = fileService.getAttachFileList(articleNo);
+    model.addAttribute("attachFileList", attachFileList);
+
     return "board/viewArticle";
   }
 
   @PostMapping("/modArticle.do")
   public String modArticle(
       ArticleVO articleVO,
-      @RequestParam(name = "originalFileName", defaultValue = "") String originalFileName,
       @RequestPart("imageFile") List<MultipartFile> fileList,
       RedirectAttributes redirectAttributes)
       throws IOException {
@@ -143,27 +138,26 @@ public class BoardController {
           ModalMessage.builder().title("잘못된 수정 요청").content("자신의 글만 수정 가능합니다. 😅").build());
     }
 
-    List<AttachFile> attachFileList = fileUploadService.uploadArticleAttachFile(fileList);
-
-    if (!attachFileList.isEmpty()) {
-      articleVO.setImageFileName(attachFileList.get(0).getOriginalFileName());
-    }
-
     boardService.modArticle(articleVO);
 
-    if (!attachFileList.isEmpty()) {
-      AttachFile attachFile = attachFileList.get(0);
+    List<AttachFile> attachFileList =
+        fileService.uploadArticleAttachFile(fileList, articleVO.getArticleNo());
 
-      File srcFile = new File(uploadTempPath + File.separator + attachFile.getTempFileName());
+    for (AttachFile attachFile : attachFileList) {
+      File srcFile = new File(uploadTempPath + File.separator + attachFile.getStoredFileName());
       File destDir = new File(uploadPath + File.separator + articleVO.getArticleNo());
       destDir.mkdirs();
 
+      // 글 수정시 정리는 따로 하지 않고, 보기 페이지에서 각 이미지 삭제 버튼을 따로 만들어주는게 낫겠다.
+      //
+      /*
       if (originalFileName != null && !originalFileName.isBlank()) {
         File previousFile = new File(destDir, originalFileName);
         previousFile.delete();
       }
+      */
 
-      File destFile = new File(destDir, attachFile.getOriginalFileName());
+      File destFile = new File(destDir, attachFile.getStoredFileName());
       Files.move(srcFile.toPath(), destFile.toPath(), REPLACE_EXISTING);
     }
 
@@ -188,10 +182,7 @@ public class BoardController {
     }
 
     List<Integer> removedArticleNoList = boardService.removeArticle(articleNo);
-    for (int removedArticleNo : removedArticleNoList) {
-      File imageDir = new File(uploadPath + File.separator + removedArticleNo);
-      FileUtils.deleteDirectory(imageDir);
-    }
+    fileService.removeAttachFile(removedArticleNoList);
 
     redirectAttributes.addFlashAttribute(
         "msg", ModalMessage.builder().title("🎊 삭제 성공 🎊").content("게시글 삭제에 성공하였습니다.🎉").build());
@@ -219,20 +210,15 @@ public class BoardController {
     Authentication loginMember = SecurityContextHolder.getContext().getAuthentication();
     session.removeAttribute("parentNo");
 
-    List<AttachFile> attachFileList = fileUploadService.uploadArticleAttachFile(multipartFileList);
-
-    if (!attachFileList.isEmpty()) {
-      articleVO.setImageFileName(attachFileList.get(0).getOriginalFileName());
-    }
-
     articleVO.setParentNo(parentNo);
     articleVO.setId(loginMember.getName());
     int articleNo = boardService.addReply(articleVO);
 
-    if (!attachFileList.isEmpty()) {
-      AttachFile attachFile = attachFileList.get(0);
+    List<AttachFile> attachFileList =
+        fileService.uploadArticleAttachFile(multipartFileList, articleNo);
 
-      File srcFile = new File(uploadTempPath + File.separator + attachFile.getTempFileName());
+    for (AttachFile attachFile : attachFileList) {
+      File srcFile = new File(uploadTempPath + File.separator + attachFile.getStoredFileName());
       File destDir = new File(uploadPath + File.separator + articleNo);
       destDir.mkdirs();
       File destFile =
@@ -241,7 +227,7 @@ public class BoardController {
                   + File.separator
                   + articleNo
                   + File.separator
-                  + attachFile.getOriginalFileName());
+                  + attachFile.getStoredFileName());
       Files.move(srcFile.toPath(), destFile.toPath(), REPLACE_EXISTING);
     }
 

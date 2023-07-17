@@ -1,4 +1,4 @@
-package org.mklinkj.taojwp.file;
+package org.mklinkj.taojwp.file.controller;
 
 import java.io.IOException;
 import java.util.Enumeration;
@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.mklinkj.taojwp.file.service.FileService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class FileUploadController {
 
-  private final FileUploadService fileUploadService;
+  private final FileService fileService;
 
   @GetMapping("/form")
   public String form() {
@@ -46,7 +47,7 @@ public class FileUploadController {
       map.put(name, value);
     }
 
-    List<String> fileList = fileUploadService.multiImageFileUploadExample(multipartRequest);
+    List<String> fileList = fileService.multiImageFileUploadExample(multipartRequest);
     map.put("fileList", fileList);
 
     redirectAttributes.addFlashAttribute("map", map);

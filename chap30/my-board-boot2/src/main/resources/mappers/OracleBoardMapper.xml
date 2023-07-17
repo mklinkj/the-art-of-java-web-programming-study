@@ -62,9 +62,10 @@
       FROM t30_board
   </select>
 
+  <!-- board 테이블의 이미지 파일 이름 (image_file_name) 컬럼은 사용하지 않으니 항상 null로 저장되게한다. -->
   <insert id="insertArticle" parameterType="article">
     INSERT INTO t30_board (article_no, parent_no, title, content, image_file_name, id)
-    VALUES (#{articleNo}, #{parentNo}, #{title}, #{content}, #{imageFileName}, #{id})
+    VALUES (#{articleNo}, #{parentNo}, #{title}, #{content}, null, #{id})
   </insert>
 
   <select id="selectOne" parameterType="article" resultType="article">

@@ -21,6 +21,64 @@
 
 * ... 
 
+## 게시물에 여러개 이미지 파일 첨부하기
+
+* 지금은 17장까지 진행한 내용대로 개시물 한개당 1개의 이미지를 첨부할 수 있게 진행을 했다.
+* 게시물에 여러개 이미지 파일을 첨부 할 수 있도록 백앤드와 프론트앤드를 수정해야한다.
+
+
+
+### ERD
+
+ExERD를 사용할 수 없으니, 이전에 Visual Paradigm을 사용했는데... 이번에도 그대로 쓰자. 😅
+
+![image-20230704021357747](doc-resources/image-20230704021357747.png)
+
+| 컬럼명        | 한글명      | 타입         | 설명                                    |
+| ------------- | ----------- | ------------ | --------------------------------------- |
+| uuid          | UUID        | VARCHAR(100) | UUID                                    |
+| file_name     | 파일명      | VARCHAR(250) |                                         |
+| file_type     | 파일 타입   | CHAR(1)      | `I`는 이미지, `F` 일반파일, 기본 값 `I` |
+| register_date | 등록 일시   | DATE         |                                         |
+| article_no    | 게시물 번호 | INTEGER(10)  | 게시물 테이블 참조 컬럼                 |
+
+> 책과는 다르게 하는데, 
+>
+> 테이블 자체는 반드시 이미지 파일 정보만 저장하다는 개념보다는 다양한 종류의 파일을 저장할 수 있다는 의미로 테이블 명은 첨부 파일을 의미하는 ㅅt30_attach_file로 했다. 
+>
+> uuid 컬럼과, 파일 타입 컬럼을 추가했다.
+
+### 테이블 생성문
+
+```sql
+CREATE TABLE t30_attach_file
+(
+    uuid          VARCHAR2(100)           NOT NULL,
+    file_name     VARCHAR2(250)           NOT NULL,
+    file_type     CHAR(1) DEFAULT 'I'     NOT NULL,
+    register_date DATE    DEFAULT SYSDATE NOT NULL,
+    article_no    NUMBER(10)              NOT NULL,
+    CONSTRAINT FK_t30_attach_file__t30_board FOREIGN KEY (article_no)
+        REFERENCES t30_board (article_no) ON DELETE CASCADE
+);
+```
+
+* file_type에 대해 제약 조건을 추가할 수도 있는데..
+
+  ```sql
+  file_type         CHAR(1) DEFAULT 'I' NOT NULL CHECK (file_type IN ('I', 'F')),
+  ```
+
+  Java 단에서 체크만하고 DB에서는 제약 조건을 추가하지 않는게 낫겠다.
+
+
+
+
+
+
+
+
+
 
 
 ---
