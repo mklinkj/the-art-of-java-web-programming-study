@@ -1,13 +1,21 @@
 package org.mklinkj.taojwp.file.service;
 
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.mklinkj.taojwp.board.dao.AttachFileDAO;
@@ -18,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class FileService {
@@ -80,8 +89,8 @@ public class FileService {
    *
    * 그려면 이 메서드의 역활은 그냥 임시 경로에 업로드 해두는 역활이 된다.
    */
-  public List<AttachFile> uploadArticleAttachFile(
-      List<MultipartFile> multipartFileList, Integer articleNo) throws IOException {
+  public void uploadArticleAttachFile(List<MultipartFile> multipartFileList, Integer articleNo)
+      throws IOException {
 
     List<AttachFile> attachFileList = new ArrayList<>(multipartFileList.size());
 
@@ -111,7 +120,19 @@ public class FileService {
 
     attachFileDAO.insertAttachFile(attachFileList);
 
-    return attachFileList;
+    for (AttachFile attachFile : attachFileList) {
+      File srcFile = new File(uploadTempPath + File.separator + attachFile.getStoredFileName());
+      File destDir = new File(uploadPath + File.separator + articleNo);
+      destDir.mkdirs();
+      File destFile =
+          new File(
+              uploadPath
+                  + File.separator
+                  + articleNo
+                  + File.separator
+                  + attachFile.getStoredFileName());
+      Files.move(srcFile.toPath(), destFile.toPath(), REPLACE_EXISTING);
+    }
   }
 
   public void removeAttachFile(List<Integer> articleNoList) throws IOException {
@@ -120,6 +141,42 @@ public class FileService {
       FileUtils.deleteDirectory(imageDir);
     }
     attachFileDAO.deleteByArticleNoList(articleNoList);
+  }
+
+  public void removeAttachFileByUuid(List<String> uuidList, Integer articleNo) {
+    List<AttachFile> fileInfoList = attachFileDAO.findByArticleNo(articleNo);
+
+    Map<String, AttachFile> dbUuidMap =
+        fileInfoList.stream().collect(Collectors.toMap(AttachFile::getUuid, Function.identity()));
+
+    List<String> validUuidList =
+        uuidList.stream()
+            .filter(requestUuid -> dbUuidMap.keySet().contains(requestUuid))
+            .collect(Collectors.toUnmodifiableList());
+
+    for (String uuid : validUuidList) {
+      try {
+        File imageFile =
+            new File(
+                uploadPath
+                    + File.separator
+                    + articleNo
+                    + File.separator
+                    + uuid
+                    + "."
+                    + dbUuidMap.get(uuid).getExtension());
+        FileUtils.delete(imageFile);
+      } catch (FileNotFoundException fe) {
+        LOGGER.warn("파일이 저장소에 없음: 게시물번호: {}, 첨부파일 UUID: {}", articleNo, uuid, fe);
+      } catch (IOException ioe) {
+        // 개별 파일 삭제할 때... 실패하더라도 진행이 멈추게 하진 말자.
+        LOGGER.error("파일 삭제 오류: 게시물번호: {}, 첨부파일 UUID: {}", articleNo, uuid, ioe);
+      }
+    }
+
+    if (!validUuidList.isEmpty()) {
+      attachFileDAO.deleteByUuidList(validUuidList);
+    }
   }
 
   /**

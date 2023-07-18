@@ -1,12 +1,9 @@
 package org.mklinkj.taojwp.board.controller;
 
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static org.mklinkj.taojwp.board.constant.Constants.PAGE_NAVI_SIZE;
 import static org.mklinkj.taojwp.board.constant.Constants.PAGE_SIZE;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -17,7 +14,6 @@ import org.mklinkj.taojwp.board.domain.ArticleVO;
 import org.mklinkj.taojwp.board.exception.InvalidRequestException;
 import org.mklinkj.taojwp.board.service.BoardService;
 import org.mklinkj.taojwp.common.domain.ModalMessage;
-import org.mklinkj.taojwp.common.util.ProjectDataUtils;
 import org.mklinkj.taojwp.file.domain.AttachFile;
 import org.mklinkj.taojwp.file.service.FileService;
 import org.springframework.security.core.Authentication;
@@ -38,10 +34,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/board")
 @Controller
 public class BoardController {
-  private final String uploadTempPath = ProjectDataUtils.getProperty("upload_temp_path");
-
-  private final String uploadPath = ProjectDataUtils.getProperty("upload_path");
-
   private final BoardService boardService;
 
   private final FileService fileService;
@@ -73,7 +65,7 @@ public class BoardController {
   @PostMapping("/addArticle.do")
   public String addArticle(
       ArticleVO articleVO,
-      @RequestPart("imageFile") List<MultipartFile> multipartFileList,
+      @RequestPart("imageFile") List<MultipartFile> fileList,
       RedirectAttributes redirectAttributes)
       throws IOException {
 
@@ -83,21 +75,8 @@ public class BoardController {
 
     int articleNo = boardService.addArticle(articleVO);
 
-    List<AttachFile> attachFileList =
-        fileService.uploadArticleAttachFile(multipartFileList, articleNo);
-
-    for (AttachFile attachFile : attachFileList) {
-      File srcFile = new File(uploadTempPath + File.separator + attachFile.getStoredFileName());
-      File destDir = new File(uploadPath + File.separator + articleNo);
-      destDir.mkdirs();
-      File destFile =
-          new File(
-              uploadPath
-                  + File.separator
-                  + articleNo
-                  + File.separator
-                  + attachFile.getStoredFileName());
-      Files.move(srcFile.toPath(), destFile.toPath(), REPLACE_EXISTING);
+    if (fileList != null) {
+      fileService.uploadArticleAttachFile(fileList, articleNo);
     }
 
     redirectAttributes.addFlashAttribute(
@@ -123,7 +102,8 @@ public class BoardController {
   @PostMapping("/modArticle.do")
   public String modArticle(
       ArticleVO articleVO,
-      @RequestPart("imageFile") List<MultipartFile> fileList,
+      @RequestParam(value = "uuidsToDelete", required = false) List<String> uuidsToDelete,
+      @RequestPart(value = "imageFile", required = false) List<MultipartFile> fileList,
       RedirectAttributes redirectAttributes)
       throws IOException {
 
@@ -140,25 +120,12 @@ public class BoardController {
 
     boardService.modArticle(articleVO);
 
-    List<AttachFile> attachFileList =
-        fileService.uploadArticleAttachFile(fileList, articleVO.getArticleNo());
-
-    for (AttachFile attachFile : attachFileList) {
-      File srcFile = new File(uploadTempPath + File.separator + attachFile.getStoredFileName());
-      File destDir = new File(uploadPath + File.separator + articleVO.getArticleNo());
-      destDir.mkdirs();
-
-      // 글 수정시 정리는 따로 하지 않고, 보기 페이지에서 각 이미지 삭제 버튼을 따로 만들어주는게 낫겠다.
-      //
-      /*
-      if (originalFileName != null && !originalFileName.isBlank()) {
-        File previousFile = new File(destDir, originalFileName);
-        previousFile.delete();
-      }
-      */
-
-      File destFile = new File(destDir, attachFile.getStoredFileName());
-      Files.move(srcFile.toPath(), destFile.toPath(), REPLACE_EXISTING);
+    if (fileList != null) {
+      fileService.uploadArticleAttachFile(fileList, articleVO.getArticleNo());
+    }
+    // 수정시 기존 파일 삭제 체크가 설정 되었을 때, 정보 및 파일 삭제.
+    if (uuidsToDelete != null && !uuidsToDelete.isEmpty()) {
+      fileService.removeAttachFileByUuid(uuidsToDelete, articleVO.getArticleNo());
     }
 
     redirectAttributes.addAttribute("articleNo", articleVO.getArticleNo());
@@ -203,7 +170,7 @@ public class BoardController {
   public String addReply(
       ArticleVO articleVO,
       HttpSession session,
-      @RequestPart("imageFile") List<MultipartFile> multipartFileList,
+      @RequestPart("imageFile") List<MultipartFile> fileList,
       RedirectAttributes redirectAttributes)
       throws IOException {
     int parentNo = (Integer) session.getAttribute("parentNo");
@@ -214,23 +181,9 @@ public class BoardController {
     articleVO.setId(loginMember.getName());
     int articleNo = boardService.addReply(articleVO);
 
-    List<AttachFile> attachFileList =
-        fileService.uploadArticleAttachFile(multipartFileList, articleNo);
-
-    for (AttachFile attachFile : attachFileList) {
-      File srcFile = new File(uploadTempPath + File.separator + attachFile.getStoredFileName());
-      File destDir = new File(uploadPath + File.separator + articleNo);
-      destDir.mkdirs();
-      File destFile =
-          new File(
-              uploadPath
-                  + File.separator
-                  + articleNo
-                  + File.separator
-                  + attachFile.getStoredFileName());
-      Files.move(srcFile.toPath(), destFile.toPath(), REPLACE_EXISTING);
+    if (fileList != null) {
+      fileService.uploadArticleAttachFile(fileList, articleVO.getArticleNo());
     }
-
     redirectAttributes.addAttribute("articleNo", articleNo);
     redirectAttributes.addFlashAttribute(
         "msg",

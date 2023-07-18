@@ -57,5 +57,14 @@
     </foreach>
   </delete>
 
+  <delete id="deleteByUuidList" parameterType="list">
+    DELETE
+    FROM t30_attach_file
+    WHERE uuid IN
+    <foreach item="item" collection="list" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </delete>
+
 
 </mapper>

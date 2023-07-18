@@ -22,7 +22,7 @@
     <div class="d-grid gap-2 d-md-block">
       <input type="button" class="btn btn-outline-secondary" value="파일추가" onclick="fn_addFile()" />
       <input type="submit" class="btn btn-outline-primary" value="업로드"/>
-      </div>
+    </div>
     <div id="d_file">
     </div>
   </form>

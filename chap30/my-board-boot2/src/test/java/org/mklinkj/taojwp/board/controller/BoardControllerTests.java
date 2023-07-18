@@ -171,6 +171,9 @@ class BoardControllerTests {
             multipart(HttpMethod.POST, "/board/modArticle.do")
                 .file(multipartFile01)
                 .file(multipartFile02)
+                // 수정시 삭제할 기존 이미지의 UUID 목록
+                .param("uuidsToDelete", "dab145b3-9cec-4e58-a9d2-8be341d16093")
+                .param("uuidsToDelete", "4f4fa02f-570a-46b9-9ed8-5218b568d97e")
                 .param("articleNo", "30")
                 .param("title", "제목_수정")
                 .param("content", "내용_수정")

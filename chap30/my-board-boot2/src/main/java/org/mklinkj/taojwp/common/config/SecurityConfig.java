@@ -50,9 +50,9 @@ public class SecurityConfig {
                     "/error")
                 .permitAll()
                 .mvcMatchers(
-                    "/board/listArticles.do",
-                    "/board/viewArticle.do"
-                )
+                    "/board/listArticles.do", //
+                    "/board/viewArticle.do",
+                    "/board/download.do")
                 .permitAll()
                 .anyRequest()
                 .authenticated());

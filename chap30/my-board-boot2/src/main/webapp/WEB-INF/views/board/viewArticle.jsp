@@ -40,38 +40,42 @@
         </div>
       </div>
 
-
+      <c:forEach var="attachFile" items="${attachFileList}" varStatus="i">
       <div class="row mb-3">
         <div class="col-2 text-center">
-          <label for="preview" class="col col-form-label">이미지</label>
+          <label class="col col-form-label">이미지${i.count}</label>
         </div>
         <div class="col row-cols">
           <div class="col">
-            <div id="preview_div" class="ro mb-3 ">
-              <c:choose>
-                <c:when
-                    test="${not empty article.imageFileName and article.imageFileName ne 'null'}">
-                  <img id="preview"
-                       src="${contextPath}/board/download.do?articleNo=${article.articleNo}&imageFileName=${article.imageFileName}"
-                       class="col-5 img-thumbnail rounded mx-auto d-block">
-                </c:when>
-                <c:otherwise>
-                  <img id="preview" src=""
-                       class="col-5 img-thumbnail rounded mx-auto d-block d-none">
-                </c:otherwise>
-              </c:choose>
-            </div>
-          </div>
-          <div class="col">
-            <div class="col-sm-10">
-              <input type="hidden" name="originalFileName" value="${article.imageFileName}">
-              <input type="file" name="imageFile" class="form-control" id="inputImageFile"
-                     onchange="readURL(this)" disabled>
+            <div class="ro mb-3">
+              <img src="${contextPath}/board/download.do?articleNo=${article.articleNo}&uuidFileName=${attachFile.storedFileName}"
+                   class="col-5 img-thumbnail rounded mx-auto d-block">
+              <div class="text-center text-primary">${attachFile.fileName}</div>
+              <div class="remove_check text-center d-none">
+              <label>
+                <span class="text-danger">[삭제]</span>
+                <input type="hidden" class="file_uuid" value="${attachFile.uuid}">
+                <input type="checkbox">
+              </label>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
+      </c:forEach>
+      <div id="new_file_row" class="row mb-3 d-none">
+        <div class="col-2 text-center">
+          <label class="col col-form-label">이미지 추가</label>
+        </div>
+        <div class="col">
+          <div class="col-sm-10">
+            <input type="button" class="btn btn-outline-secondary mb-2" value="파일추가" onclick="fn_add_file()" />
+            <input type="button" class="btn btn-outline-secondary mb-2" value="초기화" onclick="fn_reset_file()" />
+            </div>
+            <div id="new_files_div">
+            </div>
+        </div>
+      </div>
       <div class="row mb-3">
         <label for="inputWriteDate" class="col-sm-2 col-form-label text-center">등록일자</label>
         <div class="col-sm-10">
@@ -131,7 +135,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
       </div>
     </div>
   </div>
@@ -144,13 +147,19 @@
     if (show) {
       articleForm.title.disabled = false;
       articleForm.content.disabled = false;
-      articleForm.querySelector("#inputImageFile").disabled = false;
-      articleForm.querySelector("#modify_view_btns").classList.add("d-none");
-      articleForm.querySelector("#modify_process_btns").classList.remove("d-none");
+
+      articleForm.querySelector('#new_file_row').classList.remove('d-none')
+      articleForm.querySelector("#modify_view_btns").classList.add('d-none');
+      articleForm.querySelector("#modify_process_btns").classList.remove('d-none');
+      articleForm.querySelectorAll('[class^="remove_check"]').forEach(
+          el => {
+            el.classList.remove("d-none")
+          }
+      );
     } else {
       articleForm.title.disabled = true;
       articleForm.content.disabled = true;
-      articleForm.querySelector("#inputImageFile").disabled = true;
+      articleForm.querySelector('#new_file_row').classList.add('d-none')
       articleForm.querySelector("#modify_view_btns").classList.remove("d-none");
       articleForm.querySelector("#modify_process_btns").classList.add("d-none");
 
@@ -158,9 +167,14 @@
         $('#preview_div').removeClass('d-none');
         $('#preview').attr('src', '');
         $('#preview').addClass('d-none');
-        articleForm.querySelector("#inputImageFile").value = '';
-      }
 
+        articleForm.querySelectorAll('[class^="remove_check"]').forEach(
+            el => {
+              el.querySelector('input[type="checkbox"]').checked = false;
+              el.classList.add("d-none");
+            }
+        );
+      }
     }
   }
 
@@ -173,6 +187,17 @@
     csrfInput.setAttribute("name", $("meta[name='_csrf_parameter']").attr("content"));
     csrfInput.setAttribute("value", $("meta[name='_csrf']").attr("content"));
     articleForm.appendChild(csrfInput);
+
+    articleForm.querySelectorAll(".file_uuid").forEach(el => {
+          if(el.nextElementSibling.checked) {
+            const uuidsToRemove = document.createElement("input");
+            uuidsToRemove.setAttribute("type", "hidden");
+            uuidsToRemove.setAttribute("name", "uuidsToDelete");
+            uuidsToRemove.setAttribute("value", el.value);
+            articleForm.appendChild(uuidsToRemove);
+          }
+        }
+    );
 
     articleForm.action = '${contextPath}/board/modArticle.do'
     articleForm.submit();
@@ -222,20 +247,9 @@
     document.body.appendChild(form);
     form.submit();
   }
-
-
-  function readURL(input) {
-    if (input.files && input.files[0]) {
-      $('#preview').removeClass('d-none');
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        $('#preview').attr('src', e.target.result);
-      }
-      reader.readAsDataURL(input.files[0]);
-      $('#preview_div').removeClass('d-none');
-    }
-  }
 </script>
+
+<script src="${contextPath}/resources/js/attach_file_support.js"></script>
 
 <script>
   // show modal

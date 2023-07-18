@@ -72,4 +72,12 @@ class AttachFileDAOTests {
   void deleteByArticleNoList() {
     attachFileDAO.deleteByArticleNoList(List.of(1, 2, 3));
   }
+
+  @Test
+  void deleteByUuidList() {
+    attachFileDAO.deleteByUuidList(
+        List.of(
+            "08bd6332-e4c3-4d99-bf13-6ddaa5c3a201", //
+            "dab145b3-9cec-4e58-a9d2-8be341d16093"));
+  }
 }

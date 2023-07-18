@@ -43,4 +43,10 @@ public interface AttachFileDAO {
    * @param articleNoList 게시글 번호 목록
    */
   void deleteByArticleNoList(List<Integer> articleNoList);
+
+  /**
+   * UUID 목록으로 첨부파일 정보 삭제
+   * @param uuidList UUID 목록
+   */
+  void deleteByUuidList(List<String> uuidList);
 }

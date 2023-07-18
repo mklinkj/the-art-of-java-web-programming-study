@@ -15,4 +15,6 @@ public interface OracleAttachFileMapper {
   int deleteByArticleNo(Integer articleNo);
 
   void deleteByArticleNoList(List<Integer> articleNoList);
+
+  void deleteByUuidList(List<String> uuidList);
 }

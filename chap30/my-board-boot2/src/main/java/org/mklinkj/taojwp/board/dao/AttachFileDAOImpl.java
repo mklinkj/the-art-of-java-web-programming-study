@@ -36,4 +36,9 @@ public class AttachFileDAOImpl implements AttachFileDAO {
   public void deleteByArticleNoList(List<Integer> articleNoList) {
     attachFileMapper.deleteByArticleNoList(articleNoList);
   }
+
+  @Override
+  public void deleteByUuidList(List<String> uuidList) {
+    attachFileMapper.deleteByUuidList(uuidList);
+  }
 }
