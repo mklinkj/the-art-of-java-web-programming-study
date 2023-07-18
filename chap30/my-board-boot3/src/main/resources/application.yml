@@ -3,7 +3,7 @@ server:
   tomcat:
     max-http-form-post-size: 10MB
   servlet:
-    context-path: "/pro30"
+    context-path: "/"
 
 spring:
   freemarker:
@@ -25,7 +25,7 @@ spring:
       location: C:\upload\art_of_java_web\temp
 
 mybatis:
-  type-aliases-package: "org.mklinkj.taojwp.board.domain;org.mklinkj.taojwp.member.domain;org.mklinkj.taojwp.member.dto"
+  type-aliases-package: "org.mklinkj.taojwp.board.domain;org.mklinkj.taojwp.member.domain;org.mklinkj.taojwp.member.dto;org.mklinkj.taojwp.file.domain"
   mapper-locations:
     - "classpath:mappers/**/*.xml"
   configuration:

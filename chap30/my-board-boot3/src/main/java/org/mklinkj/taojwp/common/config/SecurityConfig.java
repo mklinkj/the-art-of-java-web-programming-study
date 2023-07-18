@@ -51,7 +51,8 @@ public class SecurityConfig {
                 .permitAll()
                 .requestMatchers(
                     "/board/listArticles.do", //
-                    "/board/viewArticle.do")
+                    "/board/viewArticle.do",
+                    "/board/download.do")
                 .permitAll()
                 .anyRequest()
                 .authenticated());

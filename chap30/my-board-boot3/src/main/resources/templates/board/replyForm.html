@@ -32,16 +32,17 @@
         </div>
       </div>
 
-      <div class="row mb-3">
-        <label for="inputImageFile" class="col-sm-3 col-form-label text-center">이미지 파일 첨부</label>
-        <div class="col-sm-9">
-          <input type="file" name="imageFile" class="form-control" id="inputImageFile" onchange="readURL(this)">
+      <div id="new_file_row" class="row mb-3">
+        <div class="col-2 text-center">
+          <label class="col col-form-label">이미지 추가</label>
         </div>
-      </div>
-
-      <div class="row mb-3">
-        <div id="preview_div" class="ro mb-3 d-none">
-          <img id="preview" src="#" class="col-5 img-thumbnail rounded mx-auto d-block" >
+        <div class="col">
+          <div class="col-sm-10">
+            <input type="button" class="btn btn-outline-secondary mb-2" value="파일추가" onclick="fn_add_file()" />
+            <input type="button" class="btn btn-outline-secondary mb-2" value="초기화" onclick="fn_reset_file()" />
+          </div>
+          <div id="new_files_div">
+          </div>
         </div>
       </div>
 
@@ -57,15 +58,6 @@
 </div>
 </th:block>
 
-<script layout:fragment="script" th:inline="javascript">
-  function readURL(input) {
-   if (input.files && input.files[0]) {
-     const reader = new FileReader();
-     reader.onload = function (e) {
-       $('#preview').attr('src', e.target.result);
-     }
-     reader.readAsDataURL(input.files[0]);
-     $('#preview_div').removeClass('d-none');
-   }
-  }
-</script>
+<th:block layout:fragment="external_script">
+  <script th:src="@{/resources/js/attach_file_support.js}"></script>
+</th:block>

@@ -63,6 +63,9 @@ dependencies {
   implementation "net.coobird:thumbnailator:${thumbnailatorVersion}"
   implementation "org.springframework.vault:spring-vault-core:${springVaultVersion}"
 
+  // 일단은 쓰는게 나을 것 같다. 편리한 메서드가 많음.
+  implementation "commons-io:commons-io:${commonsIoVersion}"
+
   // test환경 validation시 필요한지 확인해야함.
   testRuntimeOnly "org.glassfish:jakarta.el:${jakartaElVersion}"
 }

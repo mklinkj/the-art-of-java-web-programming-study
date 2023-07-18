@@ -22,8 +22,8 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-@Slf4j
 @SpringBootTest
+@Slf4j
 class FileDownloadControllerTests {
 
   private final String IMAGE_FILE_NAME = "image_file_01.png";

@@ -25,8 +25,8 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-@Slf4j
 @SpringBootTest
+@Slf4j
 class FileUploadControllerTests {
 
   private final String IMAGE_FILE_01_NAME = "image_file_01.png";
@@ -64,21 +64,21 @@ class FileUploadControllerTests {
         new EncodedResource(
             new ClassPathResource(UPLOAD_PATH_FORMAT.formatted(IMAGE_FILE_01_NAME)),
             StandardCharsets.UTF_8);
-    MockMultipartFile textFile =
+    MockMultipartFile multipartFile01 =
         new MockMultipartFile(
             "file1", IMAGE_FILE_01_NAME, MediaType.IMAGE_PNG_VALUE, imageFile01.getInputStream());
 
     ClassPathResource imageFile02 =
         new ClassPathResource(UPLOAD_PATH_FORMAT.formatted(IMAGE_FILE_02_NAME));
-    MockMultipartFile imageFile =
+    MockMultipartFile multipartFile02 =
         new MockMultipartFile(
             "file2", IMAGE_FILE_02_NAME, MediaType.IMAGE_PNG_VALUE, imageFile02.getInputStream());
 
     mockMvc
         .perform(
             multipart("/file/upload") //
-                .file(textFile)
-                .file(imageFile)
+                .file(multipartFile01)
+                .file(multipartFile02)
                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
                 .with(csrf()))
         .andDo(print())

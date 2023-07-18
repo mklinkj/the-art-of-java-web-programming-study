@@ -42,6 +42,7 @@ class BoardControllerTests {
   @Autowired private DBDataInitializer dbDataInitializer;
 
   private final String IMAGE_FILE_01_NAME = "image_file_01.png";
+  private final String IMAGE_FILE_02_NAME = "image_file_02.png";
 
   private final String UPLOAD_PATH_FORMAT = "/upload_test_file/%s";
 
@@ -67,6 +68,20 @@ class BoardControllerTests {
   }
 
   @Test
+  void testViewArticle() throws Exception {
+    dbDataInitializer.resetDB();
+    mockMvc
+        .perform(
+            get("/board/viewArticle.do") //
+                .param("articleNo", "20"))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(model().attributeExists("article"))
+        .andExpect(model().attributeExists("attachFileList"))
+        .andExpect(view().name("board/viewArticle"));
+  }
+
+  @Test
   void testArticleForm() throws Exception {
     mockMvc
         .perform(get("/board/articleForm.do"))
@@ -82,16 +97,31 @@ class BoardControllerTests {
         new EncodedResource(
             new ClassPathResource(UPLOAD_PATH_FORMAT.formatted(IMAGE_FILE_01_NAME)),
             StandardCharsets.UTF_8);
+
+    EncodedResource imageFile02 =
+        new EncodedResource(
+            new ClassPathResource(UPLOAD_PATH_FORMAT.formatted(IMAGE_FILE_02_NAME)),
+            StandardCharsets.UTF_8);
+
     MockMultipartFile multipartFile01 =
         new MockMultipartFile(
             "imageFile",
             IMAGE_FILE_01_NAME,
             MediaType.IMAGE_PNG_VALUE,
             imageFile01.getInputStream());
+
+    MockMultipartFile multipartFile02 =
+        new MockMultipartFile(
+            "imageFile",
+            IMAGE_FILE_02_NAME,
+            MediaType.IMAGE_PNG_VALUE,
+            imageFile02.getInputStream());
+
     mockMvc
         .perform(
             multipart(HttpMethod.POST, "/board/addArticle.do")
                 .file(multipartFile01)
+                .file(multipartFile02)
                 .param("title", "제목")
                 .param("content", "내용")
                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -116,17 +146,35 @@ class BoardControllerTests {
         new EncodedResource(
             new ClassPathResource(UPLOAD_PATH_FORMAT.formatted(IMAGE_FILE_01_NAME)),
             StandardCharsets.UTF_8);
+
+    EncodedResource imageFile02 =
+        new EncodedResource(
+            new ClassPathResource(UPLOAD_PATH_FORMAT.formatted(IMAGE_FILE_02_NAME)),
+            StandardCharsets.UTF_8);
+
     MockMultipartFile multipartFile01 =
         new MockMultipartFile(
             "imageFile",
             IMAGE_FILE_01_NAME,
             MediaType.IMAGE_PNG_VALUE,
             imageFile01.getInputStream());
+
+    MockMultipartFile multipartFile02 =
+        new MockMultipartFile(
+            "imageFile",
+            IMAGE_FILE_02_NAME,
+            MediaType.IMAGE_PNG_VALUE,
+            imageFile02.getInputStream());
+
     mockMvc
         .perform(
             multipart(HttpMethod.POST, "/board/modArticle.do")
                 .file(multipartFile01)
-                .param("articleNo", "100")
+                .file(multipartFile02)
+                // 수정시 삭제할 기존 이미지의 UUID 목록
+                .param("uuidsToDelete", "dab145b3-9cec-4e58-a9d2-8be341d16093")
+                .param("uuidsToDelete", "4f4fa02f-570a-46b9-9ed8-5218b568d97e")
+                .param("articleNo", "30")
                 .param("title", "제목_수정")
                 .param("content", "내용_수정")
                 .param("originalFileName", "") // 먼저 등록된 첨부파일 이름
@@ -142,18 +190,18 @@ class BoardControllerTests {
                         .title("🎊 수정 성공 🎊")
                         .content("게시글 수정에 성공하였습니다.🎉")
                         .build()))
-        .andExpect(redirectedUrl("viewArticle.do?articleNo=100"));
+        .andExpect(redirectedUrl("viewArticle.do?articleNo=30"));
   }
 
   @Test
-  @WithMockUser("hong") // 2번 게시물의 작성자 ID
+  @WithMockUser("mklinkj")
   void testRemoveArticle() throws Exception {
     dbDataInitializer.resetDB();
 
     mockMvc
         .perform(
             post("/board/removeArticle.do") //
-                .param("articleNo", "2")
+                .param("articleNo", "30")
                 .with(csrf()))
         .andDo(print())
         .andExpect(status().isFound())
@@ -193,16 +241,30 @@ class BoardControllerTests {
         new EncodedResource(
             new ClassPathResource(UPLOAD_PATH_FORMAT.formatted(IMAGE_FILE_01_NAME)),
             StandardCharsets.UTF_8);
+
+    EncodedResource imageFile02 =
+        new EncodedResource(
+            new ClassPathResource(UPLOAD_PATH_FORMAT.formatted(IMAGE_FILE_02_NAME)),
+            StandardCharsets.UTF_8);
+
     MockMultipartFile multipartFile01 =
         new MockMultipartFile(
             "imageFile",
             IMAGE_FILE_01_NAME,
             MediaType.IMAGE_PNG_VALUE,
             imageFile01.getInputStream());
+
+    MockMultipartFile multipartFile02 =
+        new MockMultipartFile(
+            "imageFile",
+            IMAGE_FILE_02_NAME,
+            MediaType.IMAGE_PNG_VALUE,
+            imageFile02.getInputStream());
     mockMvc
         .perform(
             multipart(HttpMethod.POST, "/board/addReply.do")
                 .file(multipartFile01)
+                .file(multipartFile02)
                 .param("title", "답글 제목")
                 .param("content", "답글 내용")
                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
