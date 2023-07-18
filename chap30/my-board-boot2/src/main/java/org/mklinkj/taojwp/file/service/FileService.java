@@ -3,7 +3,6 @@ package org.mklinkj.taojwp.file.service;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -165,9 +164,11 @@ public class FileService {
                     + uuid
                     + "."
                     + dbUuidMap.get(uuid).getExtension());
+        if (!imageFile.exists()) {
+          LOGGER.warn("파일이 저장소에 없음: 게시물번호: {}, 첨부파일 UUID: {}", articleNo, uuid);
+          return;
+        }
         FileUtils.delete(imageFile);
-      } catch (FileNotFoundException fe) {
-        LOGGER.warn("파일이 저장소에 없음: 게시물번호: {}, 첨부파일 UUID: {}", articleNo, uuid, fe);
       } catch (IOException ioe) {
         // 개별 파일 삭제할 때... 실패하더라도 진행이 멈추게 하진 말자.
         LOGGER.error("파일 삭제 오류: 게시물번호: {}, 첨부파일 UUID: {}", articleNo, uuid, ioe);
