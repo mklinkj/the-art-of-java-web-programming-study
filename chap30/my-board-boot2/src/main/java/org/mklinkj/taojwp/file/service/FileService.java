@@ -39,9 +39,9 @@ public class FileService {
   /**
    * 여러 이미지 파일 업로드 예제
    *
-   * @param multipartRequest
+   * @param multipartRequest 멀티파트 요청
    * @return 업로된 파일 파일 이름
-   * @throws IOException
+   * @throws IOException IOException
    */
   public List<String> multiImageFileUploadExample(MultipartHttpServletRequest multipartRequest)
       throws IOException {
@@ -117,6 +117,10 @@ public class FileService {
       multipartFile.transferTo(file);
     }
 
+    if (attachFileList.isEmpty()) {
+      return;
+    }
+
     attachFileDAO.insertAttachFile(attachFileList);
 
     for (AttachFile attachFile : attachFileList) {
@@ -149,9 +153,7 @@ public class FileService {
         fileInfoList.stream().collect(Collectors.toMap(AttachFile::getUuid, Function.identity()));
 
     List<String> validUuidList =
-        uuidList.stream()
-            .filter(requestUuid -> dbUuidMap.keySet().contains(requestUuid))
-            .collect(Collectors.toUnmodifiableList());
+        uuidList.stream().filter(requestUuid -> dbUuidMap.keySet().contains(requestUuid)).toList();
 
     for (String uuid : validUuidList) {
       try {
@@ -164,11 +166,12 @@ public class FileService {
                     + uuid
                     + "."
                     + dbUuidMap.get(uuid).getExtension());
-        if (!imageFile.exists()) {
+        if (imageFile.exists()) {
+          FileUtils.delete(imageFile);
+        } else {
           LOGGER.warn("파일이 저장소에 없음: 게시물번호: {}, 첨부파일 UUID: {}", articleNo, uuid);
-          return;
         }
-        FileUtils.delete(imageFile);
+
       } catch (IOException ioe) {
         // 개별 파일 삭제할 때... 실패하더라도 진행이 멈추게 하진 말자.
         LOGGER.error("파일 삭제 오류: 게시물번호: {}, 첨부파일 UUID: {}", articleNo, uuid, ioe);
@@ -181,7 +184,7 @@ public class FileService {
   }
 
   /**
-   * UUID.확장자 형태의 파일명으로 부터 원본 이름을 얻는 메서드
+   * UUID 확장자 형태의 파일명으로 부터 원본 이름을 얻는 메서드
    *
    * @param uuidFileName "uuid.확장자" 형태의 파일명
    * @return 원본 이름
