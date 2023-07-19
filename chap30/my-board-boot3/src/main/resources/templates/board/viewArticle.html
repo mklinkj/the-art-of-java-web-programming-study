@@ -48,13 +48,14 @@
         <th:block th:each="attachFile, i : ${attachFileList}">
           <div class="row mb-3">
             <div class="col-2 text-center">
-              <label class="col col-form-label" th:text="이미지 + ${i.count}"></label>
+              <label class="col col-form-label" th:text="|이미지${i.count}|"></label>
             </div>
             <div class="col row-cols">
               <div class="col">
                 <div class="ro mb-3">
-                  <img th:src="@{|/board/download.do?articleNo=${article.articleNo}&uuidFileName=${attachFile.storedFileName}|}"
-                       class="col-5 img-thumbnail rounded mx-auto d-block">
+                  <img
+                      th:src="@{|/board/download.do?articleNo=${article.articleNo}&uuidFileName=${attachFile.storedFileName}|}"
+                      class="col-5 img-thumbnail rounded mx-auto d-block">
                   <div class="text-center text-primary" th:text="${attachFile.fileName}"></div>
                   <div class="remove_check text-center d-none">
                     <label>
