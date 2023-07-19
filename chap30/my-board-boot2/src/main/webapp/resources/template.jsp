@@ -12,7 +12,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet"
-        href="${contextPath}/webjars_locator/bootstrap/css/bootstrap.min.css">
+        href="${contextPath}/webjars/bootstrap/css/bootstrap.min.css">
   <title><%--<tiles:insertAttribute name="title"/>--%></title>
 </head>
 <body>
@@ -85,9 +85,9 @@
 <%--<tiles:insertAttribute name="script"/>--%>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="${contextPath}/webjars_locator/jquery/jquery.slim.min.js"></script>
+<script src="${contextPath}/webjars/jquery/jquery.slim.min.js"></script>
 <script
-    src="${contextPath}/webjars_locator/bootstrap/js/bootstrap.bundle.min.js"></script>
+    src="${contextPath}/webjars/bootstrap/js/bootstrap.bundle.min.js"></script>
 <%--// <tiles:insertAttribute name="script"/>--%>
 </body>
 </html>
