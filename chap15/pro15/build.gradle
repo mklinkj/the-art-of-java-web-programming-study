@@ -59,7 +59,6 @@ gretty {
   contextPath = project.name
   servletContainer = "tomcat10"
   inplaceMode = "hard"
-  loggingLevel = "DEBUG"
   contextConfigFile = "${project.webAppDir}/META-INF/context.xml"
   enableNaming = true
 

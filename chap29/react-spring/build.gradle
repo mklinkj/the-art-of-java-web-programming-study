@@ -64,7 +64,6 @@ gretty {
   contextPath = "/"
   servletContainer = "tomcat10"
   inplaceMode = "soft"
-  loggingLevel = "DEBUG"
   jvmArgs = [
       "-Djava.security.egd=file:/dev/./urandom",
       "--add-opens=java.base/java.io=ALL-UNNAMED",

@@ -34,7 +34,7 @@
 
     <spring.version>6.0.11</spring.version>
 
-    <spring-security.version>6.1.1</spring-security.version>
+    <spring-security.version>6.1.2</spring-security.version>
 
     <aspectj.version>1.9.19</aspectj.version>
 
@@ -74,8 +74,8 @@
 
     <thumbnailator.version>0.4.20</thumbnailator.version>
 
-    <vault3.version>3.0.3</vault3.version>
-    <vault2.version>2.3.3</vault2.version>
+    <vault3.version>3.0.4</vault3.version>
+    <vault2.version>2.3.4</vault2.version>
 
     <freemarker.version>2.3.32</freemarker.version>
 
@@ -85,7 +85,7 @@
     <!-- ################################### -->
 
     <spring5.version>5.3.29</spring5.version>
-    <spring-security5.version>5.8.4</spring-security5.version>
+    <spring-security5.version>5.8.5</spring-security5.version>
 
     <spring4.version>4.3.30.RELEASE</spring4.version>
     <slf4j.version>2.0.7</slf4j.version>

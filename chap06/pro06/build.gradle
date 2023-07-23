@@ -41,7 +41,6 @@ gretty {
   servletContainer = "tomcat10"
   inplaceMode = "hard"
   reloadOnClassChange = true
-  loggingLevel = "DEBUG"
 
   jvmArgs = [
       "--add-opens=java.base/java.io=ALL-UNNAMED",

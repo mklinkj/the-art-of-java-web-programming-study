@@ -88,7 +88,6 @@ gretty {
   contextPath = project.name
   servletContainer = "tomcat10"
   inplaceMode = "soft"
-  loggingLevel = "DEBUG"
 
   jvmArgs = [
       "--add-opens=java.base/java.io=ALL-UNNAMED",
