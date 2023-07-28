@@ -2,17 +2,27 @@
 
 > 가장 난이도가 높은 주제다 😆
 >
-> 일단은 30장에서 했던 것 처럼... Spring Boot 2 + Tiles + Maven 프로젝트로 만들어서 진행해보고...
+> 일단 쇼핑몰 디자인이 되어있어, 그것을 바로 부트스트랩으로 바꿔가면서 해보기는 어려울 것 같아서,
 >
-> 이후에 Spring Boot 3 + Thymeleaf + Gradle 프로젝트로 만들자!
+> 저자님 예제 소스를 Fork 받아서 그걸을 개선해나가는 쪽으로 진행해보기로 하였다.
 >
-> #### Spring Boot 2 + Tiles + Maven
->
-> * [my-bookshop-boot2](my-bookshop-boot2)
->
-> #### Spring Boot 3 + Thymeleaf + Gradle
->
-> * [my-bookshop-boot3](my-bookshop-boot3)
+> * https://github.com/mklinkj/006895-the-art-of-java-web-programming/tree/study/bookShop01-study
+
+
+
+## ERD
+
+테이블이 5개 정도이고, 쿼리도 복잡할 것 같진 않은데... 쿼리가 복잡하지 않은 것이 확인되면 HSQLDB로도 구성해보자 
+
+여전히 ExERD는 사용할 수 없으니, Visual Paradigm으로 맞춰서 그려보자!
+
+
+
+
+
+
+
+
 
 
 
@@ -47,5 +57,5 @@
 
 ## 기타
 
-
+* ...
 
