@@ -16,29 +16,29 @@
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
 
-    <lombok.version>1.18.28</lombok.version>
-    <log4j.version>2.20.0</log4j.version>
+    <lombok.version>1.18.30</lombok.version>
+    <log4j.version>2.21.1</log4j.version>
 
-    <commons-text.version>1.10.0</commons-text.version>
+    <commons-text.version>1.11.0</commons-text.version>
 
-    <jackson.version>2.15.2</jackson.version>
+    <jackson.version>2.15.3</jackson.version>
     <jackson-databind.version>${jackson.version}</jackson-databind.version>
 
     <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
 
-    <junit.version>5.9.3</junit.version>
+    <junit.version>5.10.1</junit.version>
     <assertj.version>3.24.2</assertj.version>
-    <json-unit.version>3.0.0</json-unit.version>
-    <mockito.version>5.4.0</mockito.version>
+    <json-unit.version>3.2.2</json-unit.version>
+    <mockito.version>5.7.0</mockito.version>
     <hamcrest.version>2.2</hamcrest.version>
 
-    <spring.version>6.0.11</spring.version>
+    <spring.version>6.0.13</spring.version>
 
-    <spring-security.version>6.1.2</spring-security.version>
+    <spring-security.version>6.1.5</spring-security.version>
 
-    <aspectj.version>1.9.19</aspectj.version>
+    <aspectj.version>1.9.20.1</aspectj.version>
 
-    <tomcat10.version>10.1.11</tomcat10.version>
+    <tomcat10.version>10.1.16</tomcat10.version>
 
 
     <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
@@ -50,25 +50,25 @@
     <!-- Hibernate Validator 로컬 테스트시 필요하다. -->
     <jakarta.el.version>5.0.0-M1</jakarta.el.version>
 
-    <ojdbc.version>23.2.0.0</ojdbc.version>
+    <ojdbc.version>23.3.0.23.09</ojdbc.version>
     <mysql-connector-j.version>8.0.33</mysql-connector-j.version>
     <hsqldb.version>2.7.2</hsqldb.version>
 
     <java-time-jsptags.version>2.0.0</java-time-jsptags.version>
 
-    <commons-io.version>2.13.0</commons-io.version>
+    <commons-io.version>2.15.0</commons-io.version>
 
     <!-- webjars -->
-    <webjars-jquery.version>3.6.4</webjars-jquery.version>
-    <webjars-bootstrap.version>5.3.0</webjars-bootstrap.version>
-    <webjars-locator.version>0.47</webjars-locator.version>
+    <webjars-jquery.version>3.7.1</webjars-jquery.version>
+    <webjars-bootstrap.version>5.3.2</webjars-bootstrap.version>
+    <webjars-locator.version>0.48</webjars-locator.version>
     <findbugs-jsr305.version>3.0.2</findbugs-jsr305.version>
 
-    <mybatis.version>3.5.13</mybatis.version>
+    <mybatis.version>3.5.14</mybatis.version>
     <mybatis-spring.version>2.1.1</mybatis-spring.version>
     <mybatis-dynamic-sql.version>1.5.0</mybatis-dynamic-sql.version>
 
-    <hikaricp.version>5.0.1</hikaricp.version>
+    <hikaricp.version>5.1.0</hikaricp.version>
 
     <commons-beanutils.version>1.9.4</commons-beanutils.version>
 
@@ -84,8 +84,8 @@
     <!-- #### Servlet 4 Project Support #### -->
     <!-- ################################### -->
 
-    <spring5.version>5.3.29</spring5.version>
-    <spring-security5.version>5.8.5</spring-security5.version>
+    <spring5.version>5.3.30</spring5.version>
+    <spring-security5.version>5.8.8</spring-security5.version>
 
     <spring4.version>4.3.30.RELEASE</spring4.version>
     <slf4j.version>2.0.7</slf4j.version>
@@ -93,7 +93,7 @@
     <!-- Spring 5까지만 공식 지원한다. -->
     <tiles.version>3.0.8</tiles.version>
 
-    <hibernate-validator-javax.version>6.0.23.Final</hibernate-validator-javax.version>
+    <hibernate-validator-javax.version>6.2.5.Final</hibernate-validator-javax.version>
     <!-- Hibernate Validator 로컬 테스트시 필요하다. -->
     <javax.el.version>3.0.1-b12</javax.el.version>
 
@@ -108,9 +108,9 @@
 
     <java-time-jsptags-javax.version>1.1.4</java-time-jsptags-javax.version>
 
-    <tomcat9.version>9.0.78</tomcat9.version>
-    <jetty.version>11.0.15</jetty.version>
-    <jetty-javax.version>10.0.15</jetty-javax.version>
+    <tomcat9.version>9.0.83</tomcat9.version>
+    <jetty.version>11.0.18</jetty.version>
+    <jetty-javax.version>10.0.18</jetty-javax.version>
     <!-- ################################### -->
 
 
@@ -118,7 +118,7 @@
     <mybatis-generator-maven-plugin.version>1.4.2</mybatis-generator-maven-plugin.version>
     <maven-war-plugin.version>3.4.0</maven-war-plugin.version>
     <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
-    <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
+    <maven-surefire-plugin.version>3.2.2</maven-surefire-plugin.version>
     <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
     <maven-toolchains-plugin.version>3.1.0</maven-toolchains-plugin.version>
 
@@ -136,7 +136,7 @@
     <web-xml-location>${project.basedir}/src/main/webapp/WEB-INF/web.xml</web-xml-location>
 
     <!-- cargo 플러그인 설정 -->
-    <cargo.version>1.10.7</cargo.version>
+    <cargo.version>1.10.10</cargo.version>
     <cargo-tomcat.containerId>tomcat10x</cargo-tomcat.containerId>
     <cargo-tomcat.version>${tomcat10.version}</cargo-tomcat.version>
     <cargo-context-path>${jetty-context-path}</cargo-context-path>

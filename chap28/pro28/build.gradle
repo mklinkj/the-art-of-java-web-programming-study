@@ -60,10 +60,11 @@ dependencies {
   implementation "org.thymeleaf:thymeleaf-spring6:${thymeleafVersion}"
   implementation "org.thymeleaf.extras:thymeleaf-extras-springsecurity6:${thymeleafVersion}"
   
-  // Gretty로 실행할 때는 공식 라이브러리는 안되고, zhanhb 버전을 써야 레이아웃 페이지 접근시 예외가 발생하지 않는다.
-  // implementation "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:${thymeleafLayoutVersion}"
+  // Gretty로 실행할 때는 공식 라이브러리는 안되고, zhanhb 버전을 써야 레이아웃 페이지 접근시 예외가 발생하지 않았었는데, 
+  // 비공식이다보니... 그냥 공식 버전을 쓰고, Tomcat에 직접 올려서 확인하는 것이 좋겠다.
+  implementation "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:${thymeleafLayoutVersion}"  
+  // implementation "com.github.zhanhb:thymeleaf-layout-dialect:${zhanhbThymeleafLayoutVersion}"
   
-  implementation "com.github.zhanhb:thymeleaf-layout-dialect:${zhanhbThymeleafLayoutVersion}"
   implementation "org.thymeleaf.extras:thymeleaf-extras-java8time:${thymeleafExtrasJava8timeVersion}"
 
   implementation "net.coobird:thumbnailator:${thumbnailatorVersion}"
