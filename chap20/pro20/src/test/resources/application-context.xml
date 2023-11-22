@@ -37,10 +37,13 @@
     <property name="dataSource" ref="dataSource"/>
   </bean>
 
-  <bean id="dbDataInitializer" class="org.mklinkj.taojwp.common.util.DBDataInitializer">
-     <constructor-arg name="initSqlScript" value="sql/mysql/init-sql.sql" />
-     <!-- <constructor-arg name="initSqlScript" value="sql/oracle/init-sql.sql" /> -->
+  <bean id="dbDataInitializer" class="org.mklinkj.taojwp.common.util.DBDataInitializer"
+    init-method="resetDB" primary="true">
+    <constructor-arg name="dataSource" ref="dataSource"/>
+    <constructor-arg name="initSqlScript" value="sql/mysql/init-sql.sql"/>
+    <!-- <constructor-arg name="initSqlScript" value="sql/oracle/init-sql.sql" /> -->
   </bean>
+
 
   <!-- MySQL DAO -->
   <bean name="mySqlBoardDAO" class="org.mklinkj.taojwp.board.MySqlBoardDAO" />

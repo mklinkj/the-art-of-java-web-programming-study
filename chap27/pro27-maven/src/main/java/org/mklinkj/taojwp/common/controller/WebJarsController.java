@@ -34,7 +34,7 @@ public class WebJarsController {
   @ResponseBody
   @GetMapping("/webjars_locator/{webjar}/**")
   public ResponseEntity<Resource> locateWebjarAsset(
-      @PathVariable String webjar, HttpServletRequest request) {
+      @PathVariable("webjar") String webjar, HttpServletRequest request) {
 
     try {
       String mvcPrefix = String.format("/webjars_locator/%s/", webjar);

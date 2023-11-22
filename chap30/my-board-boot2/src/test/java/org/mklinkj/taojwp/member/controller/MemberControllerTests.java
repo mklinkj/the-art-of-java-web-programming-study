@@ -57,6 +57,20 @@ class MemberControllerTests {
   }
 
   @Test
+  void testListMembersDo_with_Params() throws Exception {
+    mockMvc
+        .perform(
+            get("/member/listMembers.do") //
+                .param("type", "NAME")
+                .param("keyword", "홍길동"))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(model().attributeExists("memberList"))
+        .andExpect(view().name("member/listMembers"))
+        .andExpect(forwardedUrl("/WEB-INF/views/common/layout.jsp"));
+  }
+
+  @Test
   void testMemberFormDo() throws Exception {
     mockMvc
         .perform(get("/member/memberForm.do"))

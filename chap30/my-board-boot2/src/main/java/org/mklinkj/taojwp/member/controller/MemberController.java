@@ -114,7 +114,7 @@ public class MemberController {
   }
 
   @PostMapping("/delMember.do")
-  public String delMember(String id) {
+  public String delMember(@RequestParam("id") String id) {
     memberService.delMember(id);
     return "redirect:/member/listMembers.do";
   }

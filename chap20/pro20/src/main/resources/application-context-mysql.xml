@@ -38,6 +38,7 @@
 
   <bean id="dbDataInitializer" class="org.mklinkj.taojwp.common.util.DBDataInitializer"
     init-method="resetDB" primary="true">
+    <constructor-arg name="dataSource" ref="dataSource"/>
     <constructor-arg name="initSqlScript" value="sql/mysql/init-sql.sql"/>
   </bean>
 

@@ -39,15 +39,16 @@
 
   <bean id="dbDataInitializer" class="org.mklinkj.taojwp.common.util.DBDataInitializer"
     init-method="resetDB" primary="true">
+    <constructor-arg name="dataSource" ref="dataSource"/>
     <constructor-arg name="initSqlScript" value="sql/mysql/init-sql.sql"/>
     <!-- <constructor-arg name="initSqlScript" value="sql/oracle/init-sql.sql"/> -->
   </bean>
 
-  <bean name="mySqlBoardDAO" class="org.mklinkj.taojwp.board.MySqlBoardDAO" />
-  <bean name="mySqlMemberDAO" class="org.mklinkj.taojwp.member.MySqlMemberDAO" />
+  <bean name="mySqlBoardDAO" class="org.mklinkj.taojwp.board.MySqlBoardDAO"/>
+  <bean name="mySqlMemberDAO" class="org.mklinkj.taojwp.member.MySqlMemberDAO"/>
 
-<!--  <bean class="org.mklinkj.taojwp.member.OracleMemberDAO" />-->
-<!--  <bean class="org.mklinkj.taojwp.board.OracleBoardDAO" />-->
+  <!--  <bean class="org.mklinkj.taojwp.member.OracleMemberDAO" />-->
+  <!--  <bean class="org.mklinkj.taojwp.board.OracleBoardDAO" />-->
 
   <bean class="org.mklinkj.taojwp.common.listener.JDBCDriverCleaner" depends-on="dataSource"/>
 

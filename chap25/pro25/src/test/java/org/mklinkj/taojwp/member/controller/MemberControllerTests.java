@@ -57,6 +57,21 @@ class MemberControllerTests {
         .andExpect(forwardedUrl("/WEB-INF/views/member/listMembers.jsp"));
   }
 
+  // ✨ 파라미터를 넣어 조회하는 테스트도 필요함.
+  @Test
+  void testListMembersDo_with_Params() throws Exception {
+    mockMvc
+        .perform(
+            get("/member/listMembers.do") //
+                .param("type", "ID")
+                .param("keyword", "hong"))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(model().attributeExists("memberList"))
+        .andExpect(view().name("member/listMembers"))
+        .andExpect(forwardedUrl("/WEB-INF/views/member/listMembers.jsp"));
+  }
+
   @Test
   void testMemberFormDo() throws Exception {
     mockMvc

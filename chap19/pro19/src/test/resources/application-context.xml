@@ -9,7 +9,7 @@
   <context:component-scan base-package="org.mklinkj.taojwp"/>
 
   <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-<!--    <constructor-arg value="/db-oracle.properties"/>-->
+    <!--    <constructor-arg value="/db-oracle.properties"/>-->
     <constructor-arg value="/db-mysql.properties"/>
     <property name="dataSourceProperties">
       <props>
@@ -38,17 +38,18 @@
   </bean>
 
   <bean id="dbDataInitializer" class="org.mklinkj.taojwp.common.util.DBDataInitializer">
-     <constructor-arg name="initSqlScript" value="sql/mysql/init-sql.sql" />
-     <!-- <constructor-arg name="initSqlScript" value="sql/oracle/init-sql.sql" /> -->
+    <constructor-arg name="dataSource" ref="dataSource"/>
+    <constructor-arg name="initSqlScript" value="sql/mysql/init-sql.sql"/>
+    <!-- <constructor-arg name="initSqlScript" value="sql/oracle/init-sql.sql" /> -->
   </bean>
 
   <!-- MySQL DAO -->
-  <bean name="mySqlBoardDAO" class="org.mklinkj.taojwp.board.MySqlBoardDAO" />
-  <bean name="mySqlMemberDAO" class="org.mklinkj.taojwp.member.MySqlMemberDAO" />
+  <bean name="mySqlBoardDAO" class="org.mklinkj.taojwp.board.MySqlBoardDAO"/>
+  <bean name="mySqlMemberDAO" class="org.mklinkj.taojwp.member.MySqlMemberDAO"/>
 
   <!-- Oracle DAO  -->
-<!--  <bean name="oracleMemberDAO" class="org.mklinkj.taojwp.member.OracleMemberDAO" />-->
-<!--  <bean name="oracleBoardDAO" class="org.mklinkj.taojwp.board.OracleBoardDAO" />-->
+  <!--  <bean name="oracleMemberDAO" class="org.mklinkj.taojwp.member.OracleMemberDAO" />-->
+  <!--  <bean name="oracleBoardDAO" class="org.mklinkj.taojwp.board.OracleBoardDAO" />-->
 
   <tx:annotation-driven/>
 </beans>
