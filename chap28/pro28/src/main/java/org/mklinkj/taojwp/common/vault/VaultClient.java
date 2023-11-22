@@ -1,12 +1,19 @@
 package org.mklinkj.taojwp.common.vault;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
+import org.springframework.util.StreamUtils;
 import org.springframework.vault.authentication.TokenAuthentication;
 import org.springframework.vault.client.VaultEndpoint;
 import org.springframework.vault.core.VaultTemplate;
@@ -23,14 +30,11 @@ public class VaultClient {
     try {
       Properties prop =
           PropertiesLoaderUtils.loadProperties(new ClassPathResource("config/vault.properties"));
-      Properties tokenProp =
-          PropertiesLoaderUtils.loadProperties(
-              new ClassPathResource("config/vault-token.properties"));
 
       VaultConfig config =
           new VaultConfig(
               prop.getProperty("vault.server.url"),
-              tokenProp.getProperty("vault.policy.token"),
+              token(),
               prop.getProperty("vault.root.path"),
               prop.getProperty("vault.project.path"));
       this.config = config;
@@ -40,6 +44,15 @@ public class VaultClient {
           new VaultTemplate(vaultEndpoint, new TokenAuthentication(config.getPolicyToken()));
     } catch (IOException e) {
       throw new IllegalArgumentException(e);
+    }
+  }
+
+  private String token() {
+    Path vaultTokenPath = Paths.get(System.getProperty("user.home"), ".vault-token");
+    try (InputStream inputStream = Files.newInputStream(vaultTokenPath)) {
+      return StreamUtils.copyToString(inputStream, UTF_8).trim();
+    } catch (Exception e) {
+      throw new IllegalArgumentException("사용자 홈 경로의 토큰 로드 실패", e);
     }
   }
 
