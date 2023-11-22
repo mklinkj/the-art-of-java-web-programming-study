@@ -29,6 +29,9 @@ application {
 }
 
 tasks.named('test') {
+  jvmArgs = [
+    "-Djava.awt.headless=false"
+  ]
   useJUnitPlatform()
   testLogging {
     outputs.upToDateWhen { false }
