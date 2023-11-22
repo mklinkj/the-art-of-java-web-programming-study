@@ -29,13 +29,15 @@ application {
 }
 
 tasks.named('test') {
-  jvmArgs = [
-    "-Djava.awt.headless=false"
-  ]
-
   useJUnitPlatform()
   testLogging {
     outputs.upToDateWhen { false }
     showStandardStreams = true
+  }
+  if (java.awt.GraphicsEnvironment.isHeadless()) {
+    logger.lifecycle('Running in a headless environment. Skipping tests.')
+    exclude '**'
+  } else {
+    logger.lifecycle('Running in a non-headless environment. Executing tests.')
   }
 }
