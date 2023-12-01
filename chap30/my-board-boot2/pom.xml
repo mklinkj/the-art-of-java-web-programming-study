@@ -42,8 +42,8 @@
 
     <!-- Maven 플러그인 버전 재정의 -->
     <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
-    <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
-    <maven-surefire-plugin.version>3.2.2</maven-surefire-plugin.version>
+    <maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
+    <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
 
 
     <!-- ### Spring Boot Dependencies에 없는 버전 정의 ### -->
@@ -53,7 +53,7 @@
     <java-time-jsptags-javax.version>1.1.4</java-time-jsptags-javax.version>
 
     <commons-fileupload.version>1.5</commons-fileupload.version>
-    <commons-io.version>2.15.0</commons-io.version>
+    <commons-io.version>2.15.1</commons-io.version>
 
     <thumbnailator.version>0.4.20</thumbnailator.version>
 
