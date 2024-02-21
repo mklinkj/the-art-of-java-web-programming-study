@@ -26,19 +26,19 @@
 
     <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
 
-    <junit.version>5.10.1</junit.version>
-    <assertj.version>3.25.1</assertj.version>
-    <json-unit.version>3.2.2</json-unit.version>
-    <mockito.version>5.8.0</mockito.version>
+    <junit.version>5.10.2</junit.version>
+    <assertj.version>3.25.3</assertj.version>
+    <json-unit.version>3.2.5</json-unit.version>
+    <mockito.version>5.10.0</mockito.version>
     <hamcrest.version>2.2</hamcrest.version>
 
-    <spring.version>6.1.3</spring.version>
+    <spring.version>6.1.4</spring.version>
 
-    <spring-security.version>6.2.1</spring-security.version>
+    <spring-security.version>6.2.2</spring-security.version>
 
-    <aspectj.version>1.9.21</aspectj.version>
+    <aspectj.version>1.9.21.1</aspectj.version>
 
-    <tomcat10.version>10.1.18</tomcat10.version>
+    <tomcat10.version>10.1.19</tomcat10.version>
 
 
     <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
@@ -74,7 +74,7 @@
 
     <thumbnailator.version>0.4.20</thumbnailator.version>
 
-    <vault3.version>3.1.0</vault3.version>
+    <vault3.version>3.1.1</vault3.version>
     <vault2.version>2.3.4</vault2.version>
 
     <freemarker.version>2.3.32</freemarker.version>
@@ -84,11 +84,11 @@
     <!-- #### Servlet 4 Project Support #### -->
     <!-- ################################### -->
 
-    <spring5.version>5.3.31</spring5.version>
-    <spring-security5.version>5.8.9</spring-security5.version>
+    <spring5.version>5.3.32</spring5.version>
+    <spring-security5.version>5.8.10</spring-security5.version>
 
     <spring4.version>4.3.30.RELEASE</spring4.version>
-    <slf4j.version>2.0.11</slf4j.version>
+    <slf4j.version>2.0.12</slf4j.version>
 
     <!-- Spring 5까지만 공식 지원한다. -->
     <tiles.version>3.0.8</tiles.version>
@@ -108,9 +108,9 @@
 
     <java-time-jsptags-javax.version>1.1.4</java-time-jsptags-javax.version>
 
-    <tomcat9.version>9.0.85</tomcat9.version>
-    <jetty.version>11.0.19</jetty.version>
-    <jetty-javax.version>10.0.19</jetty-javax.version>
+    <tomcat9.version>9.0.86</tomcat9.version>
+    <jetty.version>11.0.20</jetty.version>
+    <jetty-javax.version>10.0.20</jetty-javax.version>
     <!-- ################################### -->
 
 
@@ -136,7 +136,7 @@
     <web-xml-location>${project.basedir}/src/main/webapp/WEB-INF/web.xml</web-xml-location>
 
     <!-- cargo 플러그인 설정 -->
-    <cargo.version>1.10.11</cargo.version>
+    <cargo.version>1.10.12</cargo.version>
     <cargo-tomcat.containerId>tomcat10x</cargo-tomcat.containerId>
     <cargo-tomcat.version>${tomcat10.version}</cargo-tomcat.version>
     <cargo-context-path>${jetty-context-path}</cargo-context-path>
@@ -233,6 +233,12 @@
               <configuration>
                 <type>standalone</type>
                 <properties>
+                  <cargo.jvmargs><!-- 
+                  -->--illegal-access=warn <!--
+                  -->--add-opens=java.base/java.io=ALL-UNNAMED <!--
+                  -->--add-opens=java.base/java.lang=ALL-UNNAMED <!--
+                  -->--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED <!--
+                  --></cargo.jvmargs>
                   <cargo.servlet.port>${cargo-server-port}</cargo.servlet.port>
                 </properties>
               </configuration>
