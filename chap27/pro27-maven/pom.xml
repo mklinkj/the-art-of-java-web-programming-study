@@ -26,18 +26,10 @@
   <properties>
     <!-- Tiles를 연습해보려고 했는데.. Spring 5.x 까지만 정식 지원한다. -->
     <!-- 프로젝트를 Servlet 4 + Spring 5.7.x 프로젝트로 환경을 다운그레이드 했다. -->
-    <jstl-scope.type>compile</jstl-scope.type>
-    <jetty.version>${jetty-javax.version}</jetty.version>
-    <jetty-context-path>/</jetty-context-path>
-
     <spring.version>${spring5.version}</spring.version>
     <spring-security.version>${spring-security5.version}</spring-security.version>
 
     <hibernate-validator.version>${hibernate-validator-javax.version}</hibernate-validator.version>
-
-    <cargo-context-path>/</cargo-context-path>
-    <cargo-tomcat.containerId>tomcat9x</cargo-tomcat.containerId>
-    <cargo-tomcat.version>${tomcat9.version}</cargo-tomcat.version>
   </properties>
 
   <dependencies>
@@ -143,7 +135,6 @@
       <groupId>javax.servlet</groupId>
       <artifactId>jstl</artifactId>
       <version>${jstl.version}</version>
-      <scope>${jstl-scope.type}</scope>
     </dependency>
 
     <dependency>

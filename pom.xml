@@ -38,9 +38,7 @@
 
     <aspectj.version>1.9.21.1</aspectj.version>
 
-    <tomcat10.version>10.1.19</tomcat10.version>
-
-
+    
     <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
     <jakarta.servlet.jsp-api.version>3.1.1</jakarta.servlet.jsp-api.version>
 
@@ -108,12 +106,8 @@
 
     <java-time-jsptags-javax.version>1.1.4</java-time-jsptags-javax.version>
 
-    <tomcat9.version>9.0.86</tomcat9.version>
-    <jetty.version>11.0.20</jetty.version>
-    <jetty-javax.version>10.0.20</jetty-javax.version>
-    <!-- ################################### -->
 
-
+    
     <!-- Maven 플러그인 버전 관리 -->
     <mybatis-generator-maven-plugin.version>1.4.2</mybatis-generator-maven-plugin.version>
     <maven-war-plugin.version>3.4.0</maven-war-plugin.version>
@@ -122,8 +116,10 @@
     <maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
     <maven-toolchains-plugin.version>3.1.0</maven-toolchains-plugin.version>
 
-    <!-- Jetty일 때는 provided, Tomcat일 때는 compile로 설정하기위해 프로퍼티로 분리했다. -->
-    <jstl-scope.type>provided</jstl-scope.type>
+
+    <!-- ##### 내장 WAS 설정 : Jetty : Jetty Maven Plugin ##### -->
+    <jetty.version>12.0.6</jetty.version>
+    <jetty.ee.version>ee8</jetty.ee.version>
 
     <!-- Jetty Http 포트 기본값 -->
     <jetty.port>8090</jetty.port>
@@ -135,10 +131,14 @@
     <!-- Embedded Jetty로 실행할 때, web.xml을 환경별로 바꿀 상황이 생겨 환경변수로 분리했다.  -->
     <web-xml-location>${project.basedir}/src/main/webapp/WEB-INF/web.xml</web-xml-location>
 
-    <!-- cargo 플러그인 설정 -->
+    <!-- ##### 내장 WAS 설정 : Tomcat : Cargo Maven Plugin ##### -->
     <cargo.version>1.10.12</cargo.version>
-    <cargo-tomcat.containerId>tomcat10x</cargo-tomcat.containerId>
-    <cargo-tomcat.version>${tomcat10.version}</cargo-tomcat.version>
+
+    <tomcat9.version>9.0.86</tomcat9.version>
+    <tomcat10.version>10.1.19</tomcat10.version>
+
+    <cargo-tomcat.containerId>tomcat9x</cargo-tomcat.containerId>
+    <cargo-tomcat.version>${tomcat9.version}</cargo-tomcat.version>
     <cargo-context-path>${jetty-context-path}</cargo-context-path>
     <cargo-server-port>${jetty.port}</cargo-server-port>
   </properties>
@@ -151,17 +151,14 @@
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
-      <properties>
-        <jstl-scope.type>provided</jstl-scope.type>
-      </properties>
       <build>
         <plugins>
           <!-- Jetty 서버 구동 -->
           <!-- 도움말 자세히보기: mvnw jetty:help -Ddetail=true -Dgoal=run -->
           <plugin>
             <!-- https://www.eclipse.org/jetty/documentation/jetty-10/programming-guide/index.html#jetty-maven-plugin -->
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-maven-plugin</artifactId>
+            <groupId>org.eclipse.jetty.${jetty.ee.version}</groupId>
+            <artifactId>jetty-${jetty.ee.version}-maven-plugin</artifactId>
             <version>${jetty.version}</version>
             <configuration>
               <httpConnector>
@@ -205,9 +202,6 @@
     <!-- Tomcat 기본 웹 애플리케이션 실행  -->
     <profile>
       <id>tomcat-run</id>
-      <properties>
-        <jstl-scope.type>compile</jstl-scope.type>
-      </properties>
       <build>
         <plugins>
           <!-- 실제 Tomcat 배포 실행 테스트 -->
