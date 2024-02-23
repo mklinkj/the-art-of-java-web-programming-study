@@ -68,12 +68,24 @@
       <groupId>org.apache.tiles</groupId>
       <artifactId>tiles-jsp</artifactId>
       <version>${tiles.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <!-- tiles-jsp가 전이 의존성으로 가져오는 항목중에 취약하다고 해서 최신 버전으로 넣음. -->
     <dependency>
       <groupId>commons-beanutils</groupId>
       <artifactId>commons-beanutils</artifactId>
       <version>${commons-beanutils.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
