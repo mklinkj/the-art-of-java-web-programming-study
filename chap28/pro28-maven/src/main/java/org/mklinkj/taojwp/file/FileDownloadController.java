@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import javax.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
 import org.mklinkj.taojwp.common.util.ProjectDataUtils;
 import org.springframework.http.HttpHeaders;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Slf4j
 @RequestMapping("/file")
 @Controller
 public class FileDownloadController {
@@ -85,7 +83,8 @@ public class FileDownloadController {
 
   private void responseFile(HttpServletResponse response, OutputStream out, File thumbnail)
       throws IOException {
-    try (out; FileInputStream fis = new FileInputStream(thumbnail)) {
+    try (out;
+        FileInputStream fis = new FileInputStream(thumbnail)) {
       byte[] buffer = new byte[1024 * 8];
       while (true) {
         int count = fis.read(buffer);

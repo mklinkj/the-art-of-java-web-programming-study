@@ -31,13 +31,13 @@ public class VaultClient {
       Properties prop =
           PropertiesLoaderUtils.loadProperties(new ClassPathResource("config/vault.properties"));
 
-      VaultConfig config =
+      this.config =
           new VaultConfig(
               prop.getProperty("vault.server.url"),
               token(),
               prop.getProperty("vault.root.path"),
               prop.getProperty("vault.project.path"));
-      this.config = config;
+
       VaultEndpoint vaultEndpoint = VaultEndpoint.from(URI.create(config.getServerUrl()));
 
       vaultTemplate =

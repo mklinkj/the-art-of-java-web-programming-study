@@ -65,8 +65,9 @@ class FileDownloadControllerTests {
               assertThat(result.getResponse().getStatus()) //
                   .isEqualTo(HttpStatus.OK.value());
               assertThat(result.getResponse().getContentType()) //
-                  .isNotEqualTo(MediaType.IMAGE_PNG_VALUE)
-                  .describedAs("컨트롤러 메서드에서 명시적으로 설정을 하지 않아서 null");
+                  .describedAs("컨트롤러 메서드에서 명시적으로 설정을 하지 않아서 null")
+                  .isNotEqualTo(MediaType.IMAGE_PNG_VALUE);
+
               assertThat(result.getResponse().getHeader(HttpHeaders.CONTENT_DISPOSITION)) //
                   .isEqualTo("attachment; fileName=%s".formatted(IMAGE_FILE_NAME));
             });
@@ -84,8 +85,8 @@ class FileDownloadControllerTests {
               assertThat(result.getResponse().getStatus()) //
                   .isEqualTo(HttpStatus.OK.value());
               assertThat(result.getResponse().getContentType()) //
-                  .isNotEqualTo(MediaType.IMAGE_PNG_VALUE)
-                  .describedAs("컨트롤러 메서드에서 명시적으로 설정을 하지 않아서 null");
+                  .describedAs("컨트롤러 메서드에서 명시적으로 설정을 하지 않아서 null")
+                  .isNotEqualTo(MediaType.IMAGE_PNG_VALUE);
             });
   }
 
@@ -101,8 +102,8 @@ class FileDownloadControllerTests {
               assertThat(result.getResponse().getStatus()) //
                   .isEqualTo(HttpStatus.OK.value());
               assertThat(result.getResponse().getContentType()) //
-                  .isNotEqualTo(MediaType.IMAGE_PNG_VALUE)
-                  .describedAs("컨트롤러 메서드에서 명시적으로 설정을 하지 않아서 null");
+                  .describedAs("컨트롤러 메서드에서 명시적으로 설정을 하지 않아서 null")
+                  .isNotEqualTo(MediaType.IMAGE_PNG_VALUE);
             });
   }
 

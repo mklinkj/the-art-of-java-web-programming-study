@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import lombok.extern.slf4j.Slf4j;
 import org.mklinkj.taojwp.common.util.ProjectDataUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +18,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequestMapping("/file")
-@Slf4j
 @Controller
 public class FileUploadController {
   private final String imageRepoPath = ProjectDataUtils.getProperty("image_repo_path");

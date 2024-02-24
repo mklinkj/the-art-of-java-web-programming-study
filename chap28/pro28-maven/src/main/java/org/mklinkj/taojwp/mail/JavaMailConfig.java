@@ -3,14 +3,12 @@ package org.mklinkj.taojwp.mail;
 import static org.mklinkj.taojwp.common.vault.VaultClientHelper.vaultClient;
 
 import java.util.Properties;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
-@Slf4j
 @Configuration
 public class JavaMailConfig {
 
@@ -30,6 +28,10 @@ public class JavaMailConfig {
     props.put("mail.smtp.auth", true);
     props.put("mail.smtp.starttls.enable", true);
     props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+
+    // Server hostnames should be verified during SSL/TLS connections (java:S5527)
+    props.put("mail.smtp.ssl.checkserveridentity", true);
+
     props.put("mail.debug", true);
 
     mailSender.setJavaMailProperties(props);

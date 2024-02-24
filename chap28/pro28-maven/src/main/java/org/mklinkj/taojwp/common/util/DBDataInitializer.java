@@ -4,12 +4,10 @@ import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.EncodedResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 
-@Slf4j
 @RequiredArgsConstructor
 public class DBDataInitializer {
   private final DataSource dataSource;

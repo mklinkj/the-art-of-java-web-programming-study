@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.mklinkj.taojwp.member.domain.MemberVO;
 import org.mklinkj.taojwp.member.dto.SearchDTO;
 import org.mklinkj.taojwp.member.dto.SearchType;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@Slf4j
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
@@ -39,7 +37,9 @@ public class MemberController {
   }
 
   @GetMapping("/memberForm.do")
-  public void memberForm(@ModelAttribute("command") MemberVO command) {}
+  public void memberForm(@ModelAttribute("command") MemberVO command) {
+    // Spring Controller Void Method
+  }
 
   /** 상세보기 폼과, 수정 폼은 동일한 로직 */
   @GetMapping({"/memberDetail.do", "/modMemberForm.do"})
