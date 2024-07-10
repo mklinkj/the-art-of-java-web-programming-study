@@ -18,6 +18,10 @@ java {
 compileJava.options.encoding = "${projectEncoding}"
 compileTestJava.options.encoding = "${projectEncoding}"
 
+tasks.withType(JavaCompile).configureEach {
+  options.compilerArgs << '-parameters'
+}
+
 repositories {
   mavenCentral()
 }

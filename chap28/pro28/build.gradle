@@ -14,6 +14,10 @@ java {
 
 [compileJava, compileTestJava]*.options*.encoding = "${projectEncoding}"
 
+tasks.withType(JavaCompile).configureEach {
+  options.compilerArgs << '-parameters'
+}
+
 repositories {
   mavenCentral()
 }
@@ -64,8 +68,6 @@ dependencies {
   // 비공식이다보니... 그냥 공식 버전을 쓰고, Tomcat에 직접 올려서 확인하는 것이 좋겠다.
   implementation "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:${thymeleafLayoutVersion}"  
   // implementation "com.github.zhanhb:thymeleaf-layout-dialect:${zhanhbThymeleafLayoutVersion}"
-  
-  implementation "org.thymeleaf.extras:thymeleaf-extras-java8time:${thymeleafExtrasJava8timeVersion}"
 
   implementation "net.coobird:thumbnailator:${thumbnailatorVersion}"
 

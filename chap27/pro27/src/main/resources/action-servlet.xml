@@ -38,7 +38,6 @@
       <set>
         <bean class="nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect"/>
         <bean class="org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect"/>
-        <bean class="org.thymeleaf.extras.java8time.dialect.Java8TimeDialect"/>
       </set>
     </property>
     <property name="templateResolver" ref="templateResolver"/>

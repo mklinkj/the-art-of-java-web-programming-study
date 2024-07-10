@@ -37,13 +37,13 @@
 
     <!-- ### Spring Boot Dependencies에 존재하는 버전 재정의 ### -->
     <!-- https://repo1.maven.org/maven2/org/springframework/boot/spring-boot-dependencies/2.7.17/spring-boot-dependencies-2.7.17.pom -->
-    <hsqldb.version>2.7.2</hsqldb.version>
-    <ojdbc.version>23.2.0.0</ojdbc.version>
+    <hsqldb.version>2.7.3</hsqldb.version>
+    <ojdbc.version>23.4.0.24.05</ojdbc.version>
 
     <!-- Maven 플러그인 버전 재정의 -->
     <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
-    <maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
-    <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
+    <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+    <maven-surefire-plugin.version>3.3.0</maven-surefire-plugin.version>
 
 
     <!-- ### Spring Boot Dependencies에 없는 버전 정의 ### -->
@@ -53,13 +53,13 @@
     <java-time-jsptags-javax.version>1.1.4</java-time-jsptags-javax.version>
 
     <commons-fileupload.version>1.5</commons-fileupload.version>
-    <commons-io.version>2.15.1</commons-io.version>
+    <commons-io.version>2.16.1</commons-io.version>
 
     <thumbnailator.version>0.4.20</thumbnailator.version>
 
     <webjars-jquery.version>3.7.1</webjars-jquery.version>
-    <webjars-bootstrap.version>5.3.2</webjars-bootstrap.version>
-    <webjars-locator.version>0.50</webjars-locator.version>
+    <webjars-bootstrap.version>5.3.3</webjars-bootstrap.version>
+    <webjars-locator.version>0.52</webjars-locator.version>
 
     <vault2.version>2.3.4</vault2.version>
   </properties>
